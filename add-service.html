@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل خدمة جديدة</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; direction: rtl; }
+        .form-container { max-width: 450px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        input, select, button { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2 style="text-align:center;">إضافة خدمة جديدة</h2>
+    <form id="addServiceForm">
+        <input type="text" id="name" placeholder="اسم المهني أو المحل" required>
+        <select id="city" required>
+            <option value="" disabled selected>اختر المدينة</option>
+            <option value="بركان">بركان</option>
+            <option value="أكليم">أكليم</option>
+        </select>
+        <select id="category" required>
+            <option value="" disabled selected>نوع الخدمة</option>
+            <option value="كراء السيارات">كراء السيارات</option>
+            <option value="صحة">صحة (صيدلية/طبيب)</option>
+            <option value="نقل">نقل (طاكسي/حافلة)</option>
+            <option value="حرفي">حرفي (سباك/كهربائي)</option>
+            <option value="مطعم">مطعم/مقهى</option>
+        </select>
+        <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+        <input type="text" id="desc" placeholder="وصف بسيط (اختياري)">
+        <button type="submit">حفظ البيانات</button>
+    </form>
+    <br><a href="index.html" style="display:block; text-align:center;">العودة للرئيسية</a>
+</div>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyClJ6bFMOF_NZgo8fam_sUrj7WrigWGnzM",
+        authDomain: "hani-home-app.firebaseapp.com",
+        databaseURL: "https://hani-home-app-default-rtdb.firebaseio.com",
+        projectId: "hani-home-app",
+        storageBucket: "hani-home-app.firebasestorage.app",
+        messagingSenderId: "656083114132",
+        appId: "1:656083114132:web:f84c97028d91caa5d5bc81"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    document.getElementById('addServiceForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            name: document.getElementById('name').value,
+            city: document.getElementById('city').value,
+            category: document.getElementById('category').value,
+            phone: document.getElementById('phone').value,
+            desc: document.getElementById('desc').value
+        };
+        db.ref('services').push(data).then(() => {
+            alert('تمت الإضافة بنجاح!');
+            window.location.href = 'index.html';
+        });
+    });
+</script>
+</body>
+</html>
