@@ -4,70 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليل أكليم وبركان Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
-        :root { --primary: #007bff; --accent: #28a745; --dark: #343a40; --light: #f8f9fa; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--light); margin: 0; padding-bottom: 80px; }
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 0 0 20px 20px; }
-        .search-box { padding: 20px; text-align: center; }
-        input { padding: 15px; border: 1px solid #ddd; border-radius: 30px; width: 90%; max-width: 500px; outline: none; }
-        .ad-space { background: #fff; border: 1px dashed #bbb; margin: 10px auto; padding: 10px; width: 90%; text-align: center; color: #888; font-size: 0.8rem; border-radius: 8px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; padding: 15px; }
-        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-right: 6px solid var(--primary); position: relative; }
-        .card.aklim { border-right-color: #e67e22; }
-        .city-tag { position: absolute; top: 15px; left: 15px; font-size: 0.7rem; background: #eee; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
-        .btn-call { display: block; background: var(--accent); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px; }
-        .add-btn { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.4); z-index: 1000; }
+        body { background-color: #f8fafc; font-family: 'Segoe UI', sans-serif; }
+        .card-gradient { background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); }
+        .btn-call { transition: all 0.3s ease; }
+        .btn-call:hover { transform: scale(1.05); }
     </style>
 </head>
-<body>
-<header>
-    <h1 style="margin:0;">دليل أكليم وبركان</h1>
-    <p style="margin:5px 0 0 0;">كل الخدمات وأرقام الهواتف في مكان واحد</p>
-</header>
-<div class="ad-space">مساحة إعلانية (Google Ads)</div>
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="ابحث عن: كراء سيارات، صيدلية، سباك..." onkeyup="filterServices()">
-</div>
-<div id="servicesGrid" class="grid"></div>
-<a href="add-service.html" class="add-btn">+</a>
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyClJ6bFMOF_NZgo8fam_sUrj7WrigWGnzM",
-        authDomain: "hani-home-app.firebaseapp.com",
-        databaseURL: "https://hani-home-app-default-rtdb.firebaseio.com",
-        projectId: "hani-home-app",
-        storageBucket: "hani-home-app.firebasestorage.app",
-        messagingSenderId: "656083114132",
-        appId: "1:656083114132:web:f84c97028d91caa5d5bc81"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    db.ref('services').on('value', (snapshot) => {
-        const grid = document.getElementById('servicesGrid');
-        grid.innerHTML = '';
-        snapshot.forEach((child) => {
-            const data = child.val();
-            const cityClass = data.city === 'أكليم' ? 'aklim' : '';
-            grid.innerHTML += `
-                <div class="card ${cityClass}">
-                    <span class="city-tag">${data.city}</span>
-                    <h3 style="margin:0;">${data.name}</h3>
-                    <p style="color:var(--primary); font-weight:bold; margin:5px 0;">${data.category}</p>
-                    <p style="font-size:0.9rem; color:#555;">${data.desc || ''}</p>
-                    <a href="tel:${data.phone}" class="btn-call">اتصال مباشر</a>
-                </div>`;
+<body class="pb-24">
+
+    <header class="bg-blue-600 text-white pb-10 pt-6 px-4 rounded-b-[40px] shadow-lg text-center">
+        <h1 class="text-3xl font-bold">بركان & أكليم Connect</h1>
+        <p class="text-blue-100 mt-2 text-sm opacity-90">دليلك المحلي الذكي للخدمات والمهن</p>
+    </header>
+
+    <div class="mx-4 -mt-6 bg-yellow-50 border-2 border-dashed border-yellow-200 rounded-xl p-4 text-center text-yellow-700 text-xs shadow-sm">
+        مساحة إعلانية مخصصة (Google Ads Slot)
+    </div>
+
+    <div class="px-6 mt-8">
+        <div class="relative">
+            <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400">
+                <i class="fas fa-search"></i>
+            </span>
+            <input type="text" id="searchInput" onkeyup="filterServices()" 
+                   class="w-full py-4 pr-12 pl-4 bg-white border-none rounded-2xl shadow-md focus:ring-2 focus:ring-blue-500 outline-none text-gray-700"
+                   placeholder="ابحث عن ميكانيكي، صيدلية، كراء سيارات...">
+        </div>
+    </div>
+
+    <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mt-8">
+        </div>
+
+    <a href="add-service.html" class="fixed bottom-6 left-6 bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-blue-700 transition-all z-50">
+        <i class="fas fa-plus text-2xl"></i>
+    </a>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyClJ6bFMOF_NZgo8fam_sUrj7WrigWGnzM",
+            authDomain: "hani-home-app.firebaseapp.com",
+            databaseURL: "https://hani-home-app-default-rtdb.firebaseio.com",
+            projectId: "hani-home-app",
+            storageBucket: "hani-home-app.firebasestorage.app",
+            messagingSenderId: "656083114132",
+            appId: "1:656083114132:web:f84c97028d91caa5d5bc81"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        db.ref('services').on('value', (snapshot) => {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+            snapshot.forEach((child) => {
+                const data = child.val();
+                const cityColor = data.city === 'أكليم' ? 'text-orange-600 bg-orange-50' : 'text-blue-600 bg-blue-50';
+                grid.innerHTML += `
+                    <div class="card card-gradient rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${cityColor}">
+                                ${data.city}
+                            </span>
+                            <i class="fas fa-thumbtack text-gray-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">${data.name}</h3>
+                        <p class="text-blue-500 font-medium text-sm mb-3 underline decoration-2 underline-offset-4">${data.category}</p>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-6">${data.desc || 'لا يوجد وصف متاح حالياً.'}</p>
+                        
+                        <a href="tel:${data.phone}" class="btn-call w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-green-100">
+                            <i class="fas fa-phone-alt"></i>
+                            اتصال مباشر
+                        </a>
+                    </div>`;
+            });
         });
-    });
-    function filterServices() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
-        let cards = document.getElementsByClassName('card');
-        for (let i = 0; i < cards.length; i++) {
-            let text = cards[i].innerText.toLowerCase();
-            cards[i].style.display = text.includes(input) ? "block" : "none";
+
+        function filterServices() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                let text = card.innerText.toLowerCase();
+                card.style.display = text.includes(input) ? "flex" : "none";
+            });
         }
-    }
-</script>
+    </script>
 </body>
 </html>
