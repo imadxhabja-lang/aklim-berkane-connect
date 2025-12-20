@@ -861,4 +861,1047 @@
             setTimeout(() => {
                 const filteredServices = currentServices.filter(service => 
                     service.name.toLowerCase().includes(searchTerm) || 
-                    service.category.toLowerCase
+                    service.category.toLowerCase().includes(searchTerm) ||
+                    service.phone.includes(searchTerm)
+                );
+                
+                displayServices(filteredServices);
+                
+                if (filteredServices.length === 0) {
+                    searchResults.innerHTML = `لم يتم العثور على نتائج لـ "<strong>${searchTerm}</strong>"`;
+                } else {
+                    searchResults.innerHTML = `عرض ${filteredServices.length} نتيجة لـ "<strong>${searchTerm}</strong>"`;
+                }
+            }, 300);
+        }
+        
+        // Function to simulate calling
+        function callNumber(phoneNumber, serviceName = '') {
+            // Format phone for tel link
+            const formattedPhone = phoneNumber.replace(/-/g, '');
+            
+            // In a real implementation, this would initiate a phone call
+            // For web demo, we'll show an alert
+            const message = serviceName 
+                ? `جاري الاتصال بـ ${serviceName}\nالرقم: ${phoneNumber}`
+                : `جاري الاتصال بالرقم: ${phoneNumber}`;
+            
+            const userConfirmed = confirm(`${message}\n\nهل تريد الاتصال الآن؟`);
+            
+            if (userConfirmed) {
+                // This would be the actual implementation for mobile:
+                // window.location.href = `tel:${formattedPhone}`;
+                
+                // For demo purposes, show success message
+                alert(`تم بدء الاتصال بـ ${phoneNumber}\n\nملاحظة: في التطبيق الحقيقي على الهاتف، سيتم تحويلك إلى تطبيق الهاتف للاتصال.`);
+                
+                // Track call (in a real app, you would send this to analytics)
+                console.log(`Call made to: ${phoneNumber}, Service: ${serviceName}`);
+            }
+        }
+        
+        // Simulate ad loading
+        function simulateAdLoading() {
+            setTimeout(() => {
+                const adSpaces = document.querySelectorAll('.ad-space');
+                
+                adSpaces.forEach((ad, index) => {
+                    setTimeout(() => {
+                        if (ad.innerHTML.includes('fas fa-ad') || ad.innerHTML.includes('fas fa-bullhorn')) {
+                            ad.innerHTML = `
+                                <h3>إعلان ممول</h3>
+                                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; margin: 10px 0; padding: 10px;">
+                                    <p style="color: #666; font-weight: bold;">إعلان Google AdSense</p>
+                                    <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">ذو صلة بالخدمات المحلية</p>
+                                </div>
+                                <p style="color: #555; font-size: 0.9rem;">إعلان يعرض هنا</p>
+                                <span class="ad-label">إعلان نشط</span>
+                            `;
+                            
+                            // Add click event to ads for demo
+                            ad.style.cursor = 'pointer';
+                            ad.onclick = function() {
+                                alert('نقرة على الإعلان - في التطبيق الحقيقي سيتم توجيهك لصفحة الإعلان');
+                            };
+                        }
+                    }, index * 500); // Stagger ad loading
+                });
+            }, 1000);
+        }
+        
+        // Add service form link (demo)
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const linkText = this.textContent || this.querySelector('span')?.textContent;
+                
+                if (linkText && linkText.includes('إضافة خدمة')) {
+                    const serviceName = prompt('أدخل اسم الخدمة الجديدة:');
+                    if (serviceName) {
+                        alert(`شكراً لاقتراحك! سيقوم فريقنا بمراجعة خدمة "${serviceName}" وإضافتها قريباً.`);
+                    }
+                } else if (linkText && linkText.includes('اتصل بنا')) {
+                    alert('للاتصال بنا: البريد الإلكتروني: info@aklimberkandirectory.com\nالهاتف: 0536-123456');
+                } else if (linkText && linkText.includes('سياسة الخصوصية')) {
+                    alert('سياسة الخصوصية: نحن نحترم خصوصيتك. بيانات الهواتف مأخوذة من مصادر عامة.');
+                } else {
+                    alert('هذا الرابط تحت التطوير - سيتم تفعيله قريباً');
+                }
+            });
+        });
+    </script>
+</body>
+    </html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل أكليم وبركان | خدمات محلية وأرقام هواتف</title>
+    <meta name="description" content="دليل الخدمات المحلية وأرقام الهواتف في مدينة أكليم وبركان. ابحث عن أي خدمة محلية وتواصل مباشرة.">
+    <meta name="keywords" content="أكليم, بركان, هواتف, خدمات محلية, كهربائي, سباك, طبيب, نجار, دليل هواتف">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/000000/phone--v1.png">
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1e90ff; /* سماوي أزرق */
+            --secondary-color: #00ced1; /* سماوي داكن */
+            --accent-color: #f8f9fa;
+            --text-color: #333;
+            --light-color: #fff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 10px;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            padding: 1.2rem 5%;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .city-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .city-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .city-btn.active {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .city-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Main Layout */
+        .container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+            gap: 25px;
+        }
+        
+        /* Sidebar for Ads */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .ad-space {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #ddd;
+        }
+        
+        .ad-space h3 {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .ad-label {
+            background: #f0f0f0;
+            color: #888;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* Search Section */
+        .search-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        /* Emergency Section */
+        .emergency-section {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .emergency-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .emergency-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .emergency-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .emergency-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Services Section */
+        .services-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .service-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .service-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .service-phone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .call-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .call-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        /* In-content Ad */
+        .in-content-ad {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 5% 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Stats Counter */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .sidebar {
+                width: 240px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                order: 2;
+            }
+            
+            .ad-space {
+                min-height: 200px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .emergency-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-phone-alt"></i>
+                <h1>دليل أكليم وبركان</h1>
+            </div>
+            
+            <div class="city-selector">
+                <button class="city-btn active" id="aklim-btn">
+                    <i class="fas fa-map-marker-alt"></i> مدينة أكليم
+                </button>
+                <button class="city-btn" id="berkan-btn">
+                    <i class="fas fa-map-marker-alt"></i> مدينة بركان
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Stats Counter -->
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number" id="total-services">24</div>
+            <div>خدمة محلية</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="aklim-count">15</div>
+            <div>خدمة في أكليم</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="berkan-count">9</div>
+            <div>خدمة في بركان</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="emergency-count">8</div>
+            <div>رقم طوارئ</div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar with Ad Spaces -->
+        <aside class="sidebar">
+            <div class="ad-space" id="sidebar-ad-1">
+                <h3>مساحة إعلانية</h3>
+                <i class="fas fa-ad" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
+                <p>إعلان Google AdSense</p>
+                <span class="ad-label">شريط جانبي - 280px</span>
+            </div>
+            
+            <div class="ad-space" id="sidebar-ad-2">
+                <h3>مساحة إعلانية</h3>
+                <i class="fas fa-bullhorn" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
+                <p>إعلان Google AdSense</p>
+                <span class="ad-label">شريط جانبي - 280px</span>
+            </div>
+            
+            <!-- Quick Links -->
+            <div style="background: white; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);">
+                <h3 style="margin-bottom: 15px; color: var(--primary-color);">
+                    <i class="fas fa-link"></i> روابط سريعة
+                </h3>
+                <ul style="list-style: none; padding-right: 10px;">
+                    <li style="margin-bottom: 10px;">
+                        <a href="#" style="color: var(--text-color); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-plus-circle" style="color: var(--primary-color);"></i>
+                            <span>إضافة خدمة جديدة</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="#" style="color: var(--text-color); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-star" style="color: #ffc107;"></i>
+                            <span>الخدمات المميزة</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="#" style="color: var(--text-color); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-info-circle" style="color: var(--secondary-color);"></i>
+                            <span>عن الموقع</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <h2 class="section-title">
+                    <i class="fas fa-search"></i> ابحث عن الخدمات المحلية
+                </h2>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="ابحث عن المهنة أو الخدمة (مثال: كهربائي, طبيب, نجار...)">
+                    <button class="search-btn" id="search-btn">
+                        <i class="fas fa-search"></i> بحث
+                    </button>
+                </div>
+                <div id="search-results" style="margin-top: 15px; color: #666; font-size: 0.9rem;"></div>
+            </section>
+            
+            <!-- Emergency Section -->
+            <section class="emergency-section">
+                <h2 class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i> <span id="emergency-title">أرقام الطوارئ في أكليم</span>
+                </h2>
+                <div class="emergency-cards">
+                    <!-- Emergency cards will be loaded by JavaScript -->
+                </div>
+            </section>
+            
+            <!-- In-content Ad -->
+            <div class="in-content-ad">
+                <div class="ad-space" id="incontent-ad-1">
+                    <h3>مساحة إعلانية بين الخدمات</h3>
+                    <i class="fas fa-ad" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
+                    <p>إعلان Google AdSense</p>
+                    <span class="ad-label">إعلان داخل المحتوى - 728x90</span>
+                </div>
+            </div>
+            
+            <!-- Loading Animation -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px;">جاري تحميل الخدمات...</p>
+            </div>
+            
+            <!-- Services Section -->
+            <section class="services-section">
+                <h2 class="section-title">
+                    <i class="fas fa-th-list"></i> <span id="services-title">الخدمات المحلية في أكليم</span>
+                </h2>
+                <div class="services-grid" id="services-container">
+                    <!-- Services will be dynamically loaded here -->
+                </div>
+            </section>
+            
+            <!-- Another In-content Ad -->
+            <div class="in-content-ad">
+                <div class="ad-space" id="incontent-ad-2">
+                    <h3>مساحة إعلانية أخرى</h3>
+                    <i class="fas fa-bullhorn" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
+                    <p>إعلان Google AdSense</p>
+                    <span class="ad-label">إعلان داخل المحتوى - 728x90</span>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>عن الدليل</h3>
+                <p>دليل أكليم وبركان يهدف إلى تسهيل الوصول للخدمات المحلية وأرقام الهواتف في المدينتين، مما يعزز التواصل والخدمة المجتمعية.</p>
+                <div style="margin-top: 15px;">
+                    <a href="#" style="color: #ddd; margin-left: 10px;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #ddd; margin-left: 10px;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: #ddd; margin-left: 10px;"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #ddd; text-decoration: none;">الرئيسية</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #ddd; text-decoration: none;">أرقام الطوارئ</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #ddd; text-decoration: none;">إضافة خدمة جديدة</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #ddd; text-decoration: none;">اتصل بنا</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #ddd; text-decoration: none;">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>للإعلان على الموقع</h3>
+                <p>للاستفسار عن المساحات الإعلانية والاسعار، يرجى التواصل عبر البريد الإلكتروني: <br>ads@aklimberkandirectory.com</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">أو الاتصال على: <strong>0661-234567</strong></p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>جميع الحقوق محفوظة &copy; دليل أكليم وبركان <span id="current-year">2024</span> | تم التصميم بتركيز على السرعة والأداء</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Enhanced services data
+        const servicesData = {
+            aklim: [
+                { id: 1, name: "كهربائي منازل", phone: "0623-456789", category: "حرفي", verified: true, rating: 4.5 },
+                { id: 2, name: "سباك محترف", phone: "0612-345678", category: "حرفي", verified: true, rating: 4.2 },
+                { id: 3, name: "طبيب عام - د. محمد", phone: "0537-123456", category: "طبي", verified: true, rating: 4.8 },
+                { id: 4, name: "صيدلية ليلى", phone: "0536-987654", category: "طبي", verified: true, rating: 4.3 },
+                { id: 5, name: "نجار أثاث", phone: "0615-112233", category: "حرفي", verified: false, rating: 4.0 },
+                { id: 6, name: "ميكانيكي سيارات", phone: "0620-445566", category: "سيارات", verified: true, rating: 4.6 },
+                { id: 7, name: "مطعم الشرق", phone: "0536-778899", category: "مطاعم", verified: true, rating: 4.4 },
+                { id: 8, name: "بقالة الأمل", phone: "0537-554433", category: "تسوق", verified: false, rating: 4.1 },
+                { id: 9, name: "محامي مدني", phone: "0618-998877", category: "خدمات مهنية", verified: true, rating: 4.7 },
+                { id: 10, name: "مدرس خصوصي رياضيات", phone: "0622-112233", category: "تعليم", verified: true, rating: 4.9 },
+                { id: 11, name: "حداد", phone: "0610-223344", category: "حرفي", verified: false, rating: 3.8 },
+                { id: 12, name: "محل إصلاح هواتف", phone: "0625-667788", category: "تقنية", verified: true, rating: 4.3 },
+                { id: 13, name: "مكتبة المدينة", phone: "0536-334455", category: "تسوق", verified: false, rating: 4.0 },
+                { id: 14, name: "مقهى الإنترنت", phone: "0537-556677", category: "تسلية", verified: true, rating: 4.2 },
+                { id: 15, name: "سائق تكسي", phone: "0621-889900", category: "مواصلات", verified: false, rating: 3.9 }
+            ],
+            berkan: [
+                { id: 1, name: "طبيب أسنان - د. فاطمة", phone: "0536-112233", category: "طبي", verified: true, rating: 4.7 },
+                { id: 2, name: "مقهى الإنترنت بركان", phone: "0537-445566", category: "تسلية", verified: true, rating: 4.1 },
+                { id: 3, name: "محل إصلاح هواتف", phone: "0621-778899", category: "تقنية", verified: true, rating: 4.4 },
+                { id: 4, name: "مطعم بركان", phone: "0536-990011", category: "مطاعم", verified: true, rating: 4.6 },
+                { id: 5, name: "سوبر ماركت المدينة", phone: "0537-223344", category: "تسوق", verified: true, rating: 4.3 },
+                { id: 6, name: "كهربائي بركان", phone: "0620-334455", category: "حرفي", verified: false, rating: 3.9 },
+                { id: 7, name: "ميكانيكي بركان", phone: "0623-667788", category: "سيارات", verified: true, rating: 4.5 },
+                { id: 8, name: "محامي عائلي", phone: "0615-990022", category: "خدمات مهنية", verified: true, rating: 4.8 },
+                { id: 9, name: "بقالة النور", phone: "0536-112244", category: "تسوق", verified: false, rating: 4.0 }
+            ]
+        };
+
+        // Emergency numbers data
+        const emergencyData = {
+            aklim: [
+                { name: "الطوارئ الصحية", number: "15", icon: "ambulance", type: "صحة" },
+                { name: "المطافئ", number: "18", icon: "fire-extinguisher", type: "إطفاء" },
+                { name: "الشرطة", number: "19", icon: "shield-alt", type: "أمن" },
+                { name: "طوارئ طبية", number: "112", icon: "user-md", type: "صحة" },
+                { name: "الدرك الملكي", number: "177", icon: "car", type: "أمن" },
+                { name: "الحماية المدنية", number: "160", icon: "hard-hat", type: "إطفاء" },
+                { name: "مركز استعلامات أكليم", number: "0536-123456", icon: "info-circle", type: "معلومات" },
+                { name: "صيدلية ليلية", number: "0536-987600", icon: "pills", type: "صحة" }
+            ],
+            berkan: [
+                { name: "الطوارئ الصحية", number: "15", icon: "ambulance", type: "صحة" },
+                { name: "المطافئ", number: "18", icon: "fire-extinguisher", type: "إطفاء" },
+                { name: "الشرطة", number: "19", icon: "shield-alt", type: "أمن" },
+                { name: "طوارئ طبية", number: "112", icon: "user-md", type: "صحة" },
+                { name: "مستشفى بركان", number: "0536-500500", icon: "hospital", type: "صحة" },
+                { name: "مركز استعلامات بركان", number: "0537-600600", icon: "info-circle", type: "معلومات" }
+            ]
+        };
+
+        // DOM elements
+        const aklimBtn = document.getElementById('aklim-btn');
+        const berkanBtn = document.getElementById('berkan-btn');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const servicesContainer = document.getElementById('services-container');
+        const emergencyContainer = document.querySelector('.emergency-cards');
+        const searchResults = document.getElementById('search-results');
+        const loadingElement = document.getElementById('loading');
+        const emergencyTitle = document.getElementById('emergency-title');
+        const servicesTitle = document.getElementById('services-title');
+        
+        // Stats elements
+        const totalServicesElement = document.getElementById('total-services');
+        const aklimCountElement = document.getElementById('aklim-count');
+        const berkanCountElement = document.getElementById('berkan-count');
+        const emergencyCountElement = document.getElementById('emergency-count');
+        
+        let currentCity = 'aklim';
+        let allServices = [...servicesData.aklim, ...servicesData.berkan];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            setActiveCity('aklim');
+            displayEmergencyNumbers(emergencyData.aklim);
+            displayServices(servicesData.aklim);
+            
+            // Simulate ad loading
+            simulateAdLoading();
+        });
+        
+        // Update stats
+        function updateStats() {
+            const totalServices = servicesData.aklim.length + servicesData.berkan.length;
+            const totalEmergency = emergencyData.aklim.length + emergencyData.berkan.length;
+            
+            totalServicesElement.textContent = totalServices;
+            aklimCountElement.textContent = servicesData.aklim.length;
+            berkanCountElement.textContent = servicesData.berkan.length;
+            emergencyCountElement.textContent = totalEmergency;
+        }
+        
+        // City selector functionality
+        aklimBtn.addEventListener('click', function() {
+            setActiveCity('aklim');
+            displayEmergencyNumbers(emergencyData.aklim);
+            displayServices(servicesData.aklim);
+            searchInput.value = '';
+            searchResults.textContent = '';
+        });
+        
+        berkanBtn.addEventListener('click', function() {
+            setActiveCity('berkan');
+            displayEmergencyNumbers(emergencyData.berkan);
+            displayServices(servicesData.berkan);
+            searchInput.value = '';
+            searchResults.textContent = '';
+        });
+        
+        // Search functionality
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // Function to set active city
+        function setActiveCity(city) {
+            currentCity = city;
+            
+            if (city === 'aklim') {
+                aklimBtn.classList.add('active');
+                berkanBtn.classList.remove('active');
+                emergencyTitle.textContent = 'أرقام الطوارئ في أكليم';
+                servicesTitle.textContent = 'الخدمات المحلية في أكليم';
+            } else {
+                berkanBtn.classList.add('active');
+                aklimBtn.classList.remove('active');
+                emergencyTitle.textContent = 'أرقام الطوارئ في بركان';
+                servicesTitle.textContent = 'الخدمات المحلية في بركان';
+            }
+        }
+        
+        // Function to display emergency numbers
+        function displayEmergencyNumbers(emergencies) {
+            emergencyContainer.innerHTML = '';
+            
+            emergencies.forEach(emergency => {
+                const emergencyCard = document.createElement('div');
+                emergencyCard.className = 'emergency-card';
+                
+                emergencyCard.innerHTML = `
+                    <div class="emergency-icon">
+                        <i class="fas fa-${emergency.icon}"></i>
+                    </div>
+                    <h3>${emergency.name}</h3>
+                    <p class="service-phone">
+                        <i class="fas fa-phone"></i> ${emergency.number}
+                    </p>
+                    <span style="background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;">
+                        ${emergency.type}
+                    </span>
+                `;
+                
+                emergencyContainer.appendChild(emergencyCard);
+            });
+        }
+        
+        // Function to display services
+        function displayServices(services) {
+            loadingElement.style.display = 'block';
+            servicesContainer.innerHTML = '';
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                if (services.length === 0) {
+                    servicesContainer.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                            <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
+                            <h3>لا توجد خدمات</h3>
+                            <p>لم يتم العثور على خدمات تطابق بحثك</p>
+                        </div>
+                    `;
+                } else {
+                    services.forEach(service => {
+                        const serviceCard = document.createElement('div');
+                        serviceCard.className = 'service-card';
+                        
+                        // Generate star rating
+                        let stars = '';
+                        for (let i = 1; i <= 5; i++) {
+                            if (i <= Math.floor(service.rating)) {
+                                stars += '<i class="fas fa-star" style="color: #ffc107;"></i>';
+                            } else if (i === Math.ceil(service.rating) && service.rating % 1 !== 0) {
+                                stars += '<i class="fas fa-star-half-alt" style="color: #ffc107;"></i>';
+                            } else {
+                                stars += '<i class="far fa-star" style="color: #ccc;"></i>';
+                            }
+                        }
+                        
+                        serviceCard.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div class="service-name">${service.name}</div>
+                                ${service.verified ? '<span style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem;"><i class="fas fa-check-circle"></i> موثّق</span>' : ''}
+                            </div>
+                            <div class="service-category" style="color: #777; font-size: 0.9rem; margin-bottom: 8px;">
+                                <i class="fas fa-tag"></i> ${service.category}
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                ${stars}
+                                <span style="color: #666; font-size: 0.9rem; margin-right: 5px;">${service.rating}</span>
+                            </div>
+                            <div class="service-phone">
+                                <i class="fas fa-phone"></i> ${service.phone}
+                            </div>
+                            <button class="call-btn" onclick="callNumber('${service.phone}', '${service.name}')">
+                                <i class="fas fa-phone-alt"></i> اتصال مباشر
+                            </button>
+                        `;
+                        
+                        servicesContainer.appendChild(serviceCard);
+                    });
+                }
+                
+                loadingElement.style.display = 'none';
+                searchResults.textContent = `عرض ${services.length} خدمة`;
+            }, 500); // Simulate loading delay
+        }
+        
+        // Function to perform search
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const currentServices = servicesData[currentCity];
+            
+            if (!searchTerm) {
+                displayServices(currentServices);
+                searchResults.textContent = `عرض ${currentServices.length} خدمة`;
+                return;
+            }
+            
+            // Show loading
+            loadingElement.style.display = 'block';
+            
+            // Simulate search delay
+            setTimeout(() => {
+                const filteredServices = currentServices.filter(service => 
+                    service.name.toLowerCase().includes(searchTerm) || 
+                    service.category.toLowerCase().includes(searchTerm) ||
+                    service.phone.includes(searchTerm)
+                );
+                
+                displayServices(filteredServices);
+                
+                if (filteredServices.length === 0) {
+                    searchResults.innerHTML = `لم يتم العثور على نتائج لـ "<strong>${searchTerm}</strong>"`;
+                } else {
+                    searchResults.innerHTML = `عرض ${filteredServices.length} نتيجة لـ "<strong>${searchTerm}</strong>"`;
+                }
+            }, 300);
+        }
+        
+        // Function to simulate calling
+        function callNumber(phoneNumber, serviceName = '') {
+            // Format phone for tel link
+            const formattedPhone = phoneNumber.replace(/-/g, '');
+            
+            // In a real implementation, this would initiate a phone call
+            // For web demo, we'll show an alert
+            const message = serviceName 
+                ? `جاري الاتصال بـ ${serviceName}\nالرقم: ${phoneNumber}`
+                : `جاري الاتصال بالرقم: ${phoneNumber}`;
+            
+            const userConfirmed = confirm(`${message}\n\nهل تريد الاتصال الآن؟`);
+            
+            if (userConfirmed) {
+                // This would be the actual implementation for mobile:
+                // window.location.href = `tel:${formattedPhone}`;
+                
+                // For demo purposes, show success message
+                alert(`تم بدء الاتصال بـ ${phoneNumber}\n\nملاحظة: في التطبيق الحقيقي على الهاتف، سيتم تحويلك إلى تطبيق الهاتف للاتصال.`);
+                
+                // Track call (in a real app, you would send this to analytics)
+                console.log(`Call made to: ${phoneNumber}, Service: ${serviceName}`);
+            }
+        }
+        
+        // Simulate ad loading
+        function simulateAdLoading() {
+            setTimeout(() => {
+                const adSpaces = document.querySelectorAll('.ad-space');
+                
+                adSpaces.forEach((ad, index) => {
+                    setTimeout(() => {
+                        if (ad.innerHTML.includes('fas fa-ad') || ad.innerHTML.includes('fas fa-bullhorn')) {
+                            ad.innerHTML = `
+                                <h3>إعلان ممول</h3>
+                                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; margin: 10px 0; padding: 10px;">
+                                    <p style="color: #666; font-weight: bold;">إعلان Google AdSense</p>
+                                    <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">ذو صلة بالخدمات المحلية</p>
+                                </div>
+                                <p style="color: #555; font-size: 0.9rem;">إعلان يعرض هنا</p>
+                                <span class="ad-label">إعلان نشط</span>
+                            `;
+                            
+                            // Add click event to ads for demo
+                            ad.style.cursor = 'pointer';
+                            ad.onclick = function() {
+                                alert('نقرة على الإعلان - في التطبيق الحقيقي سيتم توجيهك لصفحة الإعلان');
+                            };
+                        }
+                    }, index * 500); // Stagger ad loading
+                });
+            }, 1000);
+        }
+        
+        // Add service form link (demo)
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const linkText = this.textContent || this.querySelector('span')?.textContent;
+                
+                if (linkText && linkText.includes('إضافة خدمة')) {
+                    const serviceName = prompt('أدخل اسم الخدمة الجديدة:');
+                    if (serviceName) {
+                        alert(`شكراً لاقتراحك! سيقوم فريقنا بمراجعة خدمة "${serviceName}" وإضافتها قريباً.`);
+                    }
+                } else if (linkText && linkText.includes('اتصل بنا')) {
+                    alert('للاتصال بنا: البريد الإلكتروني: info@aklimberkandirectory.com\nالهاتف: 0536-123456');
+                } else if (linkText && linkText.includes('سياسة الخصوصية')) {
+                    alert('سياسة الخصوصية: نحن نحترم خصوصيتك. بيانات الهواتف مأخوذة من مصادر عامة.');
+                } else {
+                    alert('هذا الرابط تحت التطوير - سيتم تفعيله قريباً');
+                }
+            });
+        });
+    </script>
+</body>
+    </html>
