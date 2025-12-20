@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل أكليم وبركان Connect</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        :root { --primary: #007bff; --accent: #28a745; --dark: #343a40; --light: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--light); margin: 0; padding-bottom: 80px; }
+        header { background: var(--primary); color: white; padding: 25px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 0 0 20px 20px; }
+        .search-box { padding: 20px; text-align: center; }
+        input { padding: 15px; border: 1px solid #ddd; border-radius: 30px; width: 90%; max-width: 500px; outline: none; }
+        .ad-space { background: #fff; border: 1px dashed #bbb; margin: 10px auto; padding: 10px; width: 90%; text-align: center; color: #888; font-size: 0.8rem; border-radius: 8px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; padding: 15px; }
+        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-right: 6px solid var(--primary); position: relative; }
+        .card.aklim { border-right-color: #e67e22; }
+        .city-tag { position: absolute; top: 15px; left: 15px; font-size: 0.7rem; background: #eee; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
+        .btn-call { display: block; background: var(--accent); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px; }
+        .add-btn { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.4); z-index: 1000; }
+    </style>
+</head>
+<body>
+<header>
+    <h1 style="margin:0;">دليل أكليم وبركان</h1>
+    <p style="margin:5px 0 0 0;">كل الخدمات وأرقام الهواتف في مكان واحد</p>
+</header>
+<div class="ad-space">مساحة إعلانية (Google Ads)</div>
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="ابحث عن: كراء سيارات، صيدلية، سباك..." onkeyup="filterServices()">
+</div>
+<div id="servicesGrid" class="grid"></div>
+<a href="add-service.html" class="add-btn">+</a>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyClJ6bFMOF_NZgo8fam_sUrj7WrigWGnzM",
+        authDomain: "hani-home-app.firebaseapp.com",
+        databaseURL: "https://hani-home-app-default-rtdb.firebaseio.com",
+        projectId: "hani-home-app",
+        storageBucket: "hani-home-app.firebasestorage.app",
+        messagingSenderId: "656083114132",
+        appId: "1:656083114132:web:f84c97028d91caa5d5bc81"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    db.ref('services').on('value', (snapshot) => {
+        const grid = document.getElementById('servicesGrid');
+        grid.innerHTML = '';
+        snapshot.forEach((child) => {
+            const data = child.val();
+            const cityClass = data.city === 'أكليم' ? 'aklim' : '';
+            grid.innerHTML += `
+                <div class="card ${cityClass}">
+                    <span class="city-tag">${data.city}</span>
+                    <h3 style="margin:0;">${data.name}</h3>
+                    <p style="color:var(--primary); font-weight:bold; margin:5px 0;">${data.category}</p>
+                    <p style="font-size:0.9rem; color:#555;">${data.desc || ''}</p>
+                    <a href="tel:${data.phone}" class="btn-call">اتصال مباشر</a>
+                </div>`;
+        });
+    });
+    function filterServices() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('card');
+        for (let i = 0; i < cards.length; i++) {
+            let text = cards[i].innerText.toLowerCase();
+            cards[i].style.display = text.includes(input) ? "block" : "none";
+        }
+    }
+</script>
+</body>
+</html>
