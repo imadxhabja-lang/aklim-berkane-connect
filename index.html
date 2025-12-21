@@ -141,5 +141,30 @@
 
     <!-- الروابط لملفي JavaScript -->
     <script src="script.js"></script>
-</body>
+<!-- أضف هذه السكريبتات قبل script.js -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+<script>
+  // التكوين الخاص بمشروعك Firebase - استبدل القيم بأرقام مشروعك
+  const firebaseConfig = {
+    apiKey: "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    authDomain: "aklim-berkane-connect.firebaseapp.com",
+    projectId: "aklim-berkane-connect",
+    storageBucket: "aklim-berkane-connect.appspot.com",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abcdef1234567890abcdef"
+  };
+
+  // تهيئة Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  // تهيئة الخدمات
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+</script>
+
+<!-- ثم رابط ملف script.js الخاص بك -->
+<script src="script.js"></script></body>
                     </html>
