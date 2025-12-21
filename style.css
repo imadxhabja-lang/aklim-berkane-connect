@@ -1,3 +1,4 @@
+/* أساسيات الصفحة */
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +10,7 @@ body {
     background-color: #f8f9fa;
     color: #333;
     line-height: 1.6;
+    padding-bottom: 20px;
 }
 
 .container {
@@ -24,11 +26,16 @@ header {
     color: white;
     padding: 25px 0;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    font-size: 2.2rem;
+    font-size: 2.3rem;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
 }
 
 header .tagline {
@@ -39,10 +46,11 @@ header .tagline {
 /* الإحصائيات */
 .stats {
     background-color: white;
-    padding: 20px 0;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 25px 0;
+    margin: 25px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    max-width: 95%;
 }
 
 .stats .container {
@@ -54,56 +62,72 @@ header .tagline {
 
 .stat-box {
     text-align: center;
-    padding: 15px;
-    min-width: 150px;
+    padding: 20px;
+    min-width: 180px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    transition: transform 0.3s;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
 }
 
 .stat-box h3 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #2c3e50;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .stat-box p {
     color: #666;
+    font-size: 1.1rem;
 }
 
-/* الأقسام */
+/* الأقسام الرئيسية */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
 .services-section, .form-section, .cars-section, .emergency-section {
     background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    margin-bottom: 25px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-h2 {
+.services-section h2, .form-section h2, .cars-section h2, .emergency-section h2 {
     color: #2c3e50;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    font-size: 1.8rem;
 }
 
-.section-subtitle {
+.section-subtitle, .form-help {
     color: #666;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 1.05rem;
 }
 
-/* الفلترة */
+/* أزرار الفلترة */
 .filter-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 30px;
 }
 
 .filter-btn {
-    padding: 8px 16px;
+    padding: 10px 20px;
     background-color: #f1f3f4;
     border: none;
-    border-radius: 20px;
+    border-radius: 30px;
     cursor: pointer;
+    font-weight: 600;
     color: #555;
     transition: all 0.3s;
 }
@@ -117,83 +141,121 @@ h2 {
     color: white;
 }
 
-/* الخدمات */
+/* شبكة الخدمات */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 25px;
     margin-top: 20px;
 }
 
 .service-card {
     border: 1px solid #e1e5e9;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 22px;
     background-color: white;
     transition: all 0.3s;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: #3498db;
 }
 
 .service-type {
     display: inline-block;
     background-color: #ecf0f1;
     color: #2c3e50;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .service-card h3 {
     color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.service-location {
+    color: #7f8c8d;
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .service-phone {
     color: #27ae60;
     font-weight: bold;
-    margin: 10px 0;
+    font-size: 1.2rem;
+    margin: 12px 0;
+    direction: ltr;
+    text-align: right;
 }
 
-/* النماذج */
+.service-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+/* قسمي الإدارة */
+.management-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+    gap: 20px;
     margin-bottom: 15px;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 22px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: 600;
+    color: #2c3e50;
 }
 
 .form-group input, .form-group select, .form-group textarea {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: #3498db;
+    outline: none;
 }
 
 .submit-btn, .delete-btn {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .submit-btn {
@@ -214,76 +276,232 @@ h2 {
     background-color: #c0392b;
 }
 
-/* السيارات */
+/* قسم السيارات */
+.car-rental-form {
+    border: 2px dashed #3498db;
+    background-color: #f8fdff;
+}
+
 .cars-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 25px;
     margin-top: 20px;
 }
 
 .car-card {
     border: 1px solid #e1e5e9;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 22px;
     background-color: white;
+    transition: all 0.3s;
+}
+
+.car-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: #f39c12;
+}
+
+.car-type {
+    display: inline-block;
+    background-color: #e8f4fc;
+    color: #2980b9;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.car-card h3 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
 }
 
 .car-price {
     color: #27ae60;
     font-weight: bold;
-    font-size: 1.3rem;
-    margin: 10px 0;
+    font-size: 1.5rem;
+    margin: 12px 0;
 }
 
-/* الطوارئ */
+.car-price span {
+    font-size: 1rem;
+    color: #666;
+}
+
+.car-details {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+    color: #666;
+}
+
+/* قسم التواصل */
+.contact-form-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.contact-method {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-right: 5px solid #3498db;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.contact-method h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.whatsapp-contact-btn {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+}
+
+.whatsapp-contact-btn:hover {
+    background-color: #1da851;
+}
+
+#form-feedback {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* أرقام الطوارئ */
 .emergency-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
 }
 
 .emergency-card {
     text-align: center;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 12px;
     background-color: #f8f9fa;
+    transition: transform 0.3s;
+}
+
+.emergency-card:hover {
+    transform: scale(1.05);
 }
 
 .emergency-icon {
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
     border-radius: 50%;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: bold;
     color: white;
-    margin: 0 auto 10px;
+    margin: 0 auto 15px;
 }
 
-.emergency-icon.medical { background-color: #e74c3c; }
-.emergency-icon.fire { background-color: #f39c12; }
-.emergency-icon.police { background-color: #3498db; }
+.emergency-icon.medical {
+    background-color: #e74c3c;
+}
+
+.emergency-icon.fire {
+    background-color: #f39c12;
+}
+
+.emergency-icon.police {
+    background-color: #3498db;
+}
+
+.emergency-card h3 {
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
 
 /* الفوتر */
 footer {
     background-color: #2c3e50;
     color: white;
     text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
+    padding: 25px 0;
+    margin-top: 50px;
+    border-radius: 12px 12px 0 0;
 }
 
-footer a {
+.footer-contact {
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+.footer-contact a {
     color: #3498db;
     text-decoration: none;
 }
 
+.footer-contact a:hover {
+    text-decoration: underline;
+}
+
+/* رسائل التحميل والأخطاء */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    grid-column: 1 / -1;
+    font-size: 1.1rem;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+    grid-column: 1 / -1;
+    font-size: 1.1rem;
+}
+
+.error {
+    text-align: center;
+    padding: 40px;
+    color: #e74c3c;
+    grid-column: 1 / -1;
+    font-size: 1.1rem;
+}
+
 /* تصميم متجاوب */
 @media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
     .stats .container {
         flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat-box {
+        min-width: 90%;
+    }
+    
+    .management-sections {
+        grid-template-columns: 1fr;
     }
     
     .services-grid, .cars-grid {
@@ -293,4 +511,13 @@ footer a {
     .form-row {
         grid-template-columns: 1fr;
     }
-                                 }
+    
+    .emergency-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .whatsapp-contact-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    }
