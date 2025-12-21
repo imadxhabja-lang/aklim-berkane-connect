@@ -20,11 +20,11 @@
     <section class="stats">
         <div class="container">
             <div class="stat-box">
-                <h3 id="total-services">5</h3>
+                <h3 id="total-services">0</h3>
                 <p>خدمة متاحة</p>
             </div>
             <div class="stat-box">
-                <h3 id="total-cars">1</h3>
+                <h3 id="total-cars">0</h3>
                 <p>سيارات للكراء</p>
             </div>
             <div class="stat-box">
@@ -52,7 +52,7 @@
 
             <!-- قائمة الخدمات -->
             <div class="services-grid" id="services-container">
-                <!-- ستحمل من Firebase -->
+                <div class="loading">جاري تحميل الخدمات...</div>
             </div>
         </section>
 
@@ -92,19 +92,23 @@
                         <label for="service-description">وصف قصير</label>
                         <textarea id="service-description" placeholder="وصف الخدمة..."></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">إضافة الخدمة</button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-plus-circle"></i> إضافة الخدمة
+                    </button>
                 </form>
             </section>
 
             <!-- حذف خدمة -->
             <section class="form-section">
                 <h2><i class="fas fa-trash-alt"></i> حذف خدمة</h2>
-                <p>أدخل رقم الهاتف لحذف الخدمة</p>
+                <p class="form-help">أدخل رقم الهاتف المرتبط بالخدمة</p>
                 <form id="delete-service-form">
                     <div class="form-group">
                         <input type="tel" id="delete-phone" placeholder="أدخل رقم الهاتف" required>
                     </div>
-                    <button type="submit" class="delete-btn">حذف الخدمة</button>
+                    <button type="submit" class="delete-btn">
+                        <i class="fas fa-trash-alt"></i> حذف الخدمة
+                    </button>
                 </form>
             </section>
         </div>
@@ -131,18 +135,19 @@
                             <option value="">اختر النوع</option>
                             <option value="sedan">سيدان</option>
                             <option value="suv">دفع رباعي</option>
-                            <option value="van">فان</option>
+                            <option value="van">فان / عائلية</option>
+                            <option value="luxury">فخمة</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="car-price">السعر اليومي *</label>
+                        <label for="car-price">السعر اليومي (درهم) *</label>
                         <input type="number" id="car-price" placeholder="مثال: 300" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="car-location">المكان *</label>
+                        <label for="car-location">مكان التوفر *</label>
                         <select id="car-location" required>
                             <option value="">اختر المدينة</option>
                             <option value="أكليم">أكليم</option>
@@ -155,15 +160,59 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="submit-btn">إضافة السيارة</button>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-car"></i> إضافة السيارة للإيجار
+                </button>
             </form>
         </section>
 
         <!-- عرض السيارات -->
         <section class="cars-section">
-            <h2><i class="fas fa-car-side"></i> السيارات المتاحة</h2>
+            <h2><i class="fas fa-car-side"></i> السيارات المتاحة للكراء</h2>
             <div class="cars-grid" id="cars-container">
-                <!-- ستحمل من Firebase -->
+                <div class="loading">جاري تحميل السيارات...</div>
+            </div>
+        </section>
+
+        <!-- قسم التواصل -->
+        <section class="form-section contact-form-section">
+            <h2><i class="fas fa-headset"></i> تواصل معنا</h2>
+            
+            <!-- نموذج البريد الإلكتروني -->
+            <div class="contact-method">
+                <h3><i class="fas fa-envelope"></i> أرسل رسالة</h3>
+                <form id="direct-contact-form">
+                    <div class="form-group">
+                        <input type="text" id="contact-name" placeholder="اسمك" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="contact-email" placeholder="بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="contact-message" rows="4" placeholder="اكتب رسالتك هنا..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                    </button>
+                </form>
+                <p id="form-feedback"></p>
+            </div>
+
+            <!-- زر واتساب -->
+            <div class="contact-method">
+                <h3><i class="fab fa-whatsapp"></i> تواصل مباشر عبر واتساب</h3>
+                <p>يمكنك مراسلتنا مباشرة على الواتساب للاستفسار السريع.</p>
+                <a href="https://wa.me/212704487952?text=مرحباً، أود الاستفسار عن دليل أكليم وبركان للخدمات"
+                   target="_blank" class="whatsapp-contact-btn">
+                    <i class="fab fa-whatsapp"></i> اضغط هنا للدردشة على واتساب
+                </a>
+            </div>
+            
+            <!-- معلومات الاتصال -->
+            <div class="contact-method">
+                <h3><i class="fas fa-info-circle"></i> معلومات الاتصال</h3>
+                <p><i class="fas fa-envelope"></i> البريد الإلكتروني: <a href="mailto:contact.berkaneconnect@gmail.com">contact.berkaneconnect@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> واتساب: <strong>0704487952</strong></p>
             </div>
         </section>
 
@@ -190,30 +239,35 @@
     <!-- الفوتر -->
     <footer>
         <div class="container">
-            <p>© 2025 دليل أكليم وبركان</p>
-            <p>للتواصل: <a href="mailto:aklim.berkane.connect@gmail.com">aklim.berkane.connect@gmail.com</a></p>
+            <p>© 2025 دليل أكليم وبركان - اتصال الخدمات | جميع الحقوق محفوظة</p>
+            <p class="footer-contact">
+                <a href="mailto:contact.berkaneconnect@gmail.com">contact.berkaneconnect@gmail.com</a> | 
+                واتساب: 0704487952
+            </p>
         </div>
     </footer>
 
-    <!-- السكريبتات -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script>
-        // Firebase配置 - استبدل بمعلومات مشروعك
+        // ⚠️ ⚠️ ⚠️ استبدل هذا التكوين بمعلومات مشروعك في Firebase ⚠️ ⚠️ ⚠️
         const firebaseConfig = {
-            apiKey: "AIzaSyA8UEXAMPLE1234567890",
+            apiKey: "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             authDomain: "aklim-berkane-connect.firebaseapp.com",
             projectId: "aklim-berkane-connect",
             storageBucket: "aklim-berkane-connect.appspot.com",
             messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abc123def456"
+            appId: "1:123456789012:web:abcdef1234567890abcdef"
         };
         
+        // تهيئة Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
     </script>
     
+    <!-- الكود الرئيسي -->
     <script src="script.js"></script>
 </body>
-                    </html>
+    </html>
