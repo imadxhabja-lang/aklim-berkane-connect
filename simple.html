@@ -1,0 +1,91 @@
+<!-- ========== نموذج إضافة خدمة (بدون Firebase) ========== -->
+<div class="card" style="text-align:center; background:#e8f4fc;">
+    <h2>➕ أضف خدمتك مجاناً</h2>
+    
+    <div id="simpleForm">
+        <div style="text-align:right; margin:20px 0;">
+            <p><strong>1. اكتب بيانات خدمتك:</strong></p>
+            
+            <input type="text" id="serviceName" placeholder="اسم الخدمة (مثال: كهربائي)" 
+                   style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
+            
+            <select id="serviceType" style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
+                <option value="">نوع الخدمة</option>
+                <option value="كهربائي">كهربائي</option>
+                <option value="سباك">سباك</option>
+                <option value="توصيل">توصيل طعام</option>
+                <option value="طبيب">طبيب</option>
+                <option value="كراء سيارات">كراء سيارات</option>
+            </select>
+            
+            <input type="tel" id="servicePhone" placeholder="رقم الهاتف (مثال: 0605126821)" 
+                   style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
+            
+            <select id="serviceCity" style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
+                <option value="">المدينة</option>
+                <option value="أكليم">أكليم</option>
+                <option value="بركان">بركان</option>
+            </select>
+            
+            <textarea id="serviceDesc" placeholder="وصف قصير..." rows="3" 
+                      style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;"></textarea>
+            
+            <p><strong>2. اضغط لإنشاء رسالة واتساب:</strong></p>
+            
+            <button onclick="createWhatsAppMessage()" class="btn" style="background:#25d366;">
+                📲 أنشئ رسالة واتساب جاهزة
+            </button>
+            
+            <div id="whatsappResult" style="margin-top:15px; display:none;">
+                <p>✅ تم إنشاء الرسالة!</p>
+                <p>اضغط على الزر الأحمر لفتح واتساب:</p>
+                <a id="whatsappLink" class="btn" style="background:#dc3545;">
+                    📤 افتح واتساب للإرسال
+                </a>
+                <p style="margin-top:10px; color:#666; font-size:0.9em;">
+                    سنضيف خدمتك خلال 24 ساعة
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// دالة إنشاء رسالة واتساب
+function createWhatsAppMessage() {
+    const name = document.getElementById('serviceName').value;
+    const type = document.getElementById('serviceType').value;
+    const phone = document.getElementById('servicePhone').value;
+    const city = document.getElementById('serviceCity').value;
+    const desc = document.getElementById('serviceDesc').value;
+    
+    if (!name || !type || !phone || !city) {
+        alert('⚠️ الرجاء ملء جميع الحقول المطلوبة');
+        return;
+    }
+    
+    // إنشاء نص الرسالة
+    const message = `طلب إضافة خدمة جديدة:%0A%0A✅ اسم الخدمة: ${name}%0A✅ النوع: ${type}%0A✅ رقم الهاتف: ${phone}%0A✅ المدينة: ${city}%0A✅ الوصف: ${desc || 'لا يوجد وصف'}`;
+    
+    // إنشاء رابط واتساب
+    const whatsappUrl = `https://wa.me/212704487952?text=${message}`;
+    
+    // عرض نتيجة
+    document.getElementById('whatsappLink').href = whatsappUrl;
+    document.getElementById('whatsappResult').style.display = 'block';
+    
+    // تمرير للأعلى لرؤية النتيجة
+    document.getElementById('whatsappResult').scrollIntoView({behavior: 'smooth'});
+    
+    alert('📱 تم إنشاء الرسالة! اضغط على الزر الأحمر لفتح واتساب.');
+}
+
+// إخفاء الرسالة بعد 30 ثانية (اختياري)
+setTimeout(() => {
+    const resultDiv = document.getElementById('whatsappResult');
+    if (resultDiv) {
+        resultDiv.style.display = 'none';
+    }
+}, 30000);
+</script>
+<!-- ========== نهاية النموذج الجديد ========== -->
