@@ -1,74 +1,35 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل أكليم وبركان - تجربة سريعة</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui; }
-        body { background: #f0f2f5; padding: 15px; }
-        .header { background: #2c3e50; color: white; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
-        .header h1 { font-size: 1.8rem; margin-bottom: 10px; }
-        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .service-name { color: #2c3e50; font-weight: bold; margin-bottom: 5px; font-size: 1.2rem; }
-        .phone { color: #27ae60; font-weight: bold; margin: 10px 0; }
-        .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 10px; background: #2ecc71; color: white; font-size: 1.1rem; margin-top: 10px; text-align: center; text-decoration: none; }
-        .btn-whatsapp { background: #25d366; }
-        .emergency { display: flex; justify-content: space-around; margin-top: 20px; }
-        .emergency div { background: #e74c3c; color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>📱 دليل أكليم وبركان</h1>
-        <p>التجربة السهلة على هاتفك</p>
-    </div>
-    
-    <div class="card">
-        <h2>🛵 توصيل طعام سريع</h2>
-        <div class="service-name">أكليم بركان فاست فود</div>
-        <div class="phone">📞 0624-112233</div>
-        <button class="btn" onclick="window.location.href='tel:0624112233'">اتصال مباشر</button>
-    </div>
-    
-    <div class="card">
-        <h2>🔧 كهربائي منازل</h2>
-        <div class="service-name">محمد الكهربائي</div>
-        <div class="phone">📞 0623-456789</div>
-        <button class="btn" onclick="window.location.href='tel:0623456789'">اتصال مباشر</button>
-    </div>
-    
-    <div class="card">
-        <h2>🚗 كراء سيارة</h2>
-        <div class="service-name">تويوتا كورولا - 250 درهم/يوم</div>
-        <div class="phone">📞 0620-445566</div>
-        <button class="btn" onclick="window.location.href='tel:0620445566'">اتصال لحجز</button>
-    </div>
-    
-    <div class="card">
-        <h2>📞 تواصل مع المطور</h2>
-        <a href="https://wa.me/212704487952?text=مرحباً، جربت الموقع وحاب نتواصل" 
-           class="btn btn-whatsapp" target="_blank">
-            💬 واتساب: 0704487952
-        </a>
-        <p style="text-align:center; margin-top:10px; color:#666;">
-            contact.berkaneconnect@gmail.com
-        </p>
-    </div>
-    
-    <div class="card">
-        <h2>🚨 طوارئ</h2>
-        <div class="emergency">
-            <div>15</div>
-            <div style="background:#f39c12;">18</div>
-            <div style="background:#3498db;">19</div>
-        </div>
-    </div>
-    
-    <script>
-    // كود بسيط
-    console.log("✅ الموقع شغال!");
-    alert("مرحباً! جرب الاتصال بأي رقم أو واتساب.");
-    </script>
-</body>
-          </html>
+<!-- بدل الخدمات الحالية بـ: -->
+<div class="card">
+    <h2>🍔 [اسم مطعم محلي مشهور]</h2>
+    <div class="service-name">توصيل وجبات من [اسم المطعم]</div>
+    <div class="phone">📞 [ضع الرقم الحقيقي هنا]</div>
+    <button class="btn" onclick="window.location.href='tel:[نفس الرقم بدون شرطات]'">اطلب الآن</button>
+</div>
+
+<div class="card">
+    <h2>🔌 [اسم كهربائي معروف في المنطقة]</h2>
+    <div class="service-name">كهربائي منازل - إصلاح جميع الأعطال</div>
+    <div class="phone">📞 [رقم الكهربائي]</div>
+    <button class="btn" onclick="window.location.href='tel:[نفس الرقم]'">اتصال عاجل</button>
+</div>
+
+<div class="card">
+    <h2>🚗 [نوع سيارة متاحة للإيجار]</h2>
+    <div class="service-name">كراء سيارات - [السعر] درهم/يوم</div>
+    <div class="phone">📞 [رقم صاحب السيارة]</div>
+    <button class="btn" onclick="window.location.href='tel:[نفس الرقم]'">حجز سيارة</button>
+</div>
+
+<div class="card">
+    <h2>👨‍⚕️ [اسم طبيب أو عيادة]</h2>
+    <div class="service-name">عيادة [التخصص] - استشارات طبية</div>
+    <div class="phone">📞 [رقم العيادة]</div>
+    <button class="btn" onclick="window.location.href='tel:[نفس الرقم]'">موعد طبي</button>
+</div>
+
+<div class="card">
+    <h2>🔧 [اسم سباك أو ورشة]</h2>
+    <div class="service-name">سباكة منازل - حل جميع المشاكل</div>
+    <div class="phone">📞 [رقم السباك]</div>
+    <button class="btn" onclick="window.location.href='tel:[نفس الرقم]'">طلب خدمة</button>
+</div>
