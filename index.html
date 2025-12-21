@@ -241,8 +241,51 @@
             display: inline-block;
         }
         
-        /* نموذج إضافة خدمة */
-        .form-container {
+        /* صفحة كراء السيارات */
+        .car-rental-header {
+            background: linear-gradient(135deg, #1e90ff, #00bfff);
+            color: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+        
+        .car-filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .car-details-card {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+        
+        .add-car-btn {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        .add-car-btn:hover {
+            background: linear-gradient(135deg, #388E3C, #4CAF50);
+        }
+        
+        /* نموذج إضافة سيارة */
+        .car-form-container {
             background: white;
             border-radius: var(--radius);
             padding: 30px;
@@ -450,6 +493,52 @@
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-3px);
         }
+        
+        /* صفحة إضافة سيارة */
+        .add-car-header {
+            background: linear-gradient(135deg, #1e90ff, #00bfff);
+            color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .car-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .car-type-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .car-type-option:hover, .car-type-option.selected {
+            border-color: #1e90ff;
+            background: #e3f2fd;
+        }
+        
+        .car-type-icon {
+            font-size: 2.5rem;
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+        
+        .price-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+            border-left: 4px solid #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -475,6 +564,9 @@
                 </button>
                 <button class="nav-tab" onclick="showTab('car-rental')">
                     <i class="fas fa-car"></i> كراء السيارات
+                </button>
+                <button class="nav-tab" onclick="showTab('add-car')">
+                    <i class="fas fa-plus-circle"></i> إضافة سيارة
                 </button>
                 <button class="nav-tab" onclick="showTab('delivery')">
                     <i class="fas fa-truck"></i> التوصيل
@@ -634,6 +726,12 @@
                 <div class="services-grid" id="featured-cars">
                     <!-- سيارات للكراء تظهر هنا -->
                 </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="add-car-btn" onclick="showTab('add-car')">
+                        <i class="fas fa-plus-circle"></i> أضف سيارتك للكراء
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -683,38 +781,51 @@
         
         <!-- تبويب كراء السيارات -->
         <div id="car-rental-tab" class="tab-content">
-            <div style="background: linear-gradient(135deg, #1e90ff, #00bfff); color: white; padding: 25px; border-radius: var(--radius); margin-bottom: 20px;">
+            <div class="car-rental-header">
                 <h2><i class="fas fa-car"></i> كراء السيارات في أكليم وبركان</h2>
                 <p style="margin-top: 10px;">ابحث عن سيارة للإيجار اليومي أو الشهري بأفضل الأسعار</p>
             </div>
             
             <!-- إعلان خاص بكراء السيارات -->
-            <div class="content-ad" style="background: linear-gradient(135deg, #f8f9fa, #e0f7fa);">
-                <h3 style="color: #1e90ff;"><i class="fas fa-car"></i> أضف سيارتك للكراء</h3>
-                <p>اجعل سيارتك مصدر دخل إضافي</p>
-                <button onclick="showTab('add-service')" style="background: #1e90ff; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); margin-top: 10px; cursor: pointer;">
-                    <i class="fas fa-plus"></i> أضف سيارتك
+            <div class="car-details-card">
+                <h3 style="color: #1e90ff; margin-bottom: 15px;"><i class="fas fa-car"></i> أضف سيارتك للكراء</h3>
+                <p style="margin-bottom: 15px;">اجعل سيارتك مصدر دخل إضافي. أضف سيارتك الآن واجذب عملاء محليين.</p>
+                <button onclick="showTab('add-car')" class="add-car-btn">
+                    <i class="fas fa-plus-circle"></i> إضافة سيارة جديدة
                 </button>
             </div>
             
             <!-- تصفية سيارات -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0;">
+            <div class="car-filter-section">
                 <h3 style="margin-bottom: 15px;"><i class="fas fa-filter"></i> تصفية السيارات</h3>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <select id="car-type-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius);">
+                    <select id="car-type-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
                         <option value="">كل الأنواع</option>
                         <option value="سيارة عائلية">سيارة عائلية</option>
                         <option value="سيارة دفع رباعي">سيارة دفع رباعي</option>
                         <option value="سيارة صغيرة">سيارة صغيرة</option>
                         <option value="فان">فان</option>
+                        <option value="سيارة فخمة">سيارة فخمة</option>
+                        <option value="سيارة اقتصادية">سيارة اقتصادية</option>
                     </select>
-                    <select id="car-city-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius);">
+                    <select id="car-city-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
                         <option value="">كل المدن</option>
                         <option value="أكليم">أكليم</option>
                         <option value="بركان">بركان</option>
                     </select>
+                    <select id="car-price-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
+                        <option value="">كل الأسعار</option>
+                        <option value="100">حتى 100 درهم</option>
+                        <option value="200">حتى 200 درهم</option>
+                        <option value="300">حتى 300 درهم</option>
+                        <option value="500">حتى 500 درهم</option>
+                        <option value="1000">أكثر من 500 درهم</option>
+                    </select>
                     <button onclick="filterCars()" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
                         تطبيق التصفية
+                    </button>
+                    <button onclick="resetCarFilter()" style="background: #f0f0f0; color: #333; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
+                        إعادة التعيين
                     </button>
                 </div>
             </div>
@@ -724,13 +835,197 @@
             </div>
             
             <!-- معلومات إضافية -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px;">
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px; box-shadow: var(--shadow);">
                 <h3><i class="fas fa-info-circle"></i> معلومات مهمة عن كراء السيارات</h3>
                 <ul style="margin-top: 10px; padding-right: 20px;">
-                    <li style="margin-bottom: 8px;">تأكد من وجود رخصة القيادة</li>
-                    <li style="margin-bottom: 8px;">اطلب عقد كراء واضح</li>
-                    <li style="margin-bottom: 8px;">افحص السيارة قبل الاستئجار</li>
-                    <li style="margin-bottom: 8px;">تأكد من وجود تأمين على السيارة</li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                        <span>تأكد من وجود رخصة القيادة سارية المفعول</span>
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                        <span>اطلب عقد كراء واضح يحدد الشروط والأسعار</span>
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                        <span>افحص السيارة بدقة قبل الاستئجار والتقط صوراً للعربون</span>
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                        <span>تأكد من وجود تأمين ساري على السيارة</span>
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                        <span>تأكد من حالة الإطارات والفرامل والمحرك</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- تبويب إضافة سيارة جديدة -->
+        <div id="add-car-tab" class="tab-content">
+            <div class="add-car-header">
+                <h2><i class="fas fa-car"></i> إضافة سيارة للكراء</h2>
+                <p style="margin-top: 10px; opacity: 0.9;">أضف سيارتك الآن واجذب عملاء محليين</p>
+            </div>
+            
+            <div class="car-form-container">
+                <form id="car-form">
+                    <h3 style="margin-bottom: 20px; color: var(--primary-color); text-align: center;">
+                        <i class="fas fa-car"></i> معلومات السيارة
+                    </h3>
+                    
+                    <!-- نوع السيارة -->
+                    <div class="form-group">
+                        <label class="form-label">نوع السيارة *</label>
+                        <div class="car-type-grid">
+                            <div class="car-type-option" onclick="selectCarType('سيارة عائلية')">
+                                <i class="fas fa-car car-type-icon"></i>
+                                <h4>سيارة عائلية</h4>
+                                <p>مناسبة للعائلات</p>
+                            </div>
+                            <div class="car-type-option" onclick="selectCarType('سيارة دفع رباعي')">
+                                <i class="fas fa-truck car-type-icon"></i>
+                                <h4>دفع رباعي</h4>
+                                <p>طرق وعرة</p>
+                            </div>
+                            <div class="car-type-option" onclick="selectCarType('سيارة صغيرة')">
+                                <i class="fas fa-car-side car-type-icon"></i>
+                                <h4>سيارة صغيرة</h4>
+                                <p>اقتصادية</p>
+                            </div>
+                            <div class="car-type-option" onclick="selectCarType('فان')">
+                                <i class="fas fa-shuttle-van car-type-icon"></i>
+                                <h4>فان</h4>
+                                <p>نقل وأغراض تجارية</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="carType" required>
+                    </div>
+                    
+                    <!-- معلومات أساسية -->
+                    <div class="form-group">
+                        <label class="form-label">اسم عرض الكراء *</label>
+                        <input type="text" class="form-input" id="carName" placeholder="مثال: كراء سيارة دفع رباعي 2023" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">طراز السيارة *</label>
+                        <input type="text" class="form-input" id="carModel" placeholder="مثال: تويوتا كورولا 2023" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">سنة الصنع</label>
+                        <input type="number" class="form-input" id="carYear" placeholder="مثال: 2023" min="2000" max="2024">
+                    </div>
+                    
+                    <!-- الأسعار -->
+                    <div class="form-group">
+                        <label class="form-label">سعر الكراء اليومي (درهم) *</label>
+                        <input type="number" class="form-input" id="carPrice" placeholder="مثال: 200" required min="50" max="5000">
+                    </div>
+                    
+                    <div class="price-preview">
+                        <h4><i class="fas fa-calculator"></i> معاينة الأسعار</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                            <div style="text-align: center; padding: 10px; background: white; border-radius: var(--radius);">
+                                <p style="color: #666; font-size: 0.9rem;">يومي</p>
+                                <p style="font-weight: bold; color: #1e90ff;" id="daily-price-preview">-</p>
+                            </div>
+                            <div style="text-align: center; padding: 10px; background: white; border-radius: var(--radius);">
+                                <p style="color: #666; font-size: 0.9rem;">أسبوعي</p>
+                                <p style="font-weight: bold; color: #1e90ff;" id="weekly-price-preview">-</p>
+                            </div>
+                            <div style="text-align: center; padding: 10px; background: white; border-radius: var(--radius);">
+                                <p style="color: #666; font-size: 0.9rem;">شهري</p>
+                                <p style="font-weight: bold; color: #1e90ff;" id="monthly-price-preview">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- معلومات المالك -->
+                    <div class="form-group">
+                        <label class="form-label">اسم المالك *</label>
+                        <input type="text" class="form-input" id="ownerName" placeholder="أدخل اسمك الكامل" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف *</label>
+                        <input type="tel" class="form-input" id="carPhone" placeholder="مثال: 0612345678" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">المدينة *</label>
+                        <select class="form-select" id="carCity" required>
+                            <option value="">اختر المدينة</option>
+                            <option value="أكليم">أكليم</option>
+                            <option value="بركان">بركان</option>
+                        </select>
+                    </div>
+                    
+                    <!-- تفاصيل إضافية -->
+                    <div class="form-group">
+                        <label class="form-label">تفاصيل السيارة</label>
+                        <textarea class="form-textarea" id="carDetails" placeholder="صف سيارتك: اللون، الحالة، المميزات، عدد المقاعد..." rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">متطلبات الكراء</label>
+                        <textarea class="form-textarea" id="rentalRequirements" placeholder="متطلبات الاستئجار: رخصة، عربون، مدة..." rows="3"></textarea>
+                    </div>
+                    
+                    <!-- مزايا إضافية -->
+                    <div class="form-group">
+                        <label class="form-label">المزايا المتاحة</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="feature-aircon" value="مكيف">
+                                <i class="fas fa-snowflake" style="color: #1e90ff;"></i> مكيف
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="feature-gps" value="ملاحة">
+                                <i class="fas fa-map-marker-alt" style="color: #1e90ff;"></i> ملاحة
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="feature-automatic" value="أوتوماتيك">
+                                <i class="fas fa-cog" style="color: #1e90ff;"></i> أوتوماتيك
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="feature-bluetooth" value="بلوتوث">
+                                <i class="fas fa-bluetooth" style="color: #1e90ff;"></i> بلوتوث
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, #1e90ff, #00bfff);">
+                        <i class="fas fa-check"></i> إضافة السيارة للكراء
+                    </button>
+                </form>
+                
+                <div id="car-success-message" style="display: none; text-align: center; padding: 30px; background: #f0f9ff; border-radius: var(--radius); margin-top: 20px;">
+                    <i class="fas fa-check-circle" style="color: #4CAF50; font-size: 3.5rem; margin-bottom: 15px;"></i>
+                    <h3 style="color: #4CAF50;">تمت إضافة سيارتك بنجاح!</h3>
+                    <p style="margin: 15px 0;">ستظهر سيارتك في قائمة كراء السيارات وسيتصل بك العملاء المهتمون</p>
+                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                        <button onclick="showTab('car-rental')" style="background: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: var(--radius); cursor: pointer;">
+                            <i class="fas fa-eye"></i> عرض السيارات
+                        </button>
+                        <button onclick="addAnotherCar()" style="background: #4CAF50; color: white; border: none; padding: 12px 25px; border-radius: var(--radius); cursor: pointer;">
+                            <i class="fas fa-plus"></i> إضافة سيارة أخرى
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- نصائح للإضافة -->
+            <div style="background: #fff8e1; padding: 20px; border-radius: var(--radius); margin-top: 30px; border-right: 4px solid #ff9800;">
+                <h3 style="color: #ff9800; margin-bottom: 15px;"><i class="fas fa-lightbulb"></i> نصائح لإضافة ناجحة</h3>
+                <ul style="padding-right: 20px;">
+                    <li style="margin-bottom: 8px;">أضف صوراً واضحة للسيارة من جميع الزوايا</li>
+                    <li style="margin-bottom: 8px;">اذكر السعر بوضوح وبدون رسوم مخفية</li>
+                    <li style="margin-bottom: 8px;">صف حالة السيارة بدقة (جديدة، مستعملة ممتازة، مستعملة جيدة)</li>
+                    <li style="margin-bottom: 8px;">حدد متطلبات الكراء بوضوح (رخصة، عربون، تأمين)</li>
+                    <li style="margin-bottom: 8px;">كن صادقاً في وصف المشاكل أو العيوب إن وجدت</li>
                 </ul>
             </div>
         </div>
@@ -787,15 +1082,15 @@
             </div>
             
             <!-- تصفية خدمات التوصيل -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0;">
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
                 <h3 style="margin-bottom: 15px;"><i class="fas fa-filter"></i> تصفية خدمات التوصيل</h3>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <select id="delivery-city-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius);">
+                    <select id="delivery-city-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
                         <option value="">كل المدن</option>
                         <option value="أكليم">أكليم</option>
                         <option value="بركان">بركان</option>
                     </select>
-                    <select id="delivery-service-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius);">
+                    <select id="delivery-service-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
                         <option value="">كل أنواع التوصيل</option>
                         <option value="طعام">توصيل طعام</option>
                         <option value="مستندات">توصيل مستندات</option>
@@ -814,7 +1109,7 @@
             </div>
             
             <!-- معلومات مهمة عن التوصيل -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px;">
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px; box-shadow: var(--shadow);">
                 <h3><i class="fas fa-info-circle"></i> معلومات مهمة عن خدمات التوصيل</h3>
                 <ul style="margin-top: 10px; padding-right: 20px;">
                     <li style="margin-bottom: 8px;">تأكد من عنوان التوصيل بدقة</li>
@@ -865,7 +1160,7 @@
                     <div id="car-fields" style="display: none;">
                         <div class="form-group">
                             <label class="form-label">نوع السيارة</label>
-                            <select class="form-select" id="carType">
+                            <select class="form-select" id="carTypeSimple">
                                 <option value="">اختر نوع السيارة</option>
                                 <option value="سيارة عائلية">سيارة عائلية</option>
                                 <option value="سيارة دفع رباعي">سيارة دفع رباعي</option>
@@ -876,7 +1171,7 @@
                         
                         <div class="form-group">
                             <label class="form-label">سعر الكراء (يومياً)</label>
-                            <input type="text" class="form-input" id="carPrice" placeholder="مثال: 200 درهم">
+                            <input type="text" class="form-input" id="carPriceSimple" placeholder="مثال: 200 درهم">
                         </div>
                     </div>
                     
@@ -1095,7 +1390,7 @@
                 <span class="ad-label">مساحة متاحة</span>
             </div>
             
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 20px;">
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 20px; box-shadow: var(--shadow);">
                 <h3><i class="fas fa-info-circle"></i> معلومات مهمة</h3>
                 <p style="margin-top: 10px;">في حالة الطوارئ، اتصل بالرقم المناسب وقدم معلومات واضحة عن الموقع والحالة.</p>
             </div>
@@ -1108,16 +1403,19 @@
             { id: 1, name: "كهربائي منازل", phone: "0623-456789", city: "أكليم", type: "كهربائي", featured: true },
             { id: 2, name: "سباك محترف", phone: "0612-345678", city: "أكليم", type: "سباك" },
             { id: 3, name: "طبيب عام", phone: "0537-123456", city: "أكليم", type: "طبيب", featured: true },
-            { id: 4, name: "كراء سيارة دفع رباعي", phone: "0620-445566", city: "بركان", type: "كراء السيارات", carType: "سيارة دفع رباعي", price: "300 درهم/يوم", featured: true },
+            { id: 4, name: "كراء سيارة دفع رباعي 2023", phone: "0620-445566", city: "بركان", type: "كراء السيارات", carType: "سيارة دفع رباعي", price: "300 درهم/يوم", carModel: "تويوتا لاندكروزر", carYear: "2023", featured: true },
             { id: 5, name: "مطعم الشرق", phone: "0536-778899", city: "بركان", type: "مطعم" },
-            { id: 6, name: "كراء سيارة عائلية", phone: "0618-998877", city: "أكليم", type: "كراء السيارات", carType: "سيارة عائلية", price: "250 درهم/يوم" },
+            { id: 6, name: "كراء سيارة عائلية جديدة", phone: "0618-998877", city: "أكليم", type: "كراء السيارات", carType: "سيارة عائلية", price: "250 درهم/يوم", carModel: "بيجو 508", carYear: "2022" },
             { id: 7, name: "ميكانيكي سيارات", phone: "0621-112233", city: "بركان", type: "ميكانيكي" },
-            { id: 8, name: "كراء فان نقل", phone: "0625-667788", city: "أكليم", type: "كراء السيارات", carType: "فان", price: "350 درهم/يوم" },
+            { id: 8, name: "كراء فان نقل بضائع", phone: "0625-667788", city: "أكليم", type: "كراء السيارات", carType: "فان", price: "350 درهم/يوم", carModel: "مرسيدس سبرينتر", carYear: "2021" },
             // خدمات توصيل جديدة
             { id: 9, name: "توصيل طعام سريع", phone: "0624-112233", city: "أكليم", type: "توصيل", deliveryType: "طعام", deliveryPrice: "15 درهم", deliveryTime: "30 دقيقة", featured: true },
             { id: 10, name: "توصيل مستندات أكليم", phone: "0627-445566", city: "أكليم", type: "توصيل", deliveryType: "مستندات", deliveryPrice: "10 درهم", deliveryTime: "45 دقيقة" },
             { id: 11, name: "توصيل طرود بركان", phone: "0628-778899", city: "بركان", type: "توصيل", deliveryType: "طرود", deliveryPrice: "25 درهم", deliveryTime: "60 دقيقة" },
-            { id: 12, name: "توصيل منتجات سوق", phone: "0629-990011", city: "بركان", type: "توصيل", deliveryType: "منتجات", deliveryPrice: "20 درهم", deliveryTime: "40 دقيقة", featured: true }
+            { id: 12, name: "توصيل منتجات سوق", phone: "0629-990011", city: "بركان", type: "توصيل", deliveryType: "منتجات", deliveryPrice: "20 درهم", deliveryTime: "40 دقيقة", featured: true },
+            // سيارات إضافية
+            { id: 13, name: "كراء سيارة اقتصادية 2024", phone: "0630-112233", city: "أكليم", type: "كراء السيارات", carType: "سيارة صغيرة", price: "150 درهم/يوم", carModel: "رينو كليو", carYear: "2024" },
+            { id: 14, name: "كراء سيارة فخمة", phone: "0631-445566", city: "بركان", type: "كراء السيارات", carType: "سيارة فخمة", price: "500 درهم/يوم", carModel: "مرسيدس E-Class", carYear: "2023" }
         ];
 
         // تحميل الخدمات من localStorage
@@ -1134,6 +1432,9 @@
             displayCarRentalServices();
             displayDeliveryServices();
             loadAds();
+            
+            // تحديث معاينة الأسعار
+            document.getElementById('carPrice').addEventListener('input', updatePricePreview);
             
             // تحديث الزوار بشكل عشوائي
             setInterval(() => {
@@ -1166,6 +1467,16 @@
                     btn.classList.add('active');
                 }
             });
+            
+            // إذا كانت صفحة كراء السيارات، قم بتحديث القائمة
+            if (tabName === 'car-rental') {
+                displayCarRentalServices();
+            }
+            
+            // إذا كانت صفحة إضافة سيارة، قم بتحديث معاينة الأسعار
+            if (tabName === 'add-car') {
+                updatePricePreview();
+            }
         }
 
         // الحصول على اسم التبويب
@@ -1174,6 +1485,7 @@
                 'home': 'الرئيسية',
                 'services': 'الخدمات',
                 'car-rental': 'كراء السيارات',
+                'add-car': 'إضافة سيارة',
                 'delivery': 'التوصيل',
                 'add-service': 'إضافة خدمة',
                 'ads': 'الإعلانات',
@@ -1204,6 +1516,8 @@
                 featured.forEach(service => {
                     if (service.type === 'توصيل') {
                         deliveryContainer.appendChild(createDeliveryCard(service));
+                    } else if (service.type === 'كراء السيارات') {
+                        container.appendChild(createCarCard(service));
                     } else {
                         container.appendChild(createServiceCard(service, true));
                     }
@@ -1305,28 +1619,46 @@
                     <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
                         <i class="fas fa-car" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
                         <h3>لا توجد سيارات للكراء</h3>
-                        <button onclick="showTab('add-service')" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); margin-top: 10px; cursor: pointer;">
-                            أضف سيارتك
+                        <button onclick="showTab('add-car')" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); margin-top: 10px; cursor: pointer;">
+                            <i class="fas fa-plus-circle"></i> أضف سيارتك
                         </button>
                     </div>
                 `;
             } else {
                 carServices.forEach(service => {
-                    container.appendChild(createCarCard(service));
+                    container.appendChild(createCarCardDetailed(service));
                 });
             }
             
             // في الرئيسية (عرض 3 فقط)
             featuredContainer.innerHTML = '';
-            carServices.slice(0, 3).forEach(service => {
-                featuredContainer.appendChild(createCarCard(service));
-            });
+            const featuredCars = carServices.slice(0, 3);
+            if (featuredCars.length === 0) {
+                featuredContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #666;">
+                        <i class="fas fa-car" style="font-size: 2.5rem; margin-bottom: 10px; color: #ddd;"></i>
+                        <h4>لا توجد سيارات للكراء</h4>
+                        <p>كن أول من يضيف سيارته</p>
+                    </div>
+                `;
+            } else {
+                featuredCars.forEach(service => {
+                    featuredContainer.appendChild(createCarCardDetailed(service));
+                });
+            }
         }
 
-        // إنشاء بطاقة سيارة
-        function createCarCard(service) {
+        // إنشاء بطاقة سيارة مفصلة
+        function createCarCardDetailed(service) {
             const card = document.createElement('div');
             card.className = 'service-card car-service';
+            
+            // تجميع المزايا
+            const features = [];
+            if (service.featureAircon) features.push('مكيف');
+            if (service.featureGPS) features.push('ملاحة');
+            if (service.featureAutomatic) features.push('أوتوماتيك');
+            if (service.featureBluetooth) features.push('بلوتوث');
             
             card.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -1341,11 +1673,29 @@
                     </span>
                 </div>
                 
+                ${service.carModel ? `
+                <p style="color: #666; margin: 10px 0; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> ${service.carModel}
+                    ${service.carYear ? ` - ${service.carYear}` : ''}
+                </p>
+                ` : ''}
+                
                 ${service.price ? `
                 <div style="margin: 10px 0; padding: 10px; background: #e3f2fd; border-radius: var(--radius);">
-                    <p style="color: #1e90ff; font-weight: bold;">
-                        <i class="fas fa-money-bill-wave"></i> ${service.price}
+                    <p style="color: #1e90ff; font-weight: bold; font-size: 1.1rem;">
+                        <i class="fas fa-money-bill-wave"></i> ${service.price} درهم/يوم
                     </p>
+                </div>
+                ` : ''}
+                
+                ${features.length > 0 ? `
+                <div style="margin: 10px 0;">
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i> المزايا:
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                        ${features.map(f => `<span style="background: #f0f0f0; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;">${f}</span>`).join('')}
+                    </div>
                 </div>
                 ` : ''}
                 
@@ -1353,10 +1703,22 @@
                     <i class="fas fa-phone"></i> ${service.phone}
                 </p>
                 
-                <button onclick="callService('${service.phone}', '${service.name}')" 
-                        style="background: #1e90ff; color: white; border: none; padding: 10px; border-radius: var(--radius); width: 100%; cursor: pointer; margin-top: 10px;">
-                    <i class="fas fa-phone-alt"></i> اتصل للكراء
-                </button>
+                ${service.ownerName ? `
+                <p style="color: #666; font-size: 0.9rem; margin: 5px 0;">
+                    <i class="fas fa-user"></i> ${service.ownerName}
+                </p>
+                ` : ''}
+                
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button onclick="callService('${service.phone}', '${service.name}')" 
+                            style="flex: 1; background: #1e90ff; color: white; border: none; padding: 10px; border-radius: var(--radius); cursor: pointer;">
+                        <i class="fas fa-phone-alt"></i> اتصل للكراء
+                    </button>
+                    <button onclick="showCarDetails(${service.id})" 
+                            style="flex: 1; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: var(--radius); cursor: pointer;">
+                        <i class="fas fa-info-circle"></i> التفاصيل
+                    </button>
+                </div>
             `;
             
             return card;
@@ -1405,7 +1767,7 @@
             
             services.forEach(service => {
                 if (service.type === 'كراء السيارات') {
-                    container.appendChild(createCarCard(service));
+                    container.appendChild(createCarCardDetailed(service));
                 } else if (service.type === 'توصيل') {
                     container.appendChild(createDeliveryCard(service));
                 } else {
@@ -1443,7 +1805,7 @@
             
             filtered.forEach(service => {
                 if (service.type === 'كراء السيارات') {
-                    container.appendChild(createCarCard(service));
+                    container.appendChild(createCarCardDetailed(service));
                 } else if (service.type === 'توصيل') {
                     container.appendChild(createDeliveryCard(service));
                 } else {
@@ -1456,6 +1818,7 @@
         function filterCars() {
             const type = document.getElementById('car-type-filter').value;
             const city = document.getElementById('car-city-filter').value;
+            const price = document.getElementById('car-price-filter').value;
             
             const container = document.getElementById('car-rental-services');
             container.innerHTML = '';
@@ -1470,19 +1833,41 @@
                 filtered = filtered.filter(s => s.city === city);
             }
             
+            if (price) {
+                const maxPrice = parseInt(price);
+                filtered = filtered.filter(s => {
+                    const servicePrice = parseInt(s.price) || 0;
+                    if (price === "1000") {
+                        return servicePrice > 500;
+                    }
+                    return servicePrice <= maxPrice;
+                });
+            }
+            
             if (filtered.length === 0) {
                 container.innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
                         <i class="fas fa-car" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
                         <h3>لا توجد سيارات تطابق البحث</h3>
+                        <button onclick="resetCarFilter()" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); margin-top: 10px; cursor: pointer;">
+                            عرض كل السيارات
+                        </button>
                     </div>
                 `;
                 return;
             }
             
             filtered.forEach(service => {
-                container.appendChild(createCarCard(service));
+                container.appendChild(createCarCardDetailed(service));
             });
+        }
+
+        // إعادة تعيين تصفية السيارات
+        function resetCarFilter() {
+            document.getElementById('car-type-filter').value = '';
+            document.getElementById('car-city-filter').value = '';
+            document.getElementById('car-price-filter').value = '';
+            filterCars();
         }
 
         // تصفية خدمات التوصيل
@@ -1533,7 +1918,8 @@
                 s.type.toLowerCase().includes(term) ||
                 s.city.toLowerCase().includes(term) ||
                 (s.carType && s.carType.toLowerCase().includes(term)) ||
-                (s.deliveryType && s.deliveryType.toLowerCase().includes(term))
+                (s.deliveryType && s.deliveryType.toLowerCase().includes(term)) ||
+                (s.carModel && s.carModel.toLowerCase().includes(term))
             );
             
             if (results.length === 0) {
@@ -1551,13 +1937,49 @@
             
             results.forEach(service => {
                 if (service.type === 'كراء السيارات') {
-                    container.appendChild(createCarCard(service));
+                    container.appendChild(createCarCardDetailed(service));
                 } else if (service.type === 'توصيل') {
                     container.appendChild(createDeliveryCard(service));
                 } else {
                     container.appendChild(createServiceCard(service));
                 }
             });
+        }
+
+        // اختيار نوع السيارة
+        function selectCarType(type) {
+            document.getElementById('carType').value = type;
+            
+            // إزالة التحديد من جميع الخيارات
+            document.querySelectorAll('.car-type-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // إضافة التحديد للخيار المختار
+            const selectedOption = Array.from(document.querySelectorAll('.car-type-option')).find(
+                option => option.querySelector('h4').textContent === type
+            );
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+        }
+
+        // تحديث معاينة الأسعار
+        function updatePricePreview() {
+            const dailyPrice = parseInt(document.getElementById('carPrice').value) || 0;
+            
+            if (dailyPrice > 0) {
+                const weeklyPrice = dailyPrice * 7 * 0.9; // خصم 10% للأسبوع
+                const monthlyPrice = dailyPrice * 30 * 0.8; // خصم 20% للشهر
+                
+                document.getElementById('daily-price-preview').textContent = dailyPrice + ' درهم';
+                document.getElementById('weekly-price-preview').textContent = Math.round(weeklyPrice) + ' درهم';
+                document.getElementById('monthly-price-preview').textContent = Math.round(monthlyPrice) + ' درهم';
+            } else {
+                document.getElementById('daily-price-preview').textContent = '-';
+                document.getElementById('weekly-price-preview').textContent = '-';
+                document.getElementById('monthly-price-preview').textContent = '-';
+            }
         }
 
         // تبديل حقول الخدمات
@@ -1629,7 +2051,80 @@
             document.getElementById('to-city').value = '';
         }
 
-        // إضافة خدمة جديدة
+        // إضافة سيارة جديدة
+        document.getElementById('car-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // تجميع المزايا
+            const features = [];
+            if (document.getElementById('feature-aircon').checked) features.push('مكيف');
+            if (document.getElementById('feature-gps').checked) features.push('ملاحة');
+            if (document.getElementById('feature-automatic').checked) features.push('أوتوماتيك');
+            if (document.getElementById('feature-bluetooth').checked) features.push('بلوتوث');
+            
+            const newCar = {
+                id: Date.now(),
+                name: document.getElementById('carName').value,
+                phone: document.getElementById('carPhone').value,
+                city: document.getElementById('carCity').value,
+                type: 'كراء السيارات',
+                carType: document.getElementById('carType').value,
+                price: document.getElementById('carPrice').value + ' درهم/يوم',
+                carModel: document.getElementById('carModel').value,
+                carYear: document.getElementById('carYear').value,
+                ownerName: document.getElementById('ownerName').value,
+                carDetails: document.getElementById('carDetails').value,
+                rentalRequirements: document.getElementById('rentalRequirements').value,
+                addedDate: new Date().toLocaleDateString('ar-EG'),
+                featured: Math.random() > 0.8, // 20% فرصة أن تكون مميزة
+                // المزايا
+                featureAircon: document.getElementById('feature-aircon').checked,
+                featureGPS: document.getElementById('feature-gps').checked,
+                featureAutomatic: document.getElementById('feature-automatic').checked,
+                featureBluetooth: document.getElementById('feature-bluetooth').checked
+            };
+            
+            // إضافة للخدمات
+            services.unshift(newCar);
+            
+            // حفظ في localStorage
+            let userServices = JSON.parse(localStorage.getItem('userServices')) || [];
+            userServices.push(newCar);
+            localStorage.setItem('userServices', JSON.stringify(userServices));
+            
+            // تحديث الواجهة
+            document.getElementById('car-form').reset();
+            document.getElementById('car-success-message').style.display = 'block';
+            
+            // إعادة تعيين خيارات نوع السيارة
+            document.querySelectorAll('.car-type-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            showNotification('تمت إضافة سيارتك بنجاح! ستظهر في قائمة كراء السيارات.');
+            
+            // تحديث العروض
+            setTimeout(() => {
+                updateStats();
+                displayFeaturedServices();
+                displayAllServices();
+                displayCarRentalServices();
+                displayDeliveryServices();
+            }, 500);
+        });
+
+        // إضافة سيارة أخرى
+        function addAnotherCar() {
+            document.getElementById('car-success-message').style.display = 'none';
+            document.getElementById('car-form').reset();
+            
+            // إعادة تعيين خيارات نوع السيارة
+            document.querySelectorAll('.car-type-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        // إضافة خدمة جديدة (النموذج القديم)
         document.getElementById('service-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1649,8 +2144,8 @@
             };
             
             if (isCarRental) {
-                newService.carType = document.getElementById('carType').value;
-                newService.price = document.getElementById('carPrice').value;
+                newService.carType = document.getElementById('carTypeSimple').value;
+                newService.price = document.getElementById('carPriceSimple').value;
             }
             
             if (isDelivery) {
@@ -1727,6 +2222,98 @@
                 calls.push({ service: name, phone: phone, date: new Date().toISOString() });
                 localStorage.setItem('serviceCalls', JSON.stringify(calls));
             }
+        }
+
+        // عرض تفاصيل السيارة
+        function showCarDetails(carId) {
+            const car = services.find(s => s.id === carId);
+            if (!car) return;
+            
+            const features = [];
+            if (car.featureAircon) features.push('مكيف');
+            if (car.featureGPS) features.push('ملاحة');
+            if (car.featureAutomatic) features.push('أوتوماتيك');
+            if (car.featureBluetooth) features.push('بلوتوث');
+            
+            let details = `
+                <div style="background: white; padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <h3 style="color: #1e90ff; margin-bottom: 15px;">
+                        <i class="fas fa-car"></i> ${car.name}
+                    </h3>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <p><strong><i class="fas fa-map-marker-alt"></i> المدينة:</strong> ${car.city}</p>
+                            <p><strong><i class="fas fa-car"></i> النوع:</strong> ${car.carType || 'غير محدد'}</p>
+                            <p><strong><i class="fas fa-info-circle"></i> الطراز:</strong> ${car.carModel || 'غير محدد'}</p>
+                            ${car.carYear ? `<p><strong><i class="fas fa-calendar"></i> سنة الصنع:</strong> ${car.carYear}</p>` : ''}
+                        </div>
+                        
+                        <div style="flex: 1; min-width: 200px;">
+                            <p><strong><i class="fas fa-money-bill-wave"></i> السعر:</strong> ${car.price || 'غير محدد'}</p>
+                            <p><strong><i class="fas fa-user"></i> المالك:</strong> ${car.ownerName || car.provider || 'غير محدد'}</p>
+                            <p><strong><i class="fas fa-phone"></i> الهاتف:</strong> ${car.phone}</p>
+                            <p><strong><i class="fas fa-calendar"></i> تاريخ الإضافة:</strong> ${car.addedDate || 'غير محدد'}</p>
+                        </div>
+                    </div>
+                    
+                    ${features.length > 0 ? `
+                    <div style="margin: 15px 0;">
+                        <p><strong><i class="fas fa-star"></i> المزايا:</strong></p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                            ${features.map(f => `<span style="background: #e3f2fd; padding: 8px 15px; border-radius: var(--radius);">${f}</span>`).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${car.carDetails ? `
+                    <div style="margin: 15px 0;">
+                        <p><strong><i class="fas fa-info-circle"></i> تفاصيل السيارة:</strong></p>
+                        <p style="background: #f8f9fa; padding: 15px; border-radius: var(--radius); margin-top: 10px;">
+                            ${car.carDetails}
+                        </p>
+                    </div>
+                    ` : ''}
+                    
+                    ${car.rentalRequirements ? `
+                    <div style="margin: 15px 0;">
+                        <p><strong><i class="fas fa-clipboard-list"></i> متطلبات الكراء:</strong></p>
+                        <p style="background: #fff8e1; padding: 15px; border-radius: var(--radius); margin-top: 10px;">
+                            ${car.rentalRequirements}
+                        </p>
+                    </div>
+                    ` : ''}
+                    
+                    <button onclick="callService('${car.phone}', '${car.name}')" 
+                            style="background: #1e90ff; color: white; border: none; padding: 12px 30px; border-radius: var(--radius); cursor: pointer; width: 100%; margin-top: 20px;">
+                        <i class="fas fa-phone-alt"></i> اتصل للكراء الآن
+                    </button>
+                </div>
+            `;
+            
+            // إنشاء نافذة منبثقة بسيطة
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '2000';
+            modal.innerHTML = `
+                <div style="background: white; padding: 25px; border-radius: var(--radius); max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: #1e90ff; margin: 0;">تفاصيل السيارة</h3>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">×</button>
+                    </div>
+                    ${details}
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
         }
 
         // إظهار إشعار
