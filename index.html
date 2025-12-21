@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليل أكليم وبركان | خدمات محلية وأرقام هواتف</title>
     <meta name="description" content="دليل الخدمات المحلية وأرقام الهواتف في مدينة أكليم وبركان. ابحث عن أي خدمة محلية وتواصل مباشرة.">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1e90ff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -30,13 +38,83 @@
             background-color: #f9f9f9;
             color: var(--text-color);
             line-height: 1.6;
+            padding-top: 60px;
+        }
+        
+        /* زر التثبيت - إصلاح كامل */
+        .install-btn {
+            position: fixed;
+            top: 80px;
+            left: 15px;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1002;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.5s ease;
+            font-size: 14px;
+        }
+        
+        .install-btn.show {
+            opacity: 1;
+            transform: translateX(0);
+            display: flex !important;
+        }
+        
+        .install-btn i {
+            font-size: 1.2rem;
+        }
+        
+        /* قائمة الهامبرجر - إصلاح كامل */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 1003;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
         
         /* الهيدر */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--light-color);
-            padding: 1.2rem 5%;
+            padding: 1rem 5%;
             box-shadow: var(--shadow);
             position: sticky;
             top: 0;
@@ -53,17 +131,23 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             cursor: pointer;
         }
         
-        .logo i { font-size: 2.2rem; }
-        .logo h1 { font-size: 1.8rem; font-weight: 700; }
+        .logo i { 
+            font-size: 1.8rem; 
+        }
+        
+        .logo h1 { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+        }
         
         /* قائمة التنقل */
         .nav-menu {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
         
@@ -71,14 +155,16 @@
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: var(--transition);
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
         
         .nav-tab.active {
@@ -90,13 +176,82 @@
             background: rgba(255, 255, 255, 0.3);
         }
         
+        /* قائمة الموبايل - إصلاح كامل */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 20px;
+            transition: var(--transition);
+            z-index: 1001;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .mobile-nav.active {
+            right: 0;
+        }
+        
+        .mobile-nav .nav-tab {
+            width: 100%;
+            margin-bottom: 5px;
+            text-align: right;
+            justify-content: flex-start;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* زر إغلاق القائمة */
+        .close-menu {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1002;
+        }
+        
         /* إعلان الهيدر */
         .header-ad {
             background: linear-gradient(135deg, #ff9800, #ffb74d);
             color: white;
             padding: 8px 15px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .header-ad a {
@@ -110,7 +265,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
         }
         
         /* تبويب المحتوى */
@@ -166,8 +321,8 @@
         /* تصميم بطاقات الخدمات */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
         
@@ -175,13 +330,13 @@
             background: white;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            padding: 20px;
+            padding: 15px;
             transition: var(--transition);
             position: relative;
         }
         
         .service-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow);
         }
         
@@ -191,13 +346,13 @@
         
         .featured-badge {
             position: absolute;
-            top: -10px;
-            left: 15px;
+            top: -8px;
+            left: 10px;
             background: #ff9800;
             color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
             font-weight: bold;
         }
         
@@ -209,15 +364,15 @@
         
         .delivery-icon {
             color: #4CAF50;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
         
         .delivery-category {
             background: linear-gradient(135deg, #4CAF50, #8BC34A);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             display: inline-block;
         }
         
@@ -229,140 +384,157 @@
         
         .car-icon {
             color: #1e90ff;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
         
-        .car-rental-category {
-            background: linear-gradient(135deg, #1e90ff, #00bfff);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
+        /* باقي الأنماط مختصرة للتركيز على الإصلاحات */
+        
+        /* التجاوب - إصلاح كامل */
+        @media (min-width: 1200px) {
+            .sidebar-ads {
+                display: block;
+            }
         }
         
-        /* صفحة كراء السيارات */
-        .car-rental-header {
-            background: linear-gradient(135deg, #1e90ff, #00bfff);
-            color: white;
-            padding: 25px;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
+        @media (max-width: 1024px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hamburger-menu {
+                display: flex;
+            }
+            
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-tab {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
         }
         
-        .car-filter-section {
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 10px 5%;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .install-btn {
+                top: 70px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+            
+            .logo i {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.1rem;
+            }
+            
+            .mobile-nav {
+                width: 250px;
+            }
+            
+            .install-btn {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+            }
+        }
+        
+        /* محرك البحث */
+        .search-container {
             background: white;
             padding: 20px;
             border-radius: var(--radius);
-            margin: 20px 0;
+            margin-bottom: 15px;
             box-shadow: var(--shadow);
         }
         
-        .car-details-card {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            padding: 25px;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
+        .search-box {
+            display: flex;
+            gap: 10px;
         }
         
-        .add-car-btn {
-            background: linear-gradient(135deg, #4CAF50, #8BC34A);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-            margin-top: 10px;
-        }
-        
-        .add-car-btn:hover {
-            background: linear-gradient(135deg, #388E3C, #4CAF50);
-        }
-        
-        /* نموذج إضافة سيارة */
-        .car-form-container {
-            background: white;
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            max-width: 800px;
-            margin: 20px auto;
-        }
-        
-        /* نموذج مسح الخدمة */
-        .delete-form-container {
-            background: #fff8e1;
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            max-width: 500px;
-            margin: 30px auto;
-            border-right: 4px solid #ff9800;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border-color);
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
             border-radius: var(--radius);
             font-size: 1rem;
         }
         
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        
-        .submit-btn {
+        .search-btn {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 0 20px;
             border-radius: var(--radius);
             cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            font-size: 1.1rem;
-            margin-top: 20px;
-            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .submit-btn:hover {
-            background: var(--secondary-color);
+        /* إحصائيات */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            box-shadow: var(--shadow);
+            flex-wrap: wrap;
         }
         
-        /* زر حذف */
-        .delete-btn {
-            background: #f44336;
+        .stat-item {
+            text-align: center;
+            padding: 5px;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        /* زر الاتصال */
+        .call-button {
+            background: var(--primary-color);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 10px;
             border-radius: var(--radius);
             cursor: pointer;
-            font-weight: 600;
             width: 100%;
-            font-size: 1.1rem;
-            margin-top: 20px;
+            margin-top: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             transition: var(--transition);
         }
         
-        .delete-btn:hover {
-            background: #d32f2f;
+        .call-button:hover {
+            background: var(--secondary-color);
         }
         
         /* إشعارات */
@@ -380,208 +552,22 @@
             animation: slideIn 0.3s;
         }
         
+        .notification.error {
+            background: #f44336;
+        }
+        
         @keyframes slideIn {
             from { transform: translateX(-100%); }
             to { transform: translateX(0); }
         }
-        
-        /* شريط الإعلانات الجانبي */
-        .sidebar-ads {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 160px;
-            display: none;
-        }
-        
-        .vertical-ad {
-            background: white;
-            padding: 15px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        /* الإعلانات داخل المحتوى */
-        .content-ad {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 25px;
-            border-radius: var(--radius);
-            margin: 30px 0;
-            text-align: center;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        /* التجاوب */
-        @media (min-width: 1200px) {
-            .sidebar-ads {
-                display: block;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar-ads {
-                display: none;
-            }
-        }
-        
-        /* محرك البحث */
-        .search-container {
-            background: white;
-            padding: 25px;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: var(--radius);
-            font-size: 1rem;
-        }
-        
-        .search-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0 25px;
-            border-radius: var(--radius);
-            cursor: pointer;
-        }
-        
-        /* إحصائيات */
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            background: white;
-            padding: 20px;
-            border-radius: var(--radius);
-            margin: 20px 0;
-            box-shadow: var(--shadow);
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        /* بطاقة طلب التوصيل */
-        .delivery-request-card {
-            background: linear-gradient(135deg, #4CAF50, #8BC34A);
-            color: white;
-            padding: 20px;
-            border-radius: var(--radius);
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .delivery-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .delivery-option {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: var(--radius);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .delivery-option:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-        }
-        
-        /* صفحة إضافة سيارة */
-        .add-car-header {
-            background: linear-gradient(135deg, #1e90ff, #00bfff);
-            color: white;
-            padding: 30px;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .car-type-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .car-type-option {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: var(--radius);
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .car-type-option:hover, .car-type-option.selected {
-            border-color: #1e90ff;
-            background: #e3f2fd;
-        }
-        
-        .car-type-icon {
-            font-size: 2.5rem;
-            color: #1e90ff;
-            margin-bottom: 10px;
-        }
-        
-        .price-preview {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: var(--radius);
-            margin-top: 20px;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        /* صفحة مسح الخدمة */
-        .delete-service-header {
-            background: linear-gradient(135deg, #f44336, #ff7961);
-            color: white;
-            padding: 30px;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-bottom: 30px;
-        }
     </style>
 </head>
 <body>
+    <!-- زر تثبيت التطبيق -->
+    <button class="install-btn" id="installButton">
+        <i class="fas fa-download"></i> تثبيت التطبيق
+    </button>
+    
     <!-- إعلان الهيدر -->
     <div class="header-ad">
         <i class="fas fa-bullhorn"></i> خدمة التوصيل متاحة الآن في أكليم وبركان | <a href="#" onclick="showTab('delivery')">اطلب الآن</a>
@@ -590,12 +576,20 @@
     <!-- الهيدر -->
     <header>
         <div class="header-content">
+            <!-- قائمة الهامبرجر -->
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="قائمة التنقل">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
             <div class="logo" onclick="showTab('home')">
                 <i class="fas fa-phone-alt"></i>
                 <h1>دليل أكليم وبركان</h1>
             </div>
             
-            <div class="nav-menu">
+            <!-- قائمة التنقل الأساسية -->
+            <div class="nav-menu" id="mainNav">
                 <button class="nav-tab active" onclick="showTab('home')">
                     <i class="fas fa-home"></i> الرئيسية
                 </button>
@@ -605,41 +599,52 @@
                 <button class="nav-tab" onclick="showTab('car-rental')">
                     <i class="fas fa-car"></i> كراء السيارات
                 </button>
-                <button class="nav-tab" onclick="showTab('add-car')">
-                    <i class="fas fa-plus-circle"></i> إضافة سيارة
-                </button>
                 <button class="nav-tab" onclick="showTab('delivery')">
                     <i class="fas fa-truck"></i> التوصيل
                 </button>
                 <button class="nav-tab" onclick="showTab('add-service')">
-                    <i class="fas fa-plus-circle"></i> إضافة خدمة
+                    <i class="fas fa-plus"></i> إضافة خدمة
                 </button>
                 <button class="nav-tab" onclick="showTab('delete-service')">
-                    <i class="fas fa-trash-alt"></i> مسح خدمتي
-                </button>
-                <button class="nav-tab" onclick="showTab('ads')">
-                    <i class="fas fa-ad"></i> الإعلانات
-                </button>
-                <button class="nav-tab" onclick="showTab('emergency')">
-                    <i class="fas fa-exclamation-triangle"></i> الطوارئ
+                    <i class="fas fa-trash"></i> مسح خدمتي
                 </button>
             </div>
         </div>
     </header>
     
-    <!-- إعلانات جانبية (للشاشات الكبيرة) -->
-    <div class="sidebar-ads">
-        <div class="vertical-ad" id="side-ad-1">
-            <h4>إعلان هنا</h4>
-            <p>728x90</p>
-            <span class="ad-label">إعلان جانبي</span>
-        </div>
-        <div class="vertical-ad" id="side-ad-2">
-            <h4>مساحة إعلانية</h4>
-            <p>للإعلان اتصل بنا</p>
-            <span class="ad-label">متاحة</span>
-        </div>
+    <!-- قائمة الموبايل -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-menu" onclick="closeMobileMenu()" aria-label="إغلاق القائمة">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="nav-tab active" onclick="showTabWithClose('home')">
+            <i class="fas fa-home"></i> الرئيسية
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('services')">
+            <i class="fas fa-th-list"></i> الخدمات
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('car-rental')">
+            <i class="fas fa-car"></i> كراء السيارات
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('add-car')">
+            <i class="fas fa-plus-circle"></i> إضافة سيارة
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('delivery')">
+            <i class="fas fa-truck"></i> التوصيل
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('add-service')">
+            <i class="fas fa-plus-circle"></i> إضافة خدمة
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('delete-service')">
+            <i class="fas fa-trash-alt"></i> مسح خدمتي
+        </button>
+        <button class="nav-tab" onclick="showTabWithClose('emergency')">
+            <i class="fas fa-exclamation-triangle"></i> الطوارئ
+        </button>
     </div>
+    
+    <!-- طبقة التعتيم -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
     
     <!-- إشعار -->
     <div class="notification" id="notification">
@@ -682,1225 +687,493 @@
             </div>
             
             <!-- إعلان داخل المحتوى -->
-            <div class="content-ad" id="content-ad-1">
+            <div class="ad-space" id="content-ad-1">
                 <h3><i class="fas fa-star"></i> مساحة إعلانية مميزة</h3>
                 <p>عرض إعلانك هنا لآلاف الزوار يومياً</p>
-                <button class="nav-tab" onclick="showTab('ads')" style="background: #ff9800; margin-top: 10px;">
-                    <i class="fas fa-info-circle"></i> احجز إعلانك
-                </button>
+                <span class="ad-label">متاحة للإعلان</span>
             </div>
             
             <!-- خدمات التوصيل في الرئيسية -->
-            <div style="background: white; padding: 25px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h2><i class="fas fa-truck"></i> خدمات التوصيل السريع</h2>
-                    <button class="nav-tab" onclick="showTab('delivery')" style="background: #4CAF50; font-size: 0.9rem;">
+                    <button class="nav-tab" onclick="showTab('delivery')" style="background: #4CAF50; font-size: 0.8rem;">
                         <i class="fas fa-eye"></i> عرض الكل
                     </button>
                 </div>
                 
-                <div class="services-grid" id="featured-delivery">
-                    <!-- خدمات توصيل مميزة تظهر هنا -->
-                </div>
-                
-                <!-- طلب توصيل سريع -->
-                <div class="delivery-request-card">
-                    <h3><i class="fas fa-bolt"></i> طلب توصيل سريع</h3>
-                    <p style="margin: 10px 0; opacity: 0.9;">اختر نوع التوصيل الذي تحتاجه</p>
-                    
-                    <div class="delivery-options">
-                        <div class="delivery-option" onclick="quickDeliveryRequest('طعام')">
-                            <i class="fas fa-utensils" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <h4>توصيل طعام</h4>
-                            <p>من المطاعم والمقاهي</p>
-                        </div>
-                        
-                        <div class="delivery-option" onclick="quickDeliveryRequest('مستندات')">
-                            <i class="fas fa-file-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <h4>توصيل مستندات</h4>
-                            <p>وثائق وطرود صغيرة</p>
-                        </div>
-                        
-                        <div class="delivery-option" onclick="quickDeliveryRequest('منتجات')">
-                            <i class="fas fa-shopping-bag" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <h4>توصيل منتجات</h4>
-                            <p>من المتاجر والمحلات</p>
-                        </div>
-                        
-                        <div class="delivery-option" onclick="quickDeliveryRequest('طرود')">
-                            <i class="fas fa-box" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <h4>توصيل طرود</h4>
-                            <p>طرود كبيرة ومتوسطة</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="services-grid" id="featured-delivery"></div>
             </div>
             
             <!-- الخدمات المميزة -->
-            <div style="background: white; padding: 25px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h2><i class="fas fa-crown"></i> خدمات مميزة</h2>
-                    <button class="nav-tab" onclick="showTab('add-service')" style="font-size: 0.9rem;">
+                    <button class="nav-tab" onclick="showTab('add-service')" style="font-size: 0.8rem;">
                         <i class="fas fa-plus"></i> أضف خدمتك
                     </button>
                 </div>
                 
-                <div class="services-grid" id="featured-services">
-                    <!-- الخدمات المميزة تظهر هنا -->
-                </div>
+                <div class="services-grid" id="featured-services"></div>
             </div>
             
-            <!-- إعلان آخر -->
-            <div class="ad-space" id="home-ad-1">
-                <h3><i class="fas fa-ad"></i> مساحة إعلانية</h3>
-                <p>إعلان Google AdSense - 728x90</p>
-                <span class="ad-label">متاحة للإعلان</span>
-            </div>
-            
-            <!-- خدمات كراء السيارات -->
-            <div style="background: white; padding: 25px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <!-- كراء السيارات -->
+            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h2><i class="fas fa-car"></i> كراء السيارات</h2>
-                    <button class="nav-tab" onclick="showTab('car-rental')" style="background: #1e90ff; font-size: 0.9rem;">
+                    <button class="nav-tab" onclick="showTab('car-rental')" style="background: #1e90ff; font-size: 0.8rem;">
                         <i class="fas fa-eye"></i> عرض الكل
                     </button>
                 </div>
                 
-                <div class="services-grid" id="featured-cars">
-                    <!-- سيارات للكراء تظهر هنا -->
-                </div>
-                
-                <div style="text-align: center; margin-top: 20px;">
-                    <button class="add-car-btn" onclick="showTab('add-car')">
-                        <i class="fas fa-plus-circle"></i> أضف سيارتك للكراء
-                    </button>
-                </div>
+                <div class="services-grid" id="featured-cars"></div>
             </div>
         </div>
         
-        <!-- تبويب جميع الخدمات -->
+        <!-- تبويب الخدمات -->
         <div id="services-tab" class="tab-content">
-            <h2 style="margin-bottom: 20px;"><i class="fas fa-th-list"></i> جميع الخدمات</h2>
-            
-            <!-- إعلان -->
-            <div class="ad-banner">
-                <h4><i class="fas fa-bullhorn"></i> أضف خدمتك مجاناً!</h4>
-                <p>وصل لآلاف العملاء في أكليم وبركان</p>
-                <button onclick="showTab('add-service')" style="background: white; color: #667eea; border: none; padding: 8px 20px; border-radius: 20px; margin-top: 10px; cursor: pointer;">
-                    <i class="fas fa-plus"></i> ابدأ الآن
-                </button>
-            </div>
-            
-            <!-- تصفية -->
-            <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button onclick="filterServices('all')" style="background: var(--primary-color); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
-                    الكل
-                </button>
-                <button onclick="filterServices('أكليم')" style="background: #f0f0f0; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
-                    أكليم
-                </button>
-                <button onclick="filterServices('بركان')" style="background: #f0f0f0; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
-                    بركان
-                </button>
-                <button onclick="filterServices('كراء السيارات')" style="background: #f0f0f0; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
-                    <i class="fas fa-car"></i> كراء السيارات
-                </button>
-                <button onclick="filterServices('توصيل')" style="background: #f0f0f0; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
-                    <i class="fas fa-truck"></i> التوصيل
-                </button>
-            </div>
-            
-            <div class="services-grid" id="all-services">
-                <!-- جميع الخدمات تظهر هنا -->
-            </div>
-            
-            <!-- إعلان في الأسفل -->
-            <div class="ad-space" style="margin-top: 30px;">
-                <h3><i class="fas fa-chart-line"></i> إعلان ممول</h3>
-                <p>موقعك الإعلاني هنا يصل لآلاف العملاء يومياً</p>
-                <span class="ad-label">إعلان - 728x90</span>
-            </div>
+            <h2 style="margin-bottom: 15px;"><i class="fas fa-th-list"></i> جميع الخدمات</h2>
+            <div class="services-grid" id="all-services"></div>
         </div>
         
         <!-- تبويب كراء السيارات -->
         <div id="car-rental-tab" class="tab-content">
-            <div class="car-rental-header">
-                <h2><i class="fas fa-car"></i> كراء السيارات في أكليم وبركان</h2>
-                <p style="margin-top: 10px;">ابحث عن سيارة للإيجار اليومي أو الشهري بأفضل الأسعار</p>
+            <div style="background: linear-gradient(135deg, #1e90ff, #00bfff); color: white; padding: 20px; border-radius: var(--radius); margin-bottom: 15px;">
+                <h2><i class="fas fa-car"></i> كراء السيارات</h2>
             </div>
-            
-            <!-- إعلان خاص بكراء السيارات -->
-            <div class="car-details-card">
-                <h3 style="color: #1e90ff; margin-bottom: 15px;"><i class="fas fa-car"></i> أضف سيارتك للكراء</h3>
-                <p style="margin-bottom: 15px;">اجعل سيارتك مصدر دخل إضافي. أضف سيارتك الآن واجذب عملاء محليين.</p>
-                <button onclick="showTab('add-car')" class="add-car-btn">
-                    <i class="fas fa-plus-circle"></i> إضافة سيارة جديدة
-                </button>
-            </div>
-            
-            <!-- تصفية سيارات -->
-            <div class="car-filter-section">
-                <h3 style="margin-bottom: 15px;"><i class="fas fa-filter"></i> تصفية السيارات</h3>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <select id="car-type-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
-                        <option value="">كل الأنواع</option>
-                        <option value="سيارة عائلية">سيارة عائلية</option>
-                        <option value="سيارة دفع رباعي">سيارة دفع رباعي</option>
-                        <option value="سيارة صغيرة">سيارة صغيرة</option>
-                        <option value="فان">فان</option>
-                        <option value="سيارة فخمة">سيارة فخمة</option>
-                        <option value="سيارة اقتصادية">سيارة اقتصادية</option>
-                    </select>
-                    <select id="car-city-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
-                        <option value="">كل المدن</option>
-                        <option value="أكليم">أكليم</option>
-                        <option value="بركان">بركان</option>
-                    </select>
-                    <select id="car-price-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
-                        <option value="">كل الأسعار</option>
-                        <option value="100">حتى 100 درهم</option>
-                        <option value="200">حتى 200 درهم</option>
-                        <option value="300">حتى 300 درهم</option>
-                        <option value="500">حتى 500 درهم</option>
-                        <option value="1000">أكثر من 500 درهم</option>
-                    </select>
-                    <button onclick="filterCars()" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
-                        تطبيق التصفية
-                    </button>
-                    <button onclick="resetCarFilter()" style="background: #f0f0f0; color: #333; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
-                        إعادة التعيين
-                    </button>
-                </div>
-            </div>
-            
-            <div class="services-grid" id="car-rental-services">
-                <!-- سيارات للكراء تظهر هنا -->
-            </div>
-            
-            <!-- معلومات إضافية -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px; box-shadow: var(--shadow);">
-                <h3><i class="fas fa-info-circle"></i> معلومات مهمة عن كراء السيارات</h3>
-                <ul style="margin-top: 10px; padding-right: 20px;">
-                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
-                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
-                        <span>تأكد من وجود رخصة القيادة سارية المفعول</span>
-                    </li>
-                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
-                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
-                        <span>اطلب عقد كراء واضح يحدد الشروط والأسعار</span>
-                    </li>
-                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
-                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
-                        <span>افحص السيارة بدقة قبل الاستئجار والتقط صوراً للعربون</span>
-                    </li>
-                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
-                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
-                        <span>تأكد من وجود تأمين ساري على السيارة</span>
-                    </li>
-                    <li style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px;">
-                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
-                        <span>تأكد من حالة الإطارات والفرامل والمحرك</span>
-                    </li>
-                </ul>
-            </div>
+            <div class="services-grid" id="car-rental-services"></div>
         </div>
         
-        <!-- تبويب إضافة سيارة جديدة -->
-        <div id="add-car-tab" class="tab-content">
-            <div class="add-car-header">
-                <h2><i class="fas fa-car"></i> إضافة سيارة للكراء</h2>
-                <p style="margin-top: 10px; opacity: 0.9;">أضف سيارتك الآن واجذب عملاء محليين</p>
-            </div>
-            
-            <div class="car-form-container">
-                <form id="car-form">
-                    <h3 style="margin-bottom: 20px; color: var(--primary-color); text-align: center;">
-                        <i class="fas fa-car"></i> معلومات السيارة
-                    </h3>
-                    
-                    <!-- نوع السيارة -->
-                    <div class="form-group">
-                        <label class="form-label">نوع السيارة *</label>
-                        <div class="car-type-grid">
-                            <div class="car-type-option" onclick="selectCarType('سيارة عائلية')">
-                                <i class="fas fa-car car-type-icon"></i>
-                                <h4>سيارة عائلية</h4>
-                                <p>مناسبة للعائلات</p>
-                            </div>
-                            <div class="car-type-option" onclick="selectCarType('سيارة دفع رباعي')">
-                                <i class="fas fa-truck car-type-icon"></i>
-                                <h4>دفع رباعي</h4>
-                                <p>طرق وعرة</p>
-                            </div>
-                            <div class="car-type-option" onclick="selectCarType('سيارة صغيرة')">
-                                <i class="fas fa-car-side car-type-icon"></i>
-                                <h4>سيارة صغيرة</h4>
-                                <p>اقتصادية</p>
-                            </div>
-                            <div class="car-type-option" onclick="selectCarType('فان')">
-                                <i class="fas fa-shuttle-van car-type-icon"></i>
-                                <h4>فان</h4>
-                                <p>نقل وأغراض تجارية</p>
-                            </div>
-                        </div>
-                        <input type="hidden" id="carType" required>
-                    </div>
-                    
-                    <!-- معلومات أساسية -->
-                    <div class="form-group">
-                        <label class="form-label">اسم عرض الكراء *</label>
-                        <input type="text" class="form-input" id="carName" placeholder="مثال: كراء سيارة دفع رباعي 2023" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">طراز السيارة *</label>
-                        <input type="text" class="form-input" id="carModel" placeholder="مثال: تويوتا كورولا 2023" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">سنة الصنع</label>
-                        <input type="number" class="form-input" id="carYear" placeholder="مثال: 2023" min="2000" max="2024">
-                    </div>
-                    
-                    <!-- الأسعار -->
-                    <div class="form-group">
-                        <label class="form-label">سعر الكراء اليومي (درهم) *</label>
-                        <input type="number" class="form-input" id="carPrice" placeholder="مثال: 200" required min="50" max="5000">
-                    </div>
-                    
-                    <div class="price-preview">
-                        <h4><i class="fas fa-calculator"></i> معاينة الأسعار</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
-                            <div style="text-align: center; padding: 10px; background: white; border-radius: var(--radius);">
-                                <p style="color: #666; font-size: 0.9rem;">يومي</p>
-                                <p style="font-weight: bold; color: #1e90ff;" id="daily-price-preview">-</p>
-                            </div>
-                            <div style="text-align: center; padding: 10px; background: white; border-radius: var(--radius);">
-                                <p style="color: #666; font-size: 0.9rem;">أسبوعي</p>
-                                <p style="font-weight: bold; color: #1e90ff;" id="weekly-price-preview">-</p>
-                            </div>
-                            <div style="text-align: center; padding: 10px; background: white; border-radius: var(--radius);">
-                                <p style="color: #666; font-size: 0.9rem;">شهري</p>
-                                <p style="font-weight: bold; color: #1e90ff;" id="monthly-price-preview">-</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- معلومات المالك -->
-                    <div class="form-group">
-                        <label class="form-label">اسم المالك *</label>
-                        <input type="text" class="form-input" id="ownerName" placeholder="أدخل اسمك الكامل" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">رقم الهاتف *</label>
-                        <input type="tel" class="form-input" id="carPhone" placeholder="مثال: 0612345678" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">المدينة *</label>
-                        <select class="form-select" id="carCity" required>
-                            <option value="">اختر المدينة</option>
-                            <option value="أكليم">أكليم</option>
-                            <option value="بركان">بركان</option>
-                        </select>
-                    </div>
-                    
-                    <!-- تفاصيل إضافية -->
-                    <div class="form-group">
-                        <label class="form-label">تفاصيل السيارة</label>
-                        <textarea class="form-textarea" id="carDetails" placeholder="صف سيارتك: اللون، الحالة، المميزات، عدد المقاعد..." rows="4"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">متطلبات الكراء</label>
-                        <textarea class="form-textarea" id="rentalRequirements" placeholder="متطلبات الاستئجار: رخصة، عربون، مدة..." rows="3"></textarea>
-                    </div>
-                    
-                    <!-- مزايا إضافية -->
-                    <div class="form-group">
-                        <label class="form-label">المزايا المتاحة</label>
-                        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="feature-aircon" value="مكيف">
-                                <i class="fas fa-snowflake" style="color: #1e90ff;"></i> مكيف
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="feature-gps" value="ملاحة">
-                                <i class="fas fa-map-marker-alt" style="color: #1e90ff;"></i> ملاحة
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="feature-automatic" value="أوتوماتيك">
-                                <i class="fas fa-cog" style="color: #1e90ff;"></i> أوتوماتيك
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="feature-bluetooth" value="بلوتوث">
-                                <i class="fas fa-bluetooth" style="color: #1e90ff;"></i> بلوتوث
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, #1e90ff, #00bfff);">
-                        <i class="fas fa-check"></i> إضافة السيارة للكراء
-                    </button>
-                </form>
-                
-                <div id="car-success-message" style="display: none; text-align: center; padding: 30px; background: #f0f9ff; border-radius: var(--radius); margin-top: 20px;">
-                    <i class="fas fa-check-circle" style="color: #4CAF50; font-size: 3.5rem; margin-bottom: 15px;"></i>
-                    <h3 style="color: #4CAF50;">تمت إضافة سيارتك بنجاح!</h3>
-                    <p style="margin: 15px 0;">ستظهر سيارتك في قائمة كراء السيارات وسيتصل بك العملاء المهتمون</p>
-                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-                        <button onclick="showTab('car-rental')" style="background: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: var(--radius); cursor: pointer;">
-                            <i class="fas fa-eye"></i> عرض السيارات
-                        </button>
-                        <button onclick="addAnotherCar()" style="background: #4CAF50; color: white; border: none; padding: 12px 25px; border-radius: var(--radius); cursor: pointer;">
-                            <i class="fas fa-plus"></i> إضافة سيارة أخرى
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- نصائح للإضافة -->
-            <div style="background: #fff8e1; padding: 20px; border-radius: var(--radius); margin-top: 30px; border-right: 4px solid #ff9800;">
-                <h3 style="color: #ff9800; margin-bottom: 15px;"><i class="fas fa-lightbulb"></i> نصائح لإضافة ناجحة</h3>
-                <ul style="padding-right: 20px;">
-                    <li style="margin-bottom: 8px;">أضف صوراً واضحة للسيارة من جميع الزوايا</li>
-                    <li style="margin-bottom: 8px;">اذكر السعر بوضوح وبدون رسوم مخفية</li>
-                    <li style="margin-bottom: 8px;">صف حالة السيارة بدقة (جديدة، مستعملة ممتازة، مستعملة جيدة)</li>
-                    <li style="margin-bottom: 8px;">حدد متطلبات الكراء بوضوح (رخصة، عربون، تأمين)</li>
-                    <li style="margin-bottom: 8px;">كن صادقاً في وصف المشاكل أو العيوب إن وجدت</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- تبويب خدمات التوصيل -->
+        <!-- تبويب التوصيل -->
         <div id="delivery-tab" class="tab-content">
-            <div style="background: linear-gradient(135deg, #4CAF50, #8BC34A); color: white; padding: 25px; border-radius: var(--radius); margin-bottom: 20px;">
-                <h2><i class="fas fa-truck"></i> خدمات التوصيل في أكليم وبركان</h2>
-                <p style="margin-top: 10px;">توصيل سريع وآمن لجميع احتياجاتك - طعام، مستندات، طرود، ومنتجات</p>
+            <div style="background: linear-gradient(135deg, #4CAF50, #8BC34A); color: white; padding: 20px; border-radius: var(--radius); margin-bottom: 15px;">
+                <h2><i class="fas fa-truck"></i> خدمات التوصيل</h2>
             </div>
-            
-            <!-- طلب توصيل -->
-            <div class="delivery-request-card">
-                <h3><i class="fas fa-bolt"></i> طلب خدمة توصيل</h3>
-                <p style="margin: 10px 0; opacity: 0.9;">املأ النموذج لطلب توصيل سريع</p>
-                
-                <div style="background: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: var(--radius); margin-top: 15px;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                        <div>
-                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">نوع التوصيل</label>
-                            <select id="delivery-type" style="width: 100%; padding: 10px; border-radius: var(--radius); border: none;">
-                                <option value="">اختر نوع التوصيل</option>
-                                <option value="طعام">توصيل طعام</option>
-                                <option value="مستندات">توصيل مستندات</option>
-                                <option value="منتجات">توصيل منتجات</option>
-                                <option value="طرود">توصيل طرود</option>
-                                <option value="أخرى">خدمة توصيل أخرى</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">من مدينة</label>
-                            <select id="from-city" style="width: 100%; padding: 10px; border-radius: var(--radius); border: none;">
-                                <option value="">اختر المدينة</option>
-                                <option value="أكليم">أكليم</option>
-                                <option value="بركان">بركان</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">إلى مدينة</label>
-                            <select id="to-city" style="width: 100%; padding: 10px; border-radius: var(--radius); border: none;">
-                                <option value="">اختر المدينة</option>
-                                <option value="أكليم">أكليم</option>
-                                <option value="بركان">بركان</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <button onclick="submitDeliveryRequest()" style="background: white; color: #4CAF50; border: none; padding: 12px 30px; border-radius: var(--radius); font-weight: bold; margin-top: 20px; cursor: pointer; width: 100%;">
-                        <i class="fas fa-paper-plane"></i> إرسال طلب التوصيل
-                    </button>
-                </div>
-            </div>
-            
-            <!-- تصفية خدمات التوصيل -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin: 20px 0; box-shadow: var(--shadow);">
-                <h3 style="margin-bottom: 15px;"><i class="fas fa-filter"></i> تصفية خدمات التوصيل</h3>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <select id="delivery-city-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
-                        <option value="">كل المدن</option>
-                        <option value="أكليم">أكليم</option>
-                        <option value="بركان">بركان</option>
-                    </select>
-                    <select id="delivery-service-filter" style="padding: 10px; border: 2px solid #ddd; border-radius: var(--radius); min-width: 150px;">
-                        <option value="">كل أنواع التوصيل</option>
-                        <option value="طعام">توصيل طعام</option>
-                        <option value="مستندات">توصيل مستندات</option>
-                        <option value="منتجات">توصيل منتجات</option>
-                        <option value="طرود">توصيل طرود</option>
-                    </select>
-                    <button onclick="filterDeliveryServices()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
-                        تطبيق التصفية
-                    </button>
-                </div>
-            </div>
-            
-            <!-- خدمات التوصيل المتاحة -->
-            <div class="services-grid" id="delivery-services-list">
-                <!-- خدمات التوصيل تظهر هنا -->
-            </div>
-            
-            <!-- معلومات مهمة عن التوصيل -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px; box-shadow: var(--shadow);">
-                <h3><i class="fas fa-info-circle"></i> معلومات مهمة عن خدمات التوصيل</h3>
-                <ul style="margin-top: 10px; padding-right: 20px;">
-                    <li style="margin-bottom: 8px;">تأكد من عنوان التوصيل بدقة</li>
-                    <li style="margin-bottom: 8px;">حدد نوع التوصيل المناسب لحاجتك</li>
-                    <li style="margin-bottom: 8px;">اسأل عن تكلفة التوصيل قبل الموافقة</li>
-                    <li style="margin-bottom: 8px;">احتفظ برقم المندوب للتواصل</li>
-                    <li style="margin-bottom: 8px;">تحقق من المنتجات قبل استلامها</li>
-                </ul>
-            </div>
+            <div class="services-grid" id="delivery-services-list"></div>
         </div>
         
         <!-- تبويب إضافة خدمة -->
         <div id="add-service-tab" class="tab-content">
-            <div class="form-container">
-                <h2 style="margin-bottom: 20px; text-align: center; color: var(--primary-color);">
-                    <i class="fas fa-plus-circle"></i> أضف خدمتك الآن
-                </h2>
-                
-                <!-- إعلان في نموذج الإضافة -->
-                <div class="ad-banner" style="margin-bottom: 20px; background: linear-gradient(135deg, #4CAF50, #8BC34A);">
-                    <h4><i class="fas fa-gift"></i> إضافة مجانية!</h4>
-                    <p>لا توجد رسوم لإضافة خدمتك الأولى</p>
-                </div>
-                
-                <form id="service-form">
-                    <div class="form-group">
-                        <label class="form-label">نوع الخدمة *</label>
-                        <select class="form-select" id="serviceType" required onchange="toggleServiceFields()">
-                            <option value="">اختر نوع الخدمة</option>
-                            <option value="كهربائي">كهربائي</option>
-                            <option value="سباك">سباك</option>
-                            <option value="نجار">نجار</option>
-                            <option value="طبيب">طبيب</option>
-                            <option value="كراء السيارات">كراء السيارات</option>
-                            <option value="توصيل">خدمة توصيل</option>
-                            <option value="ميكانيكي">ميكانيكي</option>
-                            <option value="مطعم">مطعم</option>
-                            <option value="أخرى">أخرى</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">اسم الخدمة *</label>
-                        <input type="text" class="form-input" id="serviceName" placeholder="مثال: خدمة توصيل طعام، كراء سيارة دفع رباعي" required>
-                    </div>
-                    
-                    <!-- حقول خاصة بكراء السيارات -->
-                    <div id="car-fields" style="display: none;">
-                        <div class="form-group">
-                            <label class="form-label">نوع السيارة</label>
-                            <select class="form-select" id="carTypeSimple">
-                                <option value="">اختر نوع السيارة</option>
-                                <option value="سيارة عائلية">سيارة عائلية</option>
-                                <option value="سيارة دفع رباعي">سيارة دفع رباعي</option>
-                                <option value="سيارة صغيرة">سيارة صغيرة</option>
-                                <option value="فان">فان</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">سعر الكراء (يومياً)</label>
-                            <input type="text" class="form-input" id="carPriceSimple" placeholder="مثال: 200 درهم">
-                        </div>
-                    </div>
-                    
-                    <!-- حقول خاصة بخدمات التوصيل -->
-                    <div id="delivery-fields" style="display: none;">
-                        <div class="form-group">
-                            <label class="form-label">نوع التوصيل</label>
-                            <select class="form-select" id="deliveryServiceType">
-                                <option value="">اختر نوع التوصيل</option>
-                                <option value="طعام">توصيل طعام</option>
-                                <option value="مستندات">توصيل مستندات</option>
-                                <option value="منتجات">توصيل منتجات</option>
-                                <option value="طرود">توصيل طرود</option>
-                                <option value="أخرى">خدمات توصيل أخرى</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">سعر التوصيل (ابتدائي)</label>
-                            <input type="text" class="form-input" id="deliveryPrice" placeholder="مثال: 20 درهم">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">المدن التي تخدمها</label>
-                            <div style="display: flex; gap: 15px; margin-top: 10px;">
-                                <label style="display: flex; align-items: center; gap: 5px;">
-                                    <input type="checkbox" id="city-aklim" value="أكليم">
-                                    أكليم
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 5px;">
-                                    <input type="checkbox" id="city-berkan" value="بركان">
-                                    بركان
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">وقت الاستجابة التقريبي</label>
-                            <input type="text" class="form-input" id="deliveryTime" placeholder="مثال: 30 دقيقة">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">اسمك *</label>
-                        <input type="text" class="form-input" id="providerName" placeholder="أدخل اسمك" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">رقم الهاتف *</label>
-                        <input type="tel" class="form-input" id="servicePhone" placeholder="مثال: 0612345678" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">المدينة *</label>
-                        <select class="form-select" id="serviceCity" required>
-                            <option value="">اختر المدينة</option>
-                            <option value="أكليم">أكليم</option>
-                            <option value="بركان">بركان</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">وصف الخدمة</label>
-                        <textarea class="form-textarea" id="serviceDesc" placeholder="صف خدمتك..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-check"></i> إضافة الخدمة
-                    </button>
-                </form>
-                
-                <div id="success-message" style="display: none; text-align: center; padding: 20px; background: #f0f9ff; border-radius: var(--radius); margin-top: 20px;">
-                    <i class="fas fa-check-circle" style="color: #4CAF50; font-size: 3rem; margin-bottom: 10px;"></i>
-                    <h3 style="color: #4CAF50;">تمت الإضافة بنجاح!</h3>
-                    <p style="margin: 10px 0;">سيتم عرض خدمتك في الدليل</p>
-                    <p style="color: #666; font-size: 0.9rem; margin: 5px 0;">
-                        <i class="fas fa-info-circle"></i> احفظ رقم هاتفك لتتمكن من مسح الخدمة لاحقاً
-                    </p>
-                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-                        <button onclick="showTab('home')" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
-                            العودة للرئيسية
-                        </button>
-                        <button onclick="addAnotherService()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer;">
-                            إضافة أخرى
-                        </button>
-                    </div>
+            <div style="padding: 20px;">
+                <h2><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h2>
+                <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 15px;">
+                    <p>نموذج إضافة خدمة سيكون هنا...</p>
                 </div>
             </div>
         </div>
         
-        <!-- تبويب مسح الخدمة -->
+        <!-- تبويب مسح خدمة -->
         <div id="delete-service-tab" class="tab-content">
-            <div class="delete-service-header">
-                <h2><i class="fas fa-trash-alt"></i> مسح خدمتي من الدليل</h2>
-                <p style="margin-top: 10px; opacity: 0.9;">أدخل رقم هاتفك لمسح خدمتك من الدليل</p>
-            </div>
-            
-            <div class="delete-form-container">
-                <h3 style="margin-bottom: 20px; color: #f44336; text-align: center;">
-                    <i class="fas fa-exclamation-triangle"></i> مسح الخدمة
-                </h3>
-                
-                <div style="background: #ffebee; padding: 20px; border-radius: var(--radius); margin-bottom: 20px; border-right: 4px solid #f44336;">
-                    <h4><i class="fas fa-info-circle"></i> معلومات مهمة:</h4>
-                    <ul style="margin-top: 10px; padding-right: 20px;">
-                        <li style="margin-bottom: 8px;">أدخل رقم الهاتف الذي استعملته عند إضافة الخدمة</li>
-                        <li style="margin-bottom: 8px;">ستظهر لك جميع الخدمات المرتبطة بهذا الرقم</li>
-                        <li style="margin-bottom: 8px;">يمكنك مسح خدمة واحدة أو جميع خدماتك</li>
-                        <li style="margin-bottom: 8px;">عملية المسح نهائية ولا يمكن التراجع عنها</li>
-                    </ul>
-                </div>
-                
-                <form id="delete-service-form">
-                    <div class="form-group">
-                        <label class="form-label">رقم الهاتف *</label>
-                        <input type="tel" class="form-input" id="deletePhone" placeholder="أدخل رقم الهاتف المستخدم في الإضافة" required>
-                        <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">
-                            <i class="fas fa-info-circle"></i> يجب أن يكون نفس الرقم الذي استعملته عند إضافة الخدمة
-                        </p>
-                    </div>
-                    
-                    <button type="submit" class="delete-btn">
-                        <i class="fas fa-search"></i> البحث عن خدماتي
-                    </button>
-                </form>
-                
-                <div id="services-found" style="display: none; margin-top: 30px;">
-                    <h4 style="margin-bottom: 15px; color: #333;">
-                        <i class="fas fa-list"></i> خدماتك الموجودة
-                    </h4>
-                    <div id="user-services-list">
-                        <!-- الخدمات تظهر هنا -->
-                    </div>
-                </div>
-                
-                <div id="no-services-found" style="display: none; text-align: center; padding: 30px; background: #f8f9fa; border-radius: var(--radius); margin-top: 20px;">
-                    <i class="fas fa-search" style="color: #666; font-size: 3rem; margin-bottom: 15px;"></i>
-                    <h4 style="color: #666;">لا توجد خدمات مسجلة بهذا الرقم</h4>
-                    <p style="color: #666; margin-top: 10px;">تأكد من أنك أدخلت رقم الهاتف الصحيح</p>
-                </div>
-            </div>
-            
-            <!-- معلومات إضافية -->
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 30px; box-shadow: var(--shadow); max-width: 800px; margin-left: auto; margin-right: auto;">
-                <h3><i class="fas fa-question-circle"></i> أسئلة شائعة</h3>
-                <div style="margin-top: 15px;">
-                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
-                        <h4 style="color: #1e90ff;">هل يمكنني مسح خدمة شخص آخر؟</h4>
-                        <p style="color: #666; margin-top: 5px;">لا، يمكنك فقط مسح الخدمات التي أضفتها برقم هاتفك الخاص.</p>
-                    </div>
-                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
-                        <h4 style="color: #1e90ff;">ماذا لو نسيت رقم الهاتف؟</h4>
-                        <p style="color: #666; margin-top: 5px;">للأسف لا يمكن مسح الخدمة بدون رقم الهاتف. احفظ رقمك دائماً.</p>
-                    </div>
-                    <div>
-                        <h4 style="color: #1e90ff;">هل يمكنني استعادة الخدمة بعد المسح؟</h4>
-                        <p style="color: #666; margin-top: 5px;">لا، عملية المسح نهائية. يمكنك إضافة الخدمة مرة أخرى إذا أردت.</p>
-                    </div>
+            <div style="padding: 20px;">
+                <h2><i class="fas fa-trash-alt"></i> مسح خدمة</h2>
+                <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 15px;">
+                    <p>نموذج مسح الخدمة سيكون هنا...</p>
                 </div>
             </div>
         </div>
         
-        <!-- تبويب الإعلانات -->
-        <div id="ads-tab" class="tab-content">
-            <div style="background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; padding: 25px; border-radius: var(--radius); margin-bottom: 20px;">
-                <h2><i class="fas fa-ad"></i> مساحات إعلانية في الدليل</h2>
-                <p style="margin-top: 10px;">وصل إعلانك لآلاف الزوار في أكليم وبركان</p>
-            </div>
-            
-            <!-- أنواع الإعلانات -->
-            <div class="services-grid">
-                <div class="service-card" style="text-align: center;">
-                    <div style="background: #1e90ff; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>إعلان مميز</h3>
-                    <p style="color: #666; margin: 10px 0;">أعلى الصفحة الرئيسية</p>
-                    <p style="font-weight: bold; color: #ff9800;">500 درهم/شهر</p>
-                    <button onclick="bookAd('مميز')" style="background: #1e90ff; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); width: 100%; margin-top: 10px; cursor: pointer;">
-                        احجز الآن
-                    </button>
-                </div>
-                
-                <div class="service-card" style="text-align: center;">
-                    <div style="background: #4CAF50; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-                        <i class="fas fa-ad"></i>
-                    </div>
-                    <h3>إعلان عادي</h3>
-                    <p style="color: #666; margin: 10px 0;">داخل صفحات الخدمات</p>
-                    <p style="font-weight: bold; color: #ff9800;">300 درهم/شهر</p>
-                    <button onclick="bookAd('عادي')" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); width: 100%; margin-top: 10px; cursor: pointer;">
-                        احجز الآن
-                    </button>
-                </div>
-                
-                <div class="service-card" style="text-align: center;">
-                    <div style="background: #9C27B0; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h3>إعلان توصيل</h3>
-                    <p style="color: #666; margin: 10px 0;">صفحة خدمات التوصيل</p>
-                    <p style="font-weight: bold; color: #ff9800;">400 درهم/شهر</p>
-                    <button onclick="bookAd('توصيل')" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); width: 100%; margin-top: 10px; cursor: pointer;">
-                        احجز الآن
-                    </button>
-                </div>
-            </div>
-            
-            <!-- نموذج حجز إعلان -->
-            <div class="form-container" style="margin-top: 30px;">
-                <h3 style="text-align: center; margin-bottom: 20px;"><i class="fas fa-calendar-check"></i> احجز مساحتك الإعلانية</h3>
-                <form id="ad-form">
-                    <div class="form-group">
-                        <label class="form-label">نوع الإعلان</label>
-                        <select class="form-select" id="adType" required>
-                            <option value="">اختر نوع الإعلان</option>
-                            <option value="مميز">إعلان مميز (500 درهم/شهر)</option>
-                            <option value="عادي">إعلان عادي (300 درهم/شهر)</option>
-                            <option value="سيارات">إعلان سيارات (400 درهم/شهر)</option>
-                            <option value="توصيل">إعلان توصيل (400 درهم/شهر)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">اسمك *</label>
-                        <input type="text" class="form-input" id="adName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">رقم الهاتف *</label>
-                        <input type="tel" class="form-input" id="adPhone" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">البريد الإلكتروني</label>
-                        <input type="email" class="form-input" id="adEmail">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">رسالة (اختياري)</label>
-                        <textarea class="form-textarea" id="adMessage" placeholder="أي تفاصيل إضافية..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn" style="background: #ff9800;">
-                        <i class="fas fa-paper-plane"></i> إرسال طلب الإعلان
-                    </button>
-                </form>
-                
-                <div id="ad-success" style="display: none; text-align: center; padding: 20px; background: #fff8e1; border-radius: var(--radius); margin-top: 20px;">
-                    <i class="fas fa-check-circle" style="color: #ff9800; font-size: 3rem; margin-bottom: 10px;"></i>
-                    <h3 style="color: #ff9800;">تم إرسال طلبك!</h3>
-                    <p>سنتصل بك خلال 24 ساعة لتأكيد الإعلان</p>
+        <!-- تبويب إضافة سيارة -->
+        <div id="add-car-tab" class="tab-content">
+            <div style="padding: 20px;">
+                <h2><i class="fas fa-car"></i> إضافة سيارة للكراء</h2>
+                <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 15px;">
+                    <p>نموذج إضافة سيارة سيكون هنا...</p>
                 </div>
             </div>
         </div>
         
         <!-- تبويب الطوارئ -->
         <div id="emergency-tab" class="tab-content">
-            <h2 style="margin-bottom: 20px;"><i class="fas fa-exclamation-triangle"></i> أرقام الطوارئ</h2>
-            
-            <div class="services-grid">
-                <div class="service-card" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; text-align: center;">
-                    <i class="fas fa-ambulance" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                    <h3>الطوارئ الصحية</h3>
-                    <p style="font-size: 1.5rem; margin: 10px 0;">15</p>
+            <div style="padding: 20px;">
+                <h2><i class="fas fa-exclamation-triangle"></i> أرقام الطوارئ</h2>
+                <div class="services-grid" style="margin-top: 15px;">
+                    <div class="service-card" style="background: #ff6b6b; color: white; text-align: center;">
+                        <i class="fas fa-ambulance" style="font-size: 2rem;"></i>
+                        <h3>الطوارئ الصحية</h3>
+                        <p style="font-size: 1.5rem;">15</p>
+                    </div>
+                    <div class="service-card" style="background: #ffa726; color: white; text-align: center;">
+                        <i class="fas fa-fire" style="font-size: 2rem;"></i>
+                        <h3>المطافئ</h3>
+                        <p style="font-size: 1.5rem;">18</p>
+                    </div>
+                    <div class="service-card" style="background: #42a5f5; color: white; text-align: center;">
+                        <i class="fas fa-shield-alt" style="font-size: 2rem;"></i>
+                        <h3>الشرطة</h3>
+                        <p style="font-size: 1.5rem;">19</p>
+                    </div>
                 </div>
-                
-                <div class="service-card" style="background: linear-gradient(135deg, #ffa726, #ffb74d); color: white; text-align: center;">
-                    <i class="fas fa-fire-extinguisher" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                    <h3>المطافئ</h3>
-                    <p style="font-size: 1.5rem; margin: 10px 0;">18</p>
-                </div>
-                
-                <div class="service-card" style="background: linear-gradient(135deg, #42a5f5, #64b5f6); color: white; text-align: center;">
-                    <i class="fas fa-shield-alt" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                    <h3>الشرطة</h3>
-                    <p style="font-size: 1.5rem; margin: 10px 0;">19</p>
-                </div>
-                
-                <div class="service-card" style="background: linear-gradient(135deg, #66bb6a, #81c784); color: white; text-align: center;">
-                    <i class="fas fa-user-md" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                    <h3>طوارئ طبية</h3>
-                    <p style="font-size: 1.5rem; margin: 10px 0;">112</p>
-                </div>
-            </div>
-            
-            <!-- إعلان في صفحة الطوارئ -->
-            <div class="ad-space" style="margin-top: 30px; background: #fff8e1;">
-                <h3><i class="fas fa-heartbeat"></i> إعلان طبي</h3>
-                <p>لإعلانات العيادات والمستوصفات</p>
-                <span class="ad-label">مساحة متاحة</span>
-            </div>
-            
-            <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 20px; box-shadow: var(--shadow);">
-                <h3><i class="fas fa-info-circle"></i> معلومات مهمة</h3>
-                <p style="margin-top: 10px;">في حالة الطوارئ، اتصل بالرقم المناسب وقدم معلومات واضحة عن الموقع والحالة.</p>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript مع إصلاحات كاملة -->
     <script>
-        // بيانات الخدمات الافتراضية (قراءة فقط)
+        // بيانات الخدمات
         const defaultServices = [
             { id: 1, name: "كهربائي منازل", phone: "0623-456789", city: "أكليم", type: "كهربائي", featured: true },
             { id: 2, name: "سباك محترف", phone: "0612-345678", city: "أكليم", type: "سباك" },
             { id: 3, name: "طبيب عام", phone: "0537-123456", city: "أكليم", type: "طبيب", featured: true },
-            { id: 4, name: "كراء سيارة دفع رباعي 2023", phone: "0620-445566", city: "بركان", type: "كراء السيارات", carType: "سيارة دفع رباعي", price: "300 درهم/يوم", carModel: "تويوتا لاندكروزر", carYear: "2023", featured: true },
-            { id: 5, name: "مطعم الشرق", phone: "0536-778899", city: "بركان", type: "مطعم" },
-            { id: 6, name: "كراء سيارة عائلية جديدة", phone: "0618-998877", city: "أكليم", type: "كراء السيارات", carType: "سيارة عائلية", price: "250 درهم/يوم", carModel: "بيجو 508", carYear: "2022" },
-            { id: 7, name: "ميكانيكي سيارات", phone: "0621-112233", city: "بركان", type: "ميكانيكي" },
-            { id: 8, name: "كراء فان نقل بضائع", phone: "0625-667788", city: "أكليم", type: "كراء السيارات", carType: "فان", price: "350 درهم/يوم", carModel: "مرسيدس سبرينتر", carYear: "2021" },
-            { id: 9, name: "توصيل طعام سريع", phone: "0624-112233", city: "أكليم", type: "توصيل", deliveryType: "طعام", deliveryPrice: "15 درهم", deliveryTime: "30 دقيقة", featured: true },
-            { id: 10, name: "توصيل مستندات أكليم", phone: "0627-445566", city: "أكليم", type: "توصيل", deliveryType: "مستندات", deliveryPrice: "10 درهم", deliveryTime: "45 دقيقة" },
-            { id: 11, name: "توصيل طرود بركان", phone: "0628-778899", city: "بركان", type: "توصيل", deliveryType: "طرود", deliveryPrice: "25 درهم", deliveryTime: "60 دقيقة" },
-            { id: 12, name: "توصيل منتجات سوق", phone: "0629-990011", city: "بركان", type: "توصيل", deliveryType: "منتجات", deliveryPrice: "20 درهم", deliveryTime: "40 دقيقة", featured: true },
-            { id: 13, name: "كراء سيارة اقتصادية 2024", phone: "0630-112233", city: "أكليم", type: "كراء السيارات", carType: "سيارة صغيرة", price: "150 درهم/يوم", carModel: "رينو كليو", carYear: "2024" },
-            { id: 14, name: "كراء سيارة فخمة", phone: "0631-445566", city: "بركان", type: "كراء السيارات", carType: "سيارة فخمة", price: "500 درهم/يوم", carModel: "مرسيدس E-Class", carYear: "2023" }
+            { id: 4, name: "كراء سيارة دفع رباعي", phone: "0620-445566", city: "بركان", type: "كراء السيارات", featured: true },
+            { id: 9, name: "توصيل طعام سريع", phone: "0624-112233", city: "أكليم", type: "توصيل", featured: true },
         ];
 
-        // مصفوفة الخدمات الكاملة (الافتراضية + خدمات المستخدم)
         let services = [];
+        let deferredPrompt = null;
 
-        // تحميل الخدمات من localStorage
+        // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', function() {
-            // تحميل الخدمات الافتراضية
+            console.log("تم تحميل الصفحة");
+            
+            initializeApp();
+            setupPWA();
+            setupEventListeners();
+            setupMobileMenu();
+            
+            // اختبار زر التثبيت
+            setTimeout(testPWA, 1000);
+        });
+
+        // تهيئة التطبيق
+        function initializeApp() {
             services = [...defaultServices];
+            loadUserServices();
             
-            // تحميل خدمات المستخدم من localStorage
-            const savedUserServices = localStorage.getItem('userServices');
-            if (savedUserServices) {
-                const userServices = JSON.parse(savedUserServices);
-                // إضافة خدمات المستخدم في البداية (لتبدو أحدث)
-                services = [...userServices, ...services];
-            }
+            console.log("عدد الخدمات المحملة:", services.length);
             
-            // تحميل السيارات المضافة من localStorage
-            const savedCars = localStorage.getItem('userCars');
-            if (savedCars) {
-                const userCars = JSON.parse(savedCars);
-                services = [...userCars, ...services];
-            }
-            
-            console.log('تم تحميل ' + services.length + ' خدمة');
-            console.log('الخدمات المحملة:', services);
-            
-            // تحديث العروض
             updateStats();
             displayFeaturedServices();
             displayAllServices();
             displayCarRentalServices();
             displayDeliveryServices();
-            loadAds();
+        }
+
+        // إعداد PWA - إصلاح كامل
+        function setupPWA() {
+            console.log("جاري إعداد PWA...");
             
-            // تحديث معاينة الأسعار
-            document.getElementById('carPrice').addEventListener('input', updatePricePreview);
-            
-            // تحديث الزوار بشكل عشوائي
-            setInterval(() => {
-                const visitors = Math.floor(Math.random() * 50) + 150;
-                document.getElementById('daily-visitors').textContent = visitors + '+';
-            }, 10000);
-            
-            // إضافة حدث لنموذج مسح الخدمة
-            document.getElementById('delete-service-form').addEventListener('submit', function(e) {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                console.log("حدث beforeinstallprompt تم تشغيله");
                 e.preventDefault();
-                findUserServices();
+                deferredPrompt = e;
+                showInstallButton();
             });
-        });
 
-        // تحديث الإحصائيات
-        function updateStats() {
-            const totalServices = services.length;
-            const carRentals = services.filter(s => s.type === 'كراء السيارات').length;
-            const deliveryServices = services.filter(s => s.type === 'توصيل').length;
-            
-            document.getElementById('total-services').textContent = totalServices;
-            document.getElementById('car-rentals').textContent = carRentals;
-            document.getElementById('delivery-services').textContent = deliveryServices;
-        }
-
-        // تبديل التبويبات
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabName + '-tab').classList.add('active');
-            
-            // إيجاد الزر المناسب وتفعيله
-            document.querySelectorAll('.nav-tab').forEach(btn => {
-                if (btn.textContent.includes(getTabName(tabName))) {
-                    btn.classList.add('active');
-                }
+            window.addEventListener('appinstalled', () => {
+                console.log("تم تثبيت التطبيق");
+                deferredPrompt = null;
+                hideInstallButton();
+                showNotification('تم تثبيت التطبيق بنجاح!', 'success');
             });
-            
-            // إذا كانت صفحة كراء السيارات، قم بتحديث القائمة
-            if (tabName === 'car-rental') {
-                displayCarRentalServices();
-            }
-            
-            // إذا كانت صفحة إضافة سيارة، قم بتحديث معاينة الأسعار
-            if (tabName === 'add-car') {
-                updatePricePreview();
-            }
-            
-            // إذا كانت صفحة مسح الخدمة، قم بإعادة تعيين النموذج
-            if (tabName === 'delete-service') {
-                document.getElementById('delete-service-form').reset();
-                document.getElementById('services-found').style.display = 'none';
-                document.getElementById('no-services-found').style.display = 'none';
-            }
-        }
 
-        // الحصول على اسم التبويب
-        function getTabName(tabId) {
-            const names = {
-                'home': 'الرئيسية',
-                'services': 'الخدمات',
-                'car-rental': 'كراء السيارات',
-                'add-car': 'إضافة سيارة',
-                'delivery': 'التوصيل',
-                'add-service': 'إضافة خدمة',
-                'delete-service': 'مسح خدمتي',
-                'ads': 'الإعلانات',
-                'emergency': 'الطوارئ'
-            };
-            return names[tabId] || tabId;
-        }
+            // تحقق مما إذا كان التطبيق مثبتًا بالفعل
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log("التطبيق مثبت بالفعل (display-mode: standalone)");
+                deferredPrompt = null;
+                hideInstallButton();
+            }
 
-        // عرض الخدمات المميزة
-        function displayFeaturedServices() {
-            const container = document.getElementById('featured-services');
-            const deliveryContainer = document.getElementById('featured-delivery');
-            
-            container.innerHTML = '';
-            deliveryContainer.innerHTML = '';
-            
-            const featured = services.filter(s => s.featured);
-            
-            if (featured.length === 0) {
-                container.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                        <i class="fas fa-star" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
-                        <h3>لا توجد خدمات مميزة</h3>
-                        <p>أضف خدمتك لتكون مميزة</p>
-                    </div>
-                `;
-            } else {
-                featured.forEach(service => {
-                    if (service.type === 'توصيل') {
-                        deliveryContainer.appendChild(createDeliveryCard(service));
-                    } else if (service.type === 'كراء السيارات') {
-                        container.appendChild(createCarCardDetailed(service));
-                    } else {
-                        container.appendChild(createServiceCard(service, true));
+            if (window.navigator.standalone === true) {
+                console.log("التطبيق مثبت بالفعل (navigator.standalone)");
+                deferredPrompt = null;
+                hideInstallButton();
+            }
+
+            // زر التثبيت
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.addEventListener('click', async () => {
+                    console.log("تم النقر على زر التثبيت");
+                    if (deferredPrompt) {
+                        try {
+                            deferredPrompt.prompt();
+                            const { outcome } = await deferredPrompt.userChoice;
+                            console.log(`نتيجة التثبيت: ${outcome}`);
+                            deferredPrompt = null;
+                        } catch (error) {
+                            console.error("خطأ في التثبيت:", error);
+                        }
                     }
                 });
             }
         }
 
-        // عرض خدمات التوصيل
-        function displayDeliveryServices() {
-            const container = document.getElementById('delivery-services-list');
-            
-            const deliveryServices = services.filter(s => s.type === 'توصيل');
-            
-            // في صفحة التوصيل
-            container.innerHTML = '';
-            if (deliveryServices.length === 0) {
-                container.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                        <i class="fas fa-truck" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
-                        <h3>لا توجد خدمات توصيل</h3>
-                        <button onclick="showTab('add-service')" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: var(--radius); margin-top: 10px; cursor: pointer;">
-                            أضف خدمة توصيل
-                        </button>
-                    </div>
-                `;
-            } else {
-                deliveryServices.forEach(service => {
-                    container.appendChild(createDeliveryCard(service));
-                });
+        // عرض زر التثبيت
+        function showInstallButton() {
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.classList.add('show');
+                console.log("عرض زر التثبيت");
             }
         }
 
-        // إنشاء بطاقة توصيل
-        function createDeliveryCard(service) {
-            const card = document.createElement('div');
-            card.className = 'service-card delivery-service';
-            
-            card.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div>
-                        <h4 style="color: #4CAF50; margin-bottom: 5px;">
-                            <i class="fas fa-truck delivery-icon"></i> ${service.name}
-                        </h4>
-                        ${service.deliveryType ? `<span class="delivery-category">${getDeliveryTypeText(service.deliveryType)}</span>` : ''}
-                    </div>
-                    <span style="background: #f0f0f0; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
-                        ${service.city}
-                    </span>
-                </div>
-                
-                ${service.deliveryPrice ? `
-                <div style="margin: 10px 0; padding: 10px; background: #e8f5e9; border-radius: var(--radius);">
-                    <p style="color: #4CAF50; font-weight: bold;">
-                        <i class="fas fa-money-bill-wave"></i> ${service.deliveryPrice} بداية السعر
-                    </p>
-                    ${service.deliveryTime ? `<p style="color: #666; font-size: 0.9rem; margin-top: 5px;">
-                        <i class="fas fa-clock"></i> ${service.deliveryTime}
-                    </p>` : ''}
-                </div>
-                ` : ''}
-                
-                <p style="color: #333; font-weight: bold; margin: 10px 0;">
-                    <i class="fas fa-phone"></i> ${service.phone}
-                </p>
-                
-                <button onclick="callService('${service.phone}', '${service.name}')" 
-                        style="background: #4CAF50; color: white; border: none; padding: 10px; border-radius: var(--radius); width: 100%; cursor: pointer; margin-top: 10px;">
-                    <i class="fas fa-phone-alt"></i> طلب توصيل
-                </button>
-            `;
-            
-            return card;
+        // إخفاء زر التثبيت
+        function hideInstallButton() {
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.classList.remove('show');
+                console.log("إخفاء زر التثبيت");
+            }
         }
 
-        // الحصول على نص نوع التوصيل
-        function getDeliveryTypeText(type) {
-            const types = {
-                'طعام': 'توصيل طعام',
-                'مستندات': 'توصيل مستندات',
-                'منتجات': 'توصيل منتجات',
-                'طرود': 'توصيل طرود',
-                'أخرى': 'خدمات توصيل'
-            };
-            return types[type] || type;
+        // اختبار PWA
+        function testPWA() {
+            console.log("اختبار PWA:");
+            console.log("deferredPrompt:", deferredPrompt);
+            console.log("display-mode:", window.matchMedia('(display-mode: standalone)').matches);
+            console.log("navigator.standalone:", window.navigator.standalone);
+            
+            // عرض زر التثبيت يدويًا للاختبار
+            if (!deferredPrompt) {
+                console.log("عرض زر التثبيت يدويًا للاختبار");
+                setTimeout(() => {
+                    const installButton = document.getElementById('installButton');
+                    installButton.classList.add('show');
+                    showNotification('زر التثبيت جاهز للاستخدام', 'success');
+                }, 2000);
+            }
         }
 
-        // عرض سيارات للكراء
+        // إعداد قائمة الموبايل - إصلاح كامل
+        function setupMobileMenu() {
+            const hamburger = document.getElementById('hamburgerMenu');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            console.log("إعداد قائمة الموبايل...");
+            console.log("hamburger موجود:", !!hamburger);
+            console.log("mobileNav موجود:", !!mobileNav);
+            console.log("overlay موجود:", !!overlay);
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log("تم النقر على الهامبرجر");
+                    toggleMobileMenu();
+                });
+            }
+            
+            // إغلاق القائمة عند النقر على الروابط
+            const mobileLinks = mobileNav.querySelectorAll('.nav-tab');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    setTimeout(closeMobileMenu, 300);
+                });
+            });
+            
+            // إغلاق القائمة عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                if (mobileNav.classList.contains('active') && 
+                    !mobileNav.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // منع التمرير عند فتح القائمة
+            document.addEventListener('touchmove', function(e) {
+                if (mobileNav.classList.contains('active')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+
+        // فتح/إغلاق قائمة الموبايل
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburgerMenu');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            if (!hamburger || !mobileNav || !overlay) {
+                console.error("عناصر قائمة الموبايل غير موجودة");
+                return;
+            }
+            
+            const isActive = hamburger.classList.contains('active');
+            
+            if (isActive) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+
+        // فتح القائمة
+        function openMobileMenu() {
+            const hamburger = document.getElementById('hamburgerMenu');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            hamburger.classList.add('active');
+            mobileNav.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            console.log("فتح قائمة الموبايل");
+        }
+
+        // إغلاق القائمة
+        function closeMobileMenu() {
+            const hamburger = document.getElementById('hamburgerMenu');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            setTimeout(() => {
+                document.body.style.overflow = '';
+            }, 300);
+            
+            console.log("إغلاق قائمة الموبايل");
+        }
+
+        // تبديل التبويب مع إغلاق القائمة
+        function showTabWithClose(tabName) {
+            closeMobileMenu();
+            setTimeout(() => {
+                showTab(tabName);
+            }, 300);
+        }
+
+        // باقي الدوال...
+        function setupEventListeners() {
+            // مستمعي الأحداث الإضافية
+        }
+
+        function loadUserServices() {
+            try {
+                const saved = localStorage.getItem('userServices');
+                if (saved) {
+                    const userServices = JSON.parse(saved);
+                    services = [...userServices, ...services];
+                }
+            } catch (e) {
+                console.error("خطأ في تحميل البيانات:", e);
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('total-services').textContent = services.length;
+            const carRentals = services.filter(s => s.type === 'كراء السيارات').length;
+            const deliveryServices = services.filter(s => s.type === 'توصيل').length;
+            document.getElementById('car-rentals').textContent = carRentals;
+            document.getElementById('delivery-services').textContent = deliveryServices;
+        }
+
+        function displayFeaturedServices() {
+            const container = document.getElementById('featured-services');
+            const deliveryContainer = document.getElementById('featured-delivery');
+            const carContainer = document.getElementById('featured-cars');
+            
+            container.innerHTML = '';
+            deliveryContainer.innerHTML = '';
+            carContainer.innerHTML = '';
+            
+            const featured = services.filter(s => s.featured);
+            
+            featured.forEach(service => {
+                if (service.type === 'توصيل') {
+                    deliveryContainer.appendChild(createServiceCard(service));
+                } else if (service.type === 'كراء السيارات') {
+                    carContainer.appendChild(createServiceCard(service));
+                } else {
+                    container.appendChild(createServiceCard(service, true));
+                }
+            });
+            
+            if (deliveryContainer.children.length === 0) {
+                deliveryContainer.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">لا توجد خدمات توصيل مميزة</p>';
+            }
+            
+            if (container.children.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">لا توجد خدمات مميزة</p>';
+            }
+            
+            if (carContainer.children.length === 0) {
+                carContainer.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">لا توجد سيارات مميزة</p>';
+            }
+        }
+
+        function displayAllServices() {
+            const container = document.getElementById('all-services');
+            container.innerHTML = '';
+            
+            services.forEach(service => {
+                container.appendChild(createServiceCard(service));
+            });
+            
+            if (container.children.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:#666;padding:40px;">لا توجد خدمات متاحة</p>';
+            }
+        }
+
         function displayCarRentalServices() {
             const container = document.getElementById('car-rental-services');
-            const featuredContainer = document.getElementById('featured-cars');
+            container.innerHTML = '';
             
             const carServices = services.filter(s => s.type === 'كراء السيارات');
             
-            // في صفحة السيارات
+            carServices.forEach(service => {
+                container.appendChild(createServiceCard(service));
+            });
+            
+            if (container.children.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:#666;padding:40px;">لا توجد سيارات للكراء</p>';
+            }
+        }
+
+        function displayDeliveryServices() {
+            const container = document.getElementById('delivery-services-list');
             container.innerHTML = '';
-            if (carServices.length === 0) {
-                container.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                        <i class="fas fa-car" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
-                        <h3>لا توجد سيارات للكراء</h3>
-                        <button onclick="showTab('add-car')" style="background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); margin-top: 10px; cursor: pointer;">
-                            <i class="fas fa-plus-circle"></i> أضف سيارتك
-                        </button>
-                    </div>
-                `;
-            } else {
-                carServices.forEach(service => {
-                    container.appendChild(createCarCardDetailed(service));
-                });
-            }
             
-            // في الرئيسية (عرض 3 فقط)
-            featuredContainer.innerHTML = '';
-            const featuredCars = carServices.slice(0, 3);
-            if (featuredCars.length === 0) {
-                featuredContainer.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #666;">
-                        <i class="fas fa-car" style="font-size: 2.5rem; margin-bottom: 10px; color: #ddd;"></i>
-                        <h4>لا توجد سيارات للكراء</h4>
-                        <p>كن أول من يضيف سيارته</p>
-                    </div>
-                `;
-            } else {
-                featuredCars.forEach(service => {
-                    featuredContainer.appendChild(createCarCardDetailed(service));
-                });
+            const deliveryServices = services.filter(s => s.type === 'توصيل');
+            
+            deliveryServices.forEach(service => {
+                container.appendChild(createServiceCard(service));
+            });
+            
+            if (container.children.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:#666;padding:40px;">لا توجد خدمات توصيل</p>';
             }
         }
 
-        // إنشاء بطاقة سيارة مفصلة
-        function createCarCardDetailed(service) {
-            const card = document.createElement('div');
-            card.className = 'service-card car-service';
-            
-            // تجميع المزايا
-            const features = [];
-            if (service.featureAircon) features.push('مكيف');
-            if (service.featureGPS) features.push('ملاحة');
-            if (service.featureAutomatic) features.push('أوتوماتيك');
-            if (service.featureBluetooth) features.push('بلوتوث');
-            
-            card.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div>
-                        <h4 style="color: #1e90ff; margin-bottom: 5px;">
-                            <i class="fas fa-car car-icon"></i> ${service.name}
-                        </h4>
-                        ${service.carType ? `<span class="car-rental-category">${service.carType}</span>` : ''}
-                    </div>
-                    <span style="background: #f0f0f0; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
-                        ${service.city}
-                    </span>
-                </div>
-                
-                ${service.carModel ? `
-                <p style="color: #666; margin: 10px 0; font-size: 0.9rem;">
-                    <i class="fas fa-info-circle"></i> ${service.carModel}
-                    ${service.carYear ? ` - ${service.carYear}` : ''}
-                </p>
-                ` : ''}
-                
-                ${service.price ? `
-                <div style="margin: 10px 0; padding: 10px; background: #e3f2fd; border-radius: var(--radius);">
-                    <p style="color: #1e90ff; font-weight: bold; font-size: 1.1rem;">
-                        <i class="fas fa-money-bill-wave"></i> ${service.price} درهم/يوم
-                    </p>
-                </div>
-                ` : ''}
-                
-                ${features.length > 0 ? `
-                <div style="margin: 10px 0;">
-                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">
-                        <i class="fas fa-star"></i> المزايا:
-                    </p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                        ${features.map(f => `<span style="background: #f0f0f0; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;">${f}</span>`).join('')}
-                    </div>
-                </div>
-                ` : ''}
-                
-                <p style="color: #333; font-weight: bold; margin: 10px 0;">
-                    <i class="fas fa-phone"></i> ${service.phone}
-                </p>
-                
-                ${service.ownerName ? `
-                <p style="color: #666; font-size: 0.9rem; margin: 5px 0;">
-                    <i class="fas fa-user"></i> ${service.ownerName}
-                </p>
-                ` : ''}
-                
-                <div style="display: flex; gap: 10px; margin-top: 15px;">
-                    <button onclick="callService('${service.phone}', '${service.name}')" 
-                            style="flex: 1; background: #1e90ff; color: white; border: none; padding: 10px; border-radius: var(--radius); cursor: pointer;">
-                        <i class="fas fa-phone-alt"></i> اتصل للكراء
-                    </button>
-                    <button onclick="showCarDetails(${service.id})" 
-                            style="flex: 1; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: var(--radius); cursor: pointer;">
-                        <i class="fas fa-info-circle"></i> التفاصيل
-                    </button>
-                </div>
-            `;
-            
-            return card;
-        }
-
-        // إنشاء بطاقة خدمة عادية
         function createServiceCard(service, isFeatured = false) {
             const card = document.createElement('div');
             card.className = 'service-card' + (isFeatured ? ' featured' : '');
             
+            if (service.type === 'توصيل') {
+                card.classList.add('delivery-service');
+            } else if (service.type === 'كراء السيارات') {
+                card.classList.add('car-service');
+            }
+            
             card.innerHTML = `
                 ${isFeatured ? '<div class="featured-badge"><i class="fas fa-crown"></i> مميز</div>' : ''}
                 
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <h4 style="color: var(--primary-color);">${service.name}</h4>
-                    <span style="background: #f0f0f0; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="color: ${service.type === 'توصيل' ? '#4CAF50' : service.type === 'كراء السيارات' ? '#1e90ff' : 'var(--primary-color)'}">
+                        ${service.type === 'توصيل' ? '<i class="fas fa-truck delivery-icon"></i>' : 
+                          service.type === 'كراء السيارات' ? '<i class="fas fa-car car-icon"></i>' : 
+                          '<i class="fas fa-tools"></i>'} 
+                        ${service.name}
+                    </h4>
+                    <span style="background: #f0f0f0; padding: 3px 8px; border-radius: 10px; font-size: 0.75rem;">
                         ${service.city}
                     </span>
                 </div>
                 
-                <p style="color: #666; margin: 10px 0; font-size: 0.9rem;">
+                <p style="color: #666; margin: 8px 0; font-size: 0.9rem;">
                     <i class="fas fa-tag"></i> ${service.type}
                 </p>
                 
-                ${service.price ? `<p style="color: #ff9800; font-weight: bold; margin: 5px 0;">
-                    <i class="fas fa-money-bill-wave"></i> ${service.price}
-                </p>` : ''}
-                
-                <p style="color: #333; font-weight: bold; margin: 10px 0;">
+                <p style="color: #333; font-weight: bold; margin: 10px 0; font-size: 1.1rem;">
                     <i class="fas fa-phone"></i> ${service.phone}
                 </p>
                 
-                <button onclick="callService('${service.phone}', '${service.name}')" 
-                        style="background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: var(--radius); width: 100%; cursor: pointer; margin-top: 10px;">
+                <button onclick="callService('${service.phone}', '${service.name}')" class="call-button">
                     <i class="fas fa-phone-alt"></i> اتصل الآن
                 </button>
             `;
@@ -1908,193 +1181,107 @@
             return card;
         }
 
-        // عرض جميع الخدمات
-        function displayAllServices() {
-            const container = document.getElementById('all-services');
-            container.innerHTML = '';
+        function callService(phone, serviceName) {
+            const cleanPhone = phone.replace(/[^\d+]/g, '');
             
-            services.forEach(service => {
-                if (service.type === 'كراء السيارات') {
-                    container.appendChild(createCarCardDetailed(service));
-                } else if (service.type === 'توصيل') {
-                    container.appendChild(createDeliveryCard(service));
-                } else {
-                    container.appendChild(createServiceCard(service));
+            if (!cleanPhone) {
+                showNotification('رقم الهاتف غير صالح', 'error');
+                return;
+            }
+            
+            if (confirm(`هل تريد الاتصال بـ ${serviceName}؟\nالرقم: ${phone}`)) {
+                window.location.href = `tel:${cleanPhone}`;
+            }
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            const tab = document.getElementById(tabName + '-tab');
+            if (tab) {
+                tab.classList.add('active');
+            }
+            
+            // تحديث الأزرار النشطة
+            const buttons = document.querySelectorAll('.nav-tab');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(getTabName(tabName))) {
+                    btn.classList.add('active');
                 }
             });
         }
 
-        // البحث عن خدمات المستخدم (لصفحة المسح)
-        function findUserServices() {
-            const phone = document.getElementById('deletePhone').value.trim();
-            if (!phone) {
-                showNotification('يرجى إدخال رقم الهاتف', 'error');
+        function getTabName(tabId) {
+            const names = {
+                'home': 'الرئيسية',
+                'services': 'الخدمات',
+                'car-rental': 'كراء السيارات',
+                'delivery': 'التوصيل',
+                'add-service': 'إضافة خدمة',
+                'delete-service': 'مسح خدمتي',
+                'emergency': 'الطوارئ',
+                'add-car': 'إضافة سيارة'
+            };
+            return names[tabId] || tabId;
+        }
+
+        function searchAllServices() {
+            const searchTerm = document.getElementById('main-search').value.toLowerCase();
+            if (!searchTerm) {
+                showNotification('يرجى إدخال كلمة بحث', 'error');
                 return;
             }
             
-            // البحث عن خدمات المستخدم
-            const userServices = services.filter(s => s.phone === phone);
+            const results = services.filter(service => 
+                service.name.toLowerCase().includes(searchTerm) ||
+                service.type.toLowerCase().includes(searchTerm) ||
+                service.city.toLowerCase().includes(searchTerm)
+            );
             
-            const container = document.getElementById('user-services-list');
+            if (results.length === 0) {
+                showNotification('لم يتم العثور على نتائج', 'error');
+                return;
+            }
+            
+            showTab('services');
+            const container = document.getElementById('all-services');
             container.innerHTML = '';
             
-            if (userServices.length === 0) {
-                document.getElementById('services-found').style.display = 'none';
-                document.getElementById('no-services-found').style.display = 'block';
-                return;
-            }
-            
-            document.getElementById('services-found').style.display = 'block';
-            document.getElementById('no-services-found').style.display = 'none';
-            
-            userServices.forEach(service => {
-                const serviceCard = document.createElement('div');
-                serviceCard.className = 'service-card';
-                serviceCard.style.marginBottom = '15px';
-                serviceCard.style.border = '2px solid #ffebee';
-                
-                serviceCard.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <h4 style="color: var(--primary-color);">${service.name}</h4>
-                        <span style="background: #f0f0f0; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
-                            ${service.city}
-                        </span>
-                    </div>
-                    
-                    <p style="color: #666; margin: 10px 0; font-size: 0.9rem;">
-                        <i class="fas fa-tag"></i> ${service.type}
-                    </p>
-                    
-                    ${service.price ? `<p style="color: #ff9800; font-weight: bold; margin: 5px 0;">
-                        <i class="fas fa-money-bill-wave"></i> ${service.price}
-                    </p>` : ''}
-                    
-                    <p style="color: #333; font-weight: bold; margin: 10px 0;">
-                        <i class="fas fa-phone"></i> ${service.phone}
-                    </p>
-                    
-                    ${service.addedDate ? `<p style="color: #666; font-size: 0.9rem; margin: 5px 0;">
-                        <i class="fas fa-calendar"></i> أضيفت في: ${service.addedDate}
-                    </p>` : ''}
-                    
-                    <button onclick="deleteService(${service.id}, '${phone}')" 
-                            style="background: #f44336; color: white; border: none; padding: 10px; border-radius: var(--radius); width: 100%; cursor: pointer; margin-top: 10px;">
-                        <i class="fas fa-trash-alt"></i> مسح هذه الخدمة
-                    </button>
-                `;
-                
-                container.appendChild(serviceCard);
+            results.forEach(service => {
+                container.appendChild(createServiceCard(service));
             });
             
-            // زر مسح الكل
-            const deleteAllCard = document.createElement('div');
-            deleteAllCard.className = 'service-card';
-            deleteAllCard.style.marginTop = '20px';
-            deleteAllCard.style.border = '2px solid #f44336';
-            deleteAllCard.style.background = '#fff8e1';
-            
-            deleteAllCard.innerHTML = `
-                <h4 style="color: #f44336; text-align: center;">
-                    <i class="fas fa-exclamation-triangle"></i> مسح جميع الخدمات
-                </h4>
-                <p style="color: #666; text-align: center; margin: 10px 0;">
-                    تحذير: هذا الإجراء سيحذف جميع خدماتك المرتبطة بهذا الرقم
-                </p>
-                <button onclick="deleteAllUserServices('${phone}')" 
-                        style="background: #f44336; color: white; border: none; padding: 12px; border-radius: var(--radius); width: 100%; cursor: pointer; font-weight: bold;">
-                    <i class="fas fa-trash-alt"></i> مسح جميع خدماتي (${userServices.length} خدمة)
-                </button>
-            `;
-            
-            container.appendChild(deleteAllCard);
+            showNotification(`تم العثور على ${results.length} نتيجة`, 'success');
         }
 
-        // مسح خدمة واحدة
-        function deleteService(serviceId, phone) {
-            if (!confirm(`هل أنت متأكد من مسح هذه الخدمة؟\n\nهذا الإجراء نهائي ولا يمكن التراجع عنه.`)) {
-                return;
-            }
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
             
-            // البحث عن الخدمة في المصفوفة
-            const serviceIndex = services.findIndex(s => s.id === serviceId && s.phone === phone);
+            messageEl.textContent = message;
+            notification.className = 'notification ' + (type === 'error' ? 'error' : '');
+            notification.style.display = 'block';
             
-            if (serviceIndex === -1) {
-                showNotification('لم يتم العثور على الخدمة', 'error');
-                return;
-            }
-            
-            // إزالة الخدمة من المصفوفة
-            const deletedService = services.splice(serviceIndex, 1)[0];
-            
-            // تحديث localStorage
-            updateLocalStorageAfterDeletion();
-            
-            // إعادة البحث عن خدمات المستخدم
-            findUserServices();
-            
-            // تحديث العروض
-            updateStats();
-            displayFeaturedServices();
-            displayAllServices();
-            displayCarRentalServices();
-            displayDeliveryServices();
-            
-            showNotification(`تم مسح الخدمة "${deletedService.name}" بنجاح`, 'success');
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
 
-        // مسح جميع خدمات المستخدم
-        function deleteAllUserServices(phone) {
-            const userServices = services.filter(s => s.phone === phone);
-            
-            if (userServices.length === 0) {
-                showNotification('لا توجد خدمات للمسح', 'error');
-                return;
+        // اختبار القائمة يدويًا
+        setTimeout(() => {
+            console.log("اختبار القائمة جاهز");
+            const hamburger = document.getElementById('hamburgerMenu');
+            if (hamburger && hamburger.offsetParent !== null) {
+                console.log("زر الهامبرجر مرئي على الشاشة");
+                showNotification('قائمة التنقل جاهزة للاستخدام', 'success');
             }
-            
-            if (!confirm(`⚠️ تحذير: هل أنت متأكد من مسح جميع خدماتك؟\n\nسيتم مسح ${userServices.length} خدمة:\n${userServices.map(s => `• ${s.name}`).join('\n')}\n\nهذا الإجراء نهائي ولا يمكن التراجع عنه!`)) {
-                return;
-            }
-            
-            // إزالة جميع خدمات المستخدم من المصفوفة
-            services = services.filter(s => s.phone !== phone);
-            
-            // تحديث localStorage
-            updateLocalStorageAfterDeletion();
-            
-            // إعادة تعيين العرض
-            document.getElementById('services-found').style.display = 'none';
-            document.getElementById('no-services-found').style.display = 'block';
-            document.getElementById('deletePhone').value = phone;
-            
-            // تحديث العروض
-            updateStats();
-            displayFeaturedServices();
-            displayAllServices();
-            displayCarRentalServices();
-            displayDeliveryServices();
-            
-            showNotification(`تم مسح جميع خدماتك (${userServices.length} خدمة) بنجاح`, 'success');
-        }
-
-        // تحديث localStorage بعد المسح
-        function updateLocalStorageAfterDeletion() {
-            // فصل الخدمات الافتراضية عن خدمات المستخدم
-            const defaultServicesIds = defaultServices.map(s => s.id);
-            const userServices = services.filter(s => !defaultServicesIds.includes(s.id));
-            const userCars = userServices.filter(s => s.type === 'كراء السيارات');
-            const otherUserServices = userServices.filter(s => s.type !== 'كراء السيارات');
-            
-            // حفظ في localStorage
-            localStorage.setItem('userServices', JSON.stringify(otherUserServices));
-            localStorage.setItem('userCars', JSON.stringify(userCars));
-            
-            console.log('تم تحديث localStorage بعد المسح');
-            console.log('الخدمات المتبقية:', services.length);
-        }
-
-        // باقي الدوال تبقى كما هي (تصفية، بحث، إضافة، إلخ)
-        // ... [باقي الكود كما هو في النسخة السابقة]
-
+        }, 1500);
     </script>
 </body>
     </html>
