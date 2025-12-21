@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل خدمات أكليم وبركان - النهائي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui; }
+        body { background: #f0f2f5; padding: 20px; }
+        .header { background: #2c3e50; color: white; padding: 25px; text-align: center; border-radius: 15px; margin-bottom: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .service-name { color: #2c3e50; font-weight: bold; margin-bottom: 5px; font-size: 1.2rem; }
+        .phone { color: #27ae60; font-weight: bold; margin: 10px 0; font-size: 1.1rem; }
+        .btn { display: block; width: 100%; padding: 15px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-size: 1.1rem; margin-top: 10px; text-align: center; text-decoration: none; }
+        .btn-whatsapp { background: #25d366; }
+        .emergency { display: flex; justify-content: space-around; margin-top: 20px; }
+        .emergency div { background: #e74c3c; color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem; }
+        .success-msg { background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; text-align: center; margin: 20px 0; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>✅ دليل خدمات أكليم وبركان</h1>
+        <p>النسخة النهائية البسيطة</p>
+    </div>
+    
+    <div class="success-msg">
+        <h2>🎉 الموقع يعمل بنجاح!</h2>
+        <p>يمكنك الآن إرسال هذا الرابط لأي شخص</p>
+    </div>
+    
+    <!-- الخدمات تظهر هنا -->
+    <div id="services-container">
+        <div class="card">
+            <h2>🛵 توصيل طعام سريع</h2>
+            <div class="service-name">مطعم البرجر اللذيذ</div>
+            <div class="phone">📞 0625-123456</div>
+            <button class="btn" onclick="window.location.href='tel:0625123456'">اتصال مباشر</button>
+        </div>
+        
+        <div class="card">
+            <h2>🔌 كهربائي منازل</h2>
+            <div class="service-name">أحمد الكهربائي المحترف</div>
+            <div class="phone">📞 0612-987654</div>
+            <button class="btn" onclick="window.location.href='tel:0612987654'">اتصال عاجل</button>
+        </div>
+        
+        <div class="card">
+            <h2>🚰 سباك محترف</h2>
+            <div class="service-name">ورشة السباكة السريعة</div>
+            <div class="phone">📞 0613-456789</div>
+            <button class="btn" onclick="window.location.href='tel:0613456789'">طلب خدمة</button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>📞 أضف خدمتك بسهولة</h2>
+        <p><strong>الطريقة:</strong> أرسل البيانات على واتساب</p>
+        <p>1. اسم الخدمة</p>
+        <p>2. رقم الهاتف</p>
+        <p>3. المدينة</p>
+        <a href="https://wa.me/212704487952?text=أريد إضافة خدمتي:%0Aالاسم: ________%0Aالرقم: ________%0Aالمدينة: ________" 
+           class="btn btn-whatsapp">
+           📲 اضغط هنا وأرسل على واتساب
+        </a>
+        <p style="text-align:center; margin-top:10px; color:#666;">
+            سنضيف خدمتك خلال 24 ساعة
+        </p>
+    </div>
+    
+    <div class="card">
+        <h2>💬 تواصل مع المطور</h2>
+        <p>واتساب: <strong>0704487952</strong></p>
+        <p>بريد: contact.berkaneconnect@gmail.com</p>
+        <a href="https://wa.me/212704487952" class="btn btn-whatsapp">
+            💬 محادثة مباشرة
+        </a>
+    </div>
+    
+    <div class="card">
+        <h2>🚨 أرقام الطوارئ</h2>
+        <div class="emergency">
+            <div>15</div>
+            <div style="background:#f39c12;">18</div>
+            <div style="background:#3498db;">19</div>
+        </div>
+        <p style="text-align:center; margin-top:10px; color:#666; font-size:0.9em;">
+            صحة - إطفاء - شرطة
+        </p>
+    </div>
+    
+    <div class="card" style="text-align:center; background:#f8f9fa;">
+        <h3>✅ الموقع جاهز 100%</h3>
+        <p>يمكنك:</p>
+        <p>1. إرسال الرابط لأصدقائك</p>
+        <p>2. جمع طلبات الخدمات عبر واتساب</p>
+        <p>3. إضافة الخدمات يدوياً (سهل)</p>
+    </div>
+    
+    <script>
+    // رسالة تأكيد
+    alert("🎉 موقع دليل الخدمات يعمل بنجاح!\nيمكنك إرسال الرابط الآن.");
+    
+    console.log("✅ الموقع النهائي يعمل!");
+    
+    // كود بسيط لتحديث الخدمات يدوياً
+    function addServiceManually(name, phone, type) {
+        // يمكنك تعديل هذا يدوياً في الكود
+        console.log("لإضافة خدمة: عدل الكود يدوياً");
+    }
+    </script>
+</body>
+  </html>
