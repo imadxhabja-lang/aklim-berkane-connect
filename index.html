@@ -539,9 +539,35 @@
             margin-top: 20px;
             border-left: 4px solid #4CAF50;
         }
+        
+        /* زر مسح البيانات (للتشخيص) */
+        .debug-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            z-index: 10000;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .debug-btn:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
+    <!-- زر مسح البيانات (للتشخيص) -->
+    <button class="debug-btn" onclick="clearLocalStorage()">
+        <i class="fas fa-trash"></i> مسح البيانات
+    </button>
+    
     <!-- إعلان الهيدر -->
     <div class="header-ad">
         <i class="fas fa-bullhorn"></i> خدمة التوصيل متاحة الآن في أكليم وبركان | <a href="#" onclick="showTab('delivery')">اطلب الآن</a>
@@ -1398,8 +1424,8 @@
     </div>
 
     <script>
-        // بيانات الخدمات الافتراضية مع كراء السيارات والتوصيل
-        let services = [
+        // بيانات الخدمات الافتراضية (قراءة فقط)
+        const defaultServices = [
             { id: 1, name: "كهربائي منازل", phone: "0623-456789", city: "أكليم", type: "كهربائي", featured: true },
             { id: 2, name: "سباك محترف", phone: "0612-345678", city: "أكليم", type: "سباك" },
             { id: 3, name: "طبيب عام", phone: "0537-123456", city: "أكليم", type: "طبيب", featured: true },
@@ -1408,24 +1434,41 @@
             { id: 6, name: "كراء سيارة عائلية جديدة", phone: "0618-998877", city: "أكليم", type: "كراء السيارات", carType: "سيارة عائلية", price: "250 درهم/يوم", carModel: "بيجو 508", carYear: "2022" },
             { id: 7, name: "ميكانيكي سيارات", phone: "0621-112233", city: "بركان", type: "ميكانيكي" },
             { id: 8, name: "كراء فان نقل بضائع", phone: "0625-667788", city: "أكليم", type: "كراء السيارات", carType: "فان", price: "350 درهم/يوم", carModel: "مرسيدس سبرينتر", carYear: "2021" },
-            // خدمات توصيل جديدة
             { id: 9, name: "توصيل طعام سريع", phone: "0624-112233", city: "أكليم", type: "توصيل", deliveryType: "طعام", deliveryPrice: "15 درهم", deliveryTime: "30 دقيقة", featured: true },
             { id: 10, name: "توصيل مستندات أكليم", phone: "0627-445566", city: "أكليم", type: "توصيل", deliveryType: "مستندات", deliveryPrice: "10 درهم", deliveryTime: "45 دقيقة" },
             { id: 11, name: "توصيل طرود بركان", phone: "0628-778899", city: "بركان", type: "توصيل", deliveryType: "طرود", deliveryPrice: "25 درهم", deliveryTime: "60 دقيقة" },
             { id: 12, name: "توصيل منتجات سوق", phone: "0629-990011", city: "بركان", type: "توصيل", deliveryType: "منتجات", deliveryPrice: "20 درهم", deliveryTime: "40 دقيقة", featured: true },
-            // سيارات إضافية
             { id: 13, name: "كراء سيارة اقتصادية 2024", phone: "0630-112233", city: "أكليم", type: "كراء السيارات", carType: "سيارة صغيرة", price: "150 درهم/يوم", carModel: "رينو كليو", carYear: "2024" },
             { id: 14, name: "كراء سيارة فخمة", phone: "0631-445566", city: "بركان", type: "كراء السيارات", carType: "سيارة فخمة", price: "500 درهم/يوم", carModel: "مرسيدس E-Class", carYear: "2023" }
         ];
 
+        // مصفوفة الخدمات الكاملة (الافتراضية + خدمات المستخدم)
+        let services = [];
+
         // تحميل الخدمات من localStorage
         document.addEventListener('DOMContentLoaded', function() {
-            const savedServices = localStorage.getItem('userServices');
-            if (savedServices) {
-                const userServices = JSON.parse(savedServices);
-                services = [...services, ...userServices];
+            // تحميل الخدمات الافتراضية
+            services = [...defaultServices];
+            
+            // تحميل خدمات المستخدم من localStorage
+            const savedUserServices = localStorage.getItem('userServices');
+            if (savedUserServices) {
+                const userServices = JSON.parse(savedUserServices);
+                // إضافة خدمات المستخدم في البداية (لتبدو أحدث)
+                services = [...userServices, ...services];
             }
             
+            // تحميل السيارات المضافة من localStorage
+            const savedCars = localStorage.getItem('userCars');
+            if (savedCars) {
+                const userCars = JSON.parse(savedCars);
+                services = [...userCars, ...services];
+            }
+            
+            console.log('تم تحميل ' + services.length + ' خدمة');
+            console.log('الخدمات المحملة:', services);
+            
+            // تحديث العروض
             updateStats();
             displayFeaturedServices();
             displayAllServices();
@@ -1517,7 +1560,7 @@
                     if (service.type === 'توصيل') {
                         deliveryContainer.appendChild(createDeliveryCard(service));
                     } else if (service.type === 'كراء السيارات') {
-                        container.appendChild(createCarCard(service));
+                        container.appendChild(createCarCardDetailed(service));
                     } else {
                         container.appendChild(createServiceCard(service, true));
                     }
@@ -1528,7 +1571,6 @@
         // عرض خدمات التوصيل
         function displayDeliveryServices() {
             const container = document.getElementById('delivery-services-list');
-            const featuredContainer = document.getElementById('featured-delivery');
             
             const deliveryServices = services.filter(s => s.type === 'توصيل');
             
@@ -2063,7 +2105,7 @@
             if (document.getElementById('feature-bluetooth').checked) features.push('بلوتوث');
             
             const newCar = {
-                id: Date.now(),
+                id: Date.now(), // استخدام الطابع الزمني كمعرف فريد
                 name: document.getElementById('carName').value,
                 phone: document.getElementById('carPhone').value,
                 city: document.getElementById('carCity').value,
@@ -2084,13 +2126,16 @@
                 featureBluetooth: document.getElementById('feature-bluetooth').checked
             };
             
-            // إضافة للخدمات
+            // إضافة السيارة للخدمات (في البداية)
             services.unshift(newCar);
             
-            // حفظ في localStorage
-            let userServices = JSON.parse(localStorage.getItem('userServices')) || [];
-            userServices.push(newCar);
-            localStorage.setItem('userServices', JSON.stringify(userServices));
+            // حفظ السيارة في localStorage
+            let userCars = JSON.parse(localStorage.getItem('userCars')) || [];
+            userCars.unshift(newCar); // إضافة في البداية
+            localStorage.setItem('userCars', JSON.stringify(userCars));
+            
+            console.log('تمت إضافة سيارة جديدة:', newCar);
+            console.log('عدد السيارات المحفوظة:', userCars.length);
             
             // تحديث الواجهة
             document.getElementById('car-form').reset();
@@ -2154,13 +2199,16 @@
                 newService.deliveryTime = document.getElementById('deliveryTime').value;
             }
             
-            // إضافة للخدمات
+            // إضافة الخدمة للقائمة
             services.unshift(newService);
             
-            // حفظ في localStorage
+            // حفظ الخدمة في localStorage
             let userServices = JSON.parse(localStorage.getItem('userServices')) || [];
-            userServices.push(newService);
+            userServices.unshift(newService); // إضافة في البداية
             localStorage.setItem('userServices', JSON.stringify(userServices));
+            
+            console.log('تمت إضافة خدمة جديدة:', newService);
+            console.log('عدد الخدمات المحفوظة:', userServices.length);
             
             // تحديث الواجهة
             document.getElementById('service-form').reset();
@@ -2366,6 +2414,41 @@
         function bookAd(type) {
             showTab('ads');
             document.getElementById('adType').value = type;
+        }
+
+        // مسح البيانات المحفوظة (للتشخيص)
+        function clearLocalStorage() {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات المحفوظة؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+                localStorage.removeItem('userServices');
+                localStorage.removeItem('userCars');
+                localStorage.removeItem('deliveryRequests');
+                localStorage.removeItem('adRequests');
+                localStorage.removeItem('serviceCalls');
+                
+                // إعادة تحميل الخدمات (البيانات الافتراضية فقط)
+                services = [...defaultServices];
+                
+                // تحديث العروض
+                updateStats();
+                displayFeaturedServices();
+                displayAllServices();
+                displayCarRentalServices();
+                displayDeliveryServices();
+                
+                showNotification('تم مسح جميع البيانات المحفوظة بنجاح', 'success');
+                console.log('تم مسح localStorage وإعادة تحميل البيانات الافتراضية');
+            }
+        }
+
+        // دالة لفحص localStorage (للتشخيص)
+        function checkLocalStorage() {
+            console.log('=== فحص localStorage ===');
+            console.log('userServices:', JSON.parse(localStorage.getItem('userServices') || '[]'));
+            console.log('userCars:', JSON.parse(localStorage.getItem('userCars') || '[]'));
+            console.log('عدد الخدمات الكلي:', services.length);
+            console.log('عدد خدمات المستخدم:', JSON.parse(localStorage.getItem('userServices') || '[]').length);
+            console.log('عدد سيارات المستخدم:', JSON.parse(localStorage.getItem('userCars') || '[]').length);
+            console.log('======================');
         }
     </script>
 </body>
