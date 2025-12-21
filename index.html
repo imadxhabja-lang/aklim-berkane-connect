@@ -4,167 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليل أكليم وبركان - اتصال الخدمات</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* التنسيقات الأساسية */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f5f5f5; color: #333; padding: 20px; }
+        
+        /* الهيدر */
+        .header { background: #2c3e50; color: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .header h1 { margin-bottom: 10px; }
+        
+        /* الإحصائيات */
+        .stats { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
+        .stat-box h3 { font-size: 24px; color: #2c3e50; }
+        
+        /* الخدمات */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+        .service-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .service-card h3 { color: #2c3e50; margin-bottom: 10px; }
+        .service-phone { color: #27ae60; font-weight: bold; margin: 10px 0; }
+        
+        /* النماذج */
+        .form-section { background: white; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .form-group { margin-bottom: 15px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #3498db; color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .delete-btn { background: #e74c3c; }
+        
+        /* الطوارئ */
+        .emergency-grid { display: flex; justify-content: space-around; margin: 20px 0; }
+        .emergency-card { text-align: center; padding: 15px; }
+        .emergency-icon { width: 60px; height: 60px; line-height: 60px; background: #e74c3c; color: white; border-radius: 50%; margin: 0 auto 10px; font-weight: bold; }
+        
+        /* الفوتر */
+        footer { text-align: center; margin-top: 30px; color: #666; }
+    </style>
 </head>
 <body>
-    <!-- الهيدر -->
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-book"></i> دليل أكليم وبركان</h1>
-            <p class="tagline">خدمة التوصيل متاحة الآن في أكليم وبركان | اطلب الآن</p>
-        </div>
-    </header>
-
-    <!-- الإحصائيات -->
-    <section class="stats">
-        <div class="container">
+    <div class="container">
+        <!-- الهيدر -->
+        <header class="header">
+            <h1>📱 دليل أكليم وبركان</h1>
+            <p>خدمة التوصيل متاحة الآن في أكليم وبركان | اطلب الآن</p>
+        </header>
+        
+        <!-- الإحصائيات -->
+        <section class="stats">
             <div class="stat-box">
-                <h3 id="total-services">5</h3>
+                <h3 id="total-services">0</h3>
                 <p>خدمة متاحة</p>
             </div>
             <div class="stat-box">
-                <h3 id="total-cars">1</h3>
+                <h3 id="total-cars">0</h3>
                 <p>سيارات للكراء</p>
             </div>
             <div class="stat-box">
                 <h3>150+</h3>
                 <p>زائر يومياً</p>
             </div>
-        </div>
-    </section>
-
-    <!-- محتوى رئيسي -->
-    <main class="container main-container">
-        <!-- القائمة الرئيسية للخدمات -->
-        <section class="services-section">
-            <h2><i class="fas fa-list"></i> جميع الخدمات</h2>
-            <p class="section-subtitle">تصفح الخدمات المتاحة في منطقتك</p>
-            
-            <!-- أزرار الفلترة -->
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">الكل</button>
-                <button class="filter-btn" data-filter="delivery">التوصيل</button>
-                <button class="filter-btn" data-filter="maintenance">الصيانة</button>
-                <button class="filter-btn" data-filter="medical">الطبي</button>
-                <button class="filter-btn" data-filter="rental">كراء السيارات</button>
-            </div>
-
-            <!-- قائمة الخدمات ستظهر هنا من JavaScript -->
+        </section>
+        
+        <!-- الخدمات -->
+        <section class="form-section">
+            <h2>🔍 جميع الخدمات</h2>
             <div class="services-grid" id="services-container">
-                <!-- الخدمات ستحقن هنا بواسطة JavaScript -->
+                <!-- الخدمات ستظهر هنا -->
             </div>
         </section>
-
-        <!-- قسم الإضافة والإدارة -->
-        <div class="management-sections">
-            <!-- نموذج إضافة خدمة -->
-            <section class="form-section">
-                <h2><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h2>
-                <form id="add-service-form">
-                    <div class="form-group">
-                        <label for="service-name">اسم الخدمة *</label>
-                        <input type="text" id="service-name" placeholder="مثال: كهربائي منازل" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-type">نوع الخدمة *</label>
-                        <select id="service-type" required>
-                            <option value="">اختر نوع الخدمة</option>
-                            <option value="delivery">توصيل</option>
-                            <option value="maintenance">صيانة (كهربائي/سباك)</option>
-                            <option value="medical">طبي</option>
-                            <option value="rental">كراء سيارات</option>
-                            <option value="other">أخرى</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-phone">رقم الهاتف *</label>
-                        <input type="tel" id="service-phone" placeholder="مثال: 0620-123456" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-location">المدينة *</label>
-                        <select id="service-location" required>
-                            <option value="">اختر المدينة</option>
-                            <option value="أكليم">أكليم</option>
-                            <option value="بركان">بركان</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-description">وصف قصير</label>
-                        <textarea id="service-description" placeholder="وصف الخدمة..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">إضافة الخدمة</button>
-                </form>
-            </section>
-
-            <!-- نموذج حذف خدمة -->
-            <section class="form-section">
-                <h2><i class="fas fa-trash-alt"></i> حذف خدمة</h2>
-                <p class="form-help">أدخل رقم الهاتف المرتبط بالخدمة لحذفها</p>
-                <form id="delete-service-form">
-                    <div class="form-group">
-                        <label for="delete-phone">رقم الهاتف *</label>
-                        <input type="tel" id="delete-phone" placeholder="أدخل رقم الهاتف" required>
-                    </div>
-                    <button type="submit" class="delete-btn">حذف الخدمة</button>
-                </form>
-            </section>
-        </div>
-
-        <!-- أرقام الطوارئ -->
-        <section class="emergency-section">
-            <h2><i class="fas fa-phone-alt"></i> أرقام الطوارئ</h2>
+        
+        <!-- إضافة خدمة -->
+        <section class="form-section">
+            <h2>➕ إضافة خدمة جديدة</h2>
+            <form id="add-service-form">
+                <div class="form-group">
+                    <input type="text" id="service-name" placeholder="اسم الخدمة (مثال: كهربائي)" required>
+                </div>
+                <div class="form-group">
+                    <select id="service-type" required>
+                        <option value="">اختر نوع الخدمة</option>
+                        <option value="توصيل">توصيل</option>
+                        <option value="صيانة">صيانة</option>
+                        <option value="طبي">طبي</option>
+                        <option value="كراء سيارات">كراء سيارات</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="service-phone" placeholder="رقم الهاتف" required>
+                </div>
+                <div class="form-group">
+                    <select id="service-location" required>
+                        <option value="">اختر المدينة</option>
+                        <option value="أكليم">أكليم</option>
+                        <option value="بركان">بركان</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">إضافة الخدمة</button>
+            </form>
+        </section>
+        
+        <!-- حذف خدمة -->
+        <section class="form-section">
+            <h2>🗑️ حذف خدمة</h2>
+            <form id="delete-service-form">
+                <div class="form-group">
+                    <input type="tel" id="delete-phone" placeholder="أدخل رقم الهاتف لحذف الخدمة" required>
+                </div>
+                <button type="submit" class="delete-btn">حذف الخدمة</button>
+            </form>
+        </section>
+        
+        <!-- الطوارئ -->
+        <section class="form-section">
+            <h2>🚨 أرقام الطوارئ</h2>
             <div class="emergency-grid">
                 <div class="emergency-card">
-                    <div class="emergency-icon medical">15</div>
+                    <div class="emergency-icon">15</div>
                     <h3>الطوارئ الصحية</h3>
                 </div>
                 <div class="emergency-card">
-                    <div class="emergency-icon fire">18</div>
+                    <div class="emergency-icon">18</div>
                     <h3>المطافئ</h3>
                 </div>
                 <div class="emergency-card">
-                    <div class="emergency-icon police">19</div>
+                    <div class="emergency-icon">19</div>
                     <h3>الشرطة</h3>
                 </div>
             </div>
         </section>
-    </main>
-
-    <!-- الفوتر -->
-    <footer>
-        <div class="container">
-            <p>© 2025 دليل أكليم وبركان - اتصال الخدمات | جميع الحقوق محفوظة</p>
-            <p class="footer-contact">للإعلان أو الدعم: <a href="mailto:info@example.com">info@example.com</a></p>
-        </div>
-    </footer>
-
-    <!-- الروابط لملفي JavaScript -->
-    <script src="script.js"></script>
-<!-- أضف هذه السكريبتات قبل script.js -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-
-<script>
-  // التكوين الخاص بمشروعك Firebase - استبدل القيم بأرقام مشروعك
-  const firebaseConfig = {
-    apiKey: "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    authDomain: "aklim-berkane-connect.firebaseapp.com",
-    projectId: "aklim-berkane-connect",
-    storageBucket: "aklim-berkane-connect.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef1234567890abcdef"
-  };
-
-  // تهيئة Firebase
-  firebase.initializeApp(firebaseConfig);
-  
-  // تهيئة الخدمات
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-</script>
-
-<!-- ثم رابط ملف script.js الخاص بك -->
-<script src="script.js"></script></body>
-                    </html>
+        
+        <!-- الفوتر -->
+        <footer>
+            <p>© 2025 دليل أكليم وبركان | للدعم: 0600-000000</p>
+        </footer>
+    </div>
+    
+    <!-- السكريبت -->
+    <script>
+        // 🔥🔥🔥 استبدل هذه المعلومات بمعلوماتك من Firebase 🔥🔥🔥
+        const firebaseConfig = {
+            apiKey: "ضع_رقم_apiKey_هنا",
+            authDomain: "ضع_authDomain_هنا",
+            databaseURL: "ضع_databaseURL_هنا", // المهم!
+            projectId: "ضع_projectId_هنا",
+            storageBucket: "ضع_storageBucket_هنا",
+            messagingSenderId: "ضع_messagingSenderId_هنا",
+            appId: "ضع_appId_هنا"
+        };
+        
+        // لا تلمس الكود تحت هذا السطر
+        // ---------------------------------------------------
+        
+        // تهيئة Firebase
+        if (typeof firebase !== 'undefined') {
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
+        }
+        
+        // عناصر الصفحة
+        const servicesContainer = document.getElementById('services-container');
+        const addServiceForm = document.getElementById('add-service-form');
+        const deleteServiceForm = document.getElementById('delete-service-form');
+        const totalServicesElement = document.getElementById('total-services');
+        const totalCarsElement = document.getElementById('total-cars');
+        
+        // عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServices();
+            
+            // إضافة خدمة
+            addServiceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('service-name').value;
+                const type = document.getElementById('service-type').value;
+                const phone = document.getElementById('service-phone').value;
+                const location = document.getElementById('service-location').value;
+                
+                if (name && type && phone && location) {
+                    if (typeof database !== 'undefined') {
+                        database.ref('services').push().set({
+                            name: name,
+                            type: type,
+                            phone: phone,
+                            location: location,
+                            date: new Date().toLocaleString()
+                        });
+                        alert('تمت الإضافة بنجاح!');
+                        addServiceForm.reset();
+                        loadServices();
+                    }
+                } else {
+                    alert('يرجى ملء جميع الحقول');
+                }
+            });
+            
+            // حذف خدمة
+            deleteServiceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const phone = document.getElementById('delete-phone').value;
+                if (phone && confirm('هل أنت متأكد من الحذف؟')) {
+                    if (typeof database !== 'undefined') {
+                        database.ref('services').orderByChild('phone').equalTo(phone).once('value', function(snapshot) {
+                            snapshot.forEach(function(child) {
+                                child.ref.remove();
+                            });
+                            alert('تم الحذف بنجاح');
+                            deleteServiceForm.reset();
+                            loadServices();
+                        });
+                    }
+                }
+            });
+        });
+        
+        // تحميل الخدمات
+        function loadServices() {
+            servicesContainer.innerHTML = '<p>جاري تحميل الخدمات...</p>';
+            
+            if (typeof database !== 'undefined') {
+                database.ref('services').on('value', function(snapshot) {
+                    servicesContainer.innerHTML = '';
+                    let servicesCount = 0;
+                    let carsCount = 0;
+                    
+                    if (snapshot.exists()) {
+                        snapshot.forEach(function(child) {
+                            const service = child.val();
+                            const serviceCard = document.createElement('div');
+                            serviceCard.className = 'service-card';
+                            serviceCard.innerHTML = `
+                                <h3>${service.name}</h3>
+                                <p><strong>النوع:</strong> ${service.type}</p>
+                                <p><strong>المدينة:</strong> ${service.location}</p>
+                                <p class="service-phone">📞 ${service.phone}</p>
+                                <p><small>${service.date || ''}</small></p>
+                            `;
+                            servicesContainer.appendChild(serviceCard);
+                            
+                            servicesCount++;
+                            if (service.type === 'كراء سيارات') carsCount++;
+                        });
+                    } else {
+                        servicesContainer.innerHTML = '<p>لا توجد خدمات حالياً. كن أول من يضيف خدمة!</p>';
+                    }
+                    
+                    totalServicesElement.textContent = servicesCount;
+                    totalCarsElement.textContent = carsCount;
+                });
+            } else {
+                servicesContainer.innerHTML = '<p>⚠️ تم تعطيب Firebase. يرجى إضافة معلومات التكوين.</p>';
+            }
+        }
+    </script>
+</body>
+                                                      </html>
