@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة تحكم Berkane Connect</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+    header { background: #d32f2f; color: white; padding: 15px; text-align: center; }
+    .section { padding: 20px; margin-bottom: 20px; background: white; border-radius: 8px; width: 90%; max-width: 800px; margin-left: auto; margin-right: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+    input, select { padding: 8px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+    button { background: #d32f2f; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 5px; }
+    h2 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>لوحة تحكم Berkane Connect</h1>
+    <p>إدارة المهنيين، وكالات كراء السيارات، والإعلانات</p>
+  </header>
+
+  <!-- إضافة مهني -->
+  <div class="section">
+    <h2>إضافة مهني</h2>
+    <input type="text" id="profName" placeholder="اسم المهني">
+    <input type="text" id="profJob" placeholder="المهنة">
+    <input type="text" id="profCity" placeholder="المدينة">
+    <input type="text" id="profDistrict" placeholder="الحي">
+    <input type="text" id="profPhone" placeholder="رقم الهاتف">
+    <input type="text" id="profHours" placeholder="ساعات العمل">
+    <input type="text" id="profWhatsapp" placeholder="WhatsApp (اختياري)">
+    <button onclick="addProfession()">إضافة المهني</button>
+  </div>
+
+  <!-- إضافة وكالة كراء -->
+  <div class="section">
+    <h2>إضافة وكالة كراء سيارات</h2>
+    <input type="text" id="agencyName" placeholder="اسم الوكالة">
+    <input type="text" id="agencyCity" placeholder="المدينة">
+    <input type="text" id="agencyPhone" placeholder="رقم الهاتف">
+    <input type="text" id="agencyCars" placeholder="أنواع السيارات (افصلها بفاصلة)">
+    <input type="text" id="agencyPrice" placeholder="السعر لليوم">
+    <input type="text" id="agencyWhatsapp" placeholder="WhatsApp (اختياري)">
+    <button onclick="addAgency()">إضافة الوكالة</button>
+  </div>
+
+  <!-- إضافة إعلان -->
+  <div class="section">
+    <h2>إضافة إعلان</h2>
+    <input type="text" id="adTitle" placeholder="عنوان الإعلان">
+    <input type="text" id="adImage" placeholder="رابط صورة الإعلان">
+    <input type="text" id="adLink" placeholder="رابط الإعلان أو رقم الهاتف">
+    <select id="adPosition">
+      <option value="top_banner">أعلى الصفحة</option>
+      <option value="between_cards">بين البطاقات</option>
+    </select>
+    <button onclick="addAd()">إضافة الإعلان</button>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // إضافة مهني
+    function addProfession() {
+      const data = {
+        name: document.getElementById('profName').value,
+        profession: document.getElementById('profJob').value,
+        city: document.getElementById('profCity').value,
+        district: document.getElementById('profDistrict').value,
+        phone: document.getElementById('profPhone').value,
+        working_hours: document.getElementById('profHours').value,
+        whatsapp: document.getElementById('profWhatsapp').value,
+        approved: true
+      };
+      db.collection("professions").add(data).then(() => alert("تمت إضافة المهني بنجاح")).catch(err => alert(err));
+    }
+
+    // إضافة وكالة كراء
+    function addAgency() {
+      const data = {
+        agency_name: document.getElementById('agencyName').value,
+        city: document.getElementById('agencyCity').value,
+        phone: document.getElementById('agencyPhone').value,
+        car_types: document.getElementById('agencyCars').value.split(",").map(s => s.trim()),
+        price_per_day: document.getElementById('agencyPrice').value,
+        whatsapp: document.getElementById('agencyWhatsapp').value,
+        approved: true
+      };
+      db.collection("car_rentals").add(data).then(() => alert("تمت إضافة الوكالة بنجاح")).catch(err => alert(err));
+    }
+
+    // إضافة إعلان
+    function addAd() {
+      const data = {
+        title: document.getElementById('adTitle').value,
+        image_url: document.getElementById('adImage').value,
+        link: document.getElementById('adLink').value,
+        position: document.getElementById('adPosition').value,
+        active: true
+      };
+      db.collection("ads").add(data).then(() => alert("تمت إضافة الإعلان بنجاح")).catch(err => alert(err));
+    }
+  </script>
+</body>
+      </html>
