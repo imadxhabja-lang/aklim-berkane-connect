@@ -1,273 +1,755 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل أكليم وبركان - اتصال الخدمات</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Berkane Connect - منصة الخدمات المحلية </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    
+    * {
+      font-family: 'Cairo', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .service-icon {
+      transition: all 0.3s ease;
+    }
+    
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
+    }
+    
+    .rtl {
+      direction: rtl;
+    }
+  </style>
 </head>
-<body>
-    <!-- الهيدر -->
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-book"></i> دليل أكليم وبركان</h1>
-            <p class="tagline">خدمة التوصيل متاحة الآن في أكليم وبركان | اطلب الآن</p>
+<body class="bg-gray-50 rtl">
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center">
+        <i class="fas fa-handshake text-3xl text-indigo-600 mr-2"></i>
+        <h1 class="text-2xl font-bold text-indigo-800">Berkane Connect</h1>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="#services" class="text-gray-700 hover:text-indigo-600 transition">الخدمات</a>
+        <a href="#cars" class="text-gray-700 hover:text-indigo-600 transition">تأجير السيارات</a>
+        <a href="#pharmacies" class="text-gray-700 hover:text-indigo-600 transition">الصيدليات</a>
+        <a href="#register" class="text-gray-700 hover:text-indigo-600 transition">التسجيل</a>
+        <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition">اتصل بنا</a>
+      </nav>
+      <button id="menu-toggle" class="md:hidden text-gray-700">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">الخدمات</a>
+      <a href="#cars" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">تأجير السيارات</a>
+      <a href="#pharmacies" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">الصيدليات</a>
+      <a href="#register" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">التسجيل</a>
+      <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50">اتصل بنا</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="gradient-bg text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">أهلاً بكم في منصة بركان كونكت</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">منصة رقمية تجمع جميع الخدمات الأساسية في إقليم بركان - المغرب</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#register" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-full text-lg transition">
+          <i class="fas fa-user-plus ml-2"></i> تسجيل المهني
+        </a>
+        <a href="#services" class="bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm py-3 px-8 rounded-full text-lg transition">
+          <i class="fas fa-search ml-2"></i> ابحث عن خدمة
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-indigo-800 mb-12">تصفح الخدمات</h2>
+      
+      <!-- Search Bar -->
+      <div class="max-w-2xl mx-auto mb-12">
+        <div class="relative">
+          <input type="text" placeholder="ابحث عن خدمة أو حرفي..." 
+                 class="w-full py-4 pl-12 pr-4 rounded-full border border-gray-300 focus:outline-none focus:border-indigo-500">
+          <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
-    </header>
-
-    <!-- الإحصائيات -->
-    <section class="stats">
-        <div class="container">
-            <div class="stat-box">
-                <h3 id="total-services">0</h3>
-                <p>خدمة متاحة</p>
-            </div>
-            <div class="stat-box">
-                <h3 id="total-cars">0</h3>
-                <p>سيارات للكراء</p>
-            </div>
-            <div class="stat-box">
-                <h3>150+</h3>
-                <p>زائر يومياً</p>
-            </div>
+      </div>
+      
+      <!-- Service Categories -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+        <div class="service-card bg-white p-6 rounded-xl shadow-md text-center card-hover cursor-pointer">
+          <div class="service-icon w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-wrench text-3xl text-blue-600"></i>
+          </div>
+          <h3 class="font-bold text-gray-800">ميكانيكي</h3>
         </div>
-    </section>
-
-    <!-- محتوى رئيسي -->
-    <main class="container main-container">
-        <!-- جميع الخدمات -->
-        <section class="services-section">
-            <h2><i class="fas fa-list"></i> جميع الخدمات</h2>
-            <p class="section-subtitle">تصفح الخدمات المتاحة في منطقتك</p>
-            
-            <!-- أزرار الفلترة -->
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">الكل</button>
-                <button class="filter-btn" data-filter="delivery">التوصيل</button>
-                <button class="filter-btn" data-filter="maintenance">الصيانة</button>
-                <button class="filter-btn" data-filter="medical">الطبي</button>
-                <button class="filter-btn" data-filter="rental">كراء السيارات</button>
-            </div>
-
-            <!-- قائمة الخدمات -->
-            <div class="services-grid" id="services-container">
-                <div class="loading">جاري تحميل الخدمات...</div>
-            </div>
-        </section>
-
-        <!-- قسم الإدارة -->
-        <div class="management-sections">
-            <!-- إضافة خدمة -->
-            <section class="form-section">
-                <h2><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h2>
-                <form id="add-service-form">
-                    <div class="form-group">
-                        <label for="service-name">اسم الخدمة *</label>
-                        <input type="text" id="service-name" placeholder="مثال: كهربائي منازل" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-type">نوع الخدمة *</label>
-                        <select id="service-type" required>
-                            <option value="">اختر نوع الخدمة</option>
-                            <option value="delivery">توصيل</option>
-                            <option value="maintenance">صيانة</option>
-                            <option value="medical">طبي</option>
-                            <option value="rental">كراء سيارات</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-phone">رقم الهاتف *</label>
-                        <input type="tel" id="service-phone" placeholder="مثال: 0620-123456" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-location">المدينة *</label>
-                        <select id="service-location" required>
-                            <option value="">اختر المدينة</option>
-                            <option value="أكليم">أكليم</option>
-                            <option value="بركان">بركان</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="service-description">وصف قصير</label>
-                        <textarea id="service-description" placeholder="وصف الخدمة..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-plus-circle"></i> إضافة الخدمة
-                    </button>
-                </form>
-            </section>
-
-            <!-- حذف خدمة -->
-            <section class="form-section">
-                <h2><i class="fas fa-trash-alt"></i> حذف خدمة</h2>
-                <p class="form-help">أدخل رقم الهاتف المرتبط بالخدمة</p>
-                <form id="delete-service-form">
-                    <div class="form-group">
-                        <input type="tel" id="delete-phone" placeholder="أدخل رقم الهاتف" required>
-                    </div>
-                    <button type="submit" class="delete-btn">
-                        <i class="fas fa-trash-alt"></i> حذف الخدمة
-                    </button>
-                </form>
-            </section>
-        </div>
-
-        <!-- إضافة سيارة -->
-        <section class="form-section car-rental-form">
-            <h2><i class="fas fa-car"></i> إضافة سيارة للكراء</h2>
-            <form id="add-car-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="car-brand">ماركة السيارة *</label>
-                        <input type="text" id="car-brand" placeholder="مثال: تويوتا" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="car-model">الموديل *</label>
-                        <input type="text" id="car-model" placeholder="مثال: كورولا 2023" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="car-type">نوع السيارة *</label>
-                        <select id="car-type" required>
-                            <option value="">اختر النوع</option>
-                            <option value="sedan">سيدان</option>
-                            <option value="suv">دفع رباعي</option>
-                            <option value="van">فان / عائلية</option>
-                            <option value="luxury">فخمة</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="car-price">السعر اليومي (درهم) *</label>
-                        <input type="number" id="car-price" placeholder="مثال: 300" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="car-location">مكان التوفر *</label>
-                        <select id="car-location" required>
-                            <option value="">اختر المدينة</option>
-                            <option value="أكليم">أكليم</option>
-                            <option value="بركان">بركان</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="car-phone">رقم الهاتف *</label>
-                        <input type="tel" id="car-phone" placeholder="مثال: 0620-123456" required>
-                    </div>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-car"></i> إضافة السيارة للإيجار
-                </button>
-            </form>
-        </section>
-
-        <!-- عرض السيارات -->
-        <section class="cars-section">
-            <h2><i class="fas fa-car-side"></i> السيارات المتاحة للكراء</h2>
-            <div class="cars-grid" id="cars-container">
-                <div class="loading">جاري تحميل السيارات...</div>
-            </div>
-        </section>
-
-        <!-- قسم التواصل -->
-        <section class="form-section contact-form-section">
-            <h2><i class="fas fa-headset"></i> تواصل معنا</h2>
-            
-            <!-- نموذج البريد الإلكتروني -->
-            <div class="contact-method">
-                <h3><i class="fas fa-envelope"></i> أرسل رسالة</h3>
-                <form id="direct-contact-form">
-                    <div class="form-group">
-                        <input type="text" id="contact-name" placeholder="اسمك" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="contact-email" placeholder="بريدك الإلكتروني" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="contact-message" rows="4" placeholder="اكتب رسالتك هنا..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i> إرسال الرسالة
-                    </button>
-                </form>
-                <p id="form-feedback"></p>
-            </div>
-
-            <!-- زر واتساب -->
-            <div class="contact-method">
-                <h3><i class="fab fa-whatsapp"></i> تواصل مباشر عبر واتساب</h3>
-                <p>يمكنك مراسلتنا مباشرة على الواتساب للاستفسار السريع.</p>
-                <a href="https://wa.me/212704487952?text=مرحباً، أود الاستفسار عن دليل أكليم وبركان للخدمات"
-                   target="_blank" class="whatsapp-contact-btn">
-                    <i class="fab fa-whatsapp"></i> اضغط هنا للدردشة على واتساب
-                </a>
-            </div>
-            
-            <!-- معلومات الاتصال -->
-            <div class="contact-method">
-                <h3><i class="fas fa-info-circle"></i> معلومات الاتصال</h3>
-                <p><i class="fas fa-envelope"></i> البريد الإلكتروني: <a href="mailto:contact.berkaneconnect@gmail.com">contact.berkaneconnect@gmail.com</a></p>
-                <p><i class="fas fa-phone"></i> واتساب: <strong>0704487952</strong></p>
-            </div>
-        </section>
-
-        <!-- أرقام الطوارئ -->
-        <section class="emergency-section">
-            <h2><i class="fas fa-phone-alt"></i> أرقام الطوارئ</h2>
-            <div class="emergency-grid">
-                <div class="emergency-card">
-                    <div class="emergency-icon medical">15</div>
-                    <h3>الطوارئ الصحية</h3>
-                </div>
-                <div class="emergency-card">
-                    <div class="emergency-icon fire">18</div>
-                    <h3>المطافئ</h3>
-                </div>
-                <div class="emergency-card">
-                    <div class="emergency-icon police">19</div>
-                    <h3>الشرطة</h3>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- الفوتر -->
-    <footer>
-        <div class="container">
-            <p>© 2025 دليل أكليم وبركان - اتصال الخدمات | جميع الحقوق محفوظة</p>
-            <p class="footer-contact">
-                <a href="mailto:contact.berkaneconnect@gmail.com">contact.berkaneconnect@gmail.com</a> | 
-                واتساب: 0704487952
-            </p>
-        </div>
-    </footer>
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
-    <script>
-        // ⚠️ ⚠️ ⚠️ استبدل هذا التكوين بمعلومات مشروعك في Firebase ⚠️ ⚠️ ⚠️
-        const firebaseConfig = {
-            apiKey: "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-            authDomain: "aklim-berkane-connect.firebaseapp.com",
-            projectId: "aklim-berkane-connect",
-            storageBucket: "aklim-berkane-connect.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abcdef1234567890abcdef"
-        };
         
-        // تهيئة Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-    </script>
+        <div class="service-card bg-white p-6 rounded-xl shadow-md text-center card-hover cursor-pointer">
+          <div class="service-icon w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-bolt text-3xl text-green-600"></i>
+          </div>
+          <h3 class="font-bold text-gray-800">كهربائي</h3>
+        </div>
+        
+        <div class="service-card bg-white p-6 rounded-xl shadow-md text-center card-hover cursor-pointer">
+          <div class="service-icon w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-paint-brush text-3xl text-yellow-600"></i>
+          </div>
+          <h3 class="font-bold text-gray-800">جار</h3>
+        </div>
+        
+        <div class="service-card bg-white p-6 rounded-xl shadow-md text-center card-hover cursor-pointer">
+          <div class="service-icon w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-lock text-3xl text-red-600"></i>
+          </div>
+          <h3 class="font-bold text-gray-800">حداد</h3>
+        </div>
+        
+        <div class="service-card bg-white p-6 rounded-xl shadow-md text-center card-hover cursor-pointer">
+          <div class="service-icon w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-tools text-3xl text-purple-600"></i>
+          </div>
+          <h3 class="font-bold text-gray-800">حرفيون</h3>
+        </div>
+        
+        <div class="service-card bg-white p-6 rounded-xl shadow-md text-center card-hover cursor-pointer">
+          <div class="service-icon w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-car text-3xl text-indigo-600"></i>
+          </div>
+          <h3 class="font-bold text-gray-800">تأجير سيارات</h3>
+        </div>
+      </div>
+      
+      <!-- Featured Professionals -->
+      <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">أفضل المهنيين</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Professional Card 1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="w-full h-full object-cover">
+              </div>
+              <div class="mr-4">
+                <h4 class="font-bold text-lg text-gray-800">ورشة الحداد حسين</h4>
+                <p class="text-gray-600">حداد - وسط المدينة</p>
+              </div>
+            </div>
+            <div class="flex items-center text-gray-600 mb-2">
+              <i class="fas fa-clock ml-2 text-indigo-600"></i>
+              <span>8:00 ص - 8:00 م</span>
+            </div>
+            <div class="flex items-center text-gray-600 mb-4">
+              <i class="fas fa-map-marker-alt ml-2 text-indigo-600"></i>
+              <span>شارع محمد الخامس، بركان</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="far fa-star text-yellow-400"></i>
+                <span class="mr-2">(24)</span>
+              </div>
+              <a href="tel:+212123456789" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+                <i class="fas fa-phone ml-1"></i> اتصل
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Professional Card 2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Profile" class="w-full h-full object-cover">
+              </div>
+              <div class="mr-4">
+                <h4 class="font-bold text-lg text-gray-800">مركز الجراحات الدقيقة</h4>
+                <p class="text-gray-600">طبيب - حي الرياض</p>
+              </div>
+            </div>
+            <div class="flex items-center text-gray-600 mb-2">
+              <i class="fas fa-clock ml-2 text-indigo-600"></i>
+              <span>9:00 ص - 7:00 م</span>
+            </div>
+            <div class="flex items-center text-gray-600 mb-4">
+              <i class="fas fa-map-marker-alt ml-2 text-indigo-600"></i>
+              <span>شارع الجيش، حي الرياض</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <span class="mr-2">(42)</span>
+              </div>
+              <a href="tel:+212987654321" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+                <i class="fas fa-phone ml-1"></i> اتصل
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Professional Card 3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
+                <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Profile" class="w-full h-full object-cover">
+              </div>
+              <div class="mr-4">
+                <h4 class="font-bold text-lg text-gray-800">ورشة المهندس الكهربائي</h4>
+                <p class="text-gray-600">كهربائي - حي السلام</p>
+              </div>
+            </div>
+            <div class="flex items-center text-gray-600 mb-2">
+              <i class="fas fa-clock ml-2 text-indigo-600"></i>
+              <span>24/7</span>
+            </div>
+            <div class="flex items-center text-gray-600 mb-4">
+              <i class="fas fa-map-marker-alt ml-2 text-indigo-600"></i>
+              <span>شارع علي اليقظ، حي السلام</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="far fa-star text-yellow-400"></i>
+                <span class="mr-2">(18)</span>
+              </div>
+              <a href="tel:+212776543210" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+                <i class="fas fa-phone ml-1"></i> اتصل
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Car Rental Section -->
+  <section id="cars" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-indigo-800 mb-12">تأجير السيارات</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Car Card 1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1557795167-7b7b5f64398b?ixlib=rb-4.0.3" 
+                 alt="Car" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 bg-yellow-500 text-gray-900 font-bold px-3 py-1 rounded-full">
+              متاح
+            </span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-gray-800 mb-2">toyota corolla 2022</h3>
+            <div class="flex justify-between mb-4">
+              <div>
+                <p class="text-gray-600">السعر في اليوم</p>
+                <p class="font-bold text-indigo-700">300 د.م</p>
+              </div>
+              <div>
+                <p class="text-gray-600">السعر في الأسبوع</p>
+                <p class="font-bold text-indigo-700">1800 د.م</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">تلقيم أوتوماتيكي</span>
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">مكيف</span>
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">5 أبواب</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <a href="tel:+212612345678" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+                <i class="fas fa-phone ml-1"></i> اتصل الآن
+              </a>
+              <button class="border border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-full">
+                شروط التأجير
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Car Card 2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1601020647959-9e2a7b7f9ef3?ixlib=rb-4.0.3" 
+                 alt="Car" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 bg-yellow-500 text-gray-900 font-bold px-3 py-1 rounded-full">
+              متاح
+            </span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-gray-800 mb-2">Renault Duster 2023</h3>
+            <div class="flex justify-between mb-4">
+              <div>
+                <p class="text-gray-600">السعر في اليوم</p>
+                <p class="font-bold text-indigo-700">450 د.م</p>
+              </div>
+              <div>
+                <p class="text-gray-600">السعر في الأسبوع</p>
+                <p class="font-bold text-indigo-700">2700 د.م</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">دفع رباعي</span>
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">مكيف</span>
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">7 مقاعد</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <a href="tel:+212698765432" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+                <i class="fas fa-phone ml-1"></i> اتصل الآن
+              </a>
+              <button class="border border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-full">
+                شروط التأجير
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Car Card 3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3" 
+                 alt="Car" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 bg-red-500 text-white font-bold px-3 py-1 rounded-full">
+              غير متاح
+            </span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-gray-800 mb-2">Mercedes Benz C-Class</h3>
+            <div class="flex justify-between mb-4">
+              <div>
+                <p class="text-gray-600">السعر في اليوم</p>
+                <p class="font-bold text-indigo-700">800 د.م</p>
+              </div>
+              <div>
+                <p class="text-gray-600">السعر في الأسبوع</p>
+                <p class="font-bold text-indigo-700">4800 د.م</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">رديو CD</span>
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">جلد أصلي</span>
+              <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">نظام تحذير</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <a href="tel:+212661234567" class="bg-gray-400 text-white px-4 py-2 rounded-full cursor-not-allowed">
+                <i class="fas fa-phone ml-1"></i> غير متاح
+              </a>
+              <button class="border border-gray-300 text-gray-500 px-4 py-2 rounded-full cursor-not-allowed">
+                شروط التأجير
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pharmacies Section -->
+  <section id="pharmacies" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-indigo-800 mb-12">الصيدليات الأقرب</h2>
+      
+      <div class="bg-white rounded-xl shadow-md p-6 max-w-3xl mx-auto mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div>
+            <h3 class="font-bold text-xl text-gray-800">الصيدلية المناوبة اليوم</h3>
+            <p class="text-gray-600">آخر تحديث: 2023-08-15 20:30</p>
+          </div>
+          <button class="mt-4 md:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full">
+            <i class="fas fa-sync-alt ml-2"></i> تحديث تلقائي
+          </button>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Pharmacy Card 1 -->
+        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="font-bold text-xl text-gray-800">صيدلية الشفاء</h3>
+              <p class="text-gray-600">شارع مولاي يوسف، بركان</p>
+            </div>
+            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">مفتوح</span>
+          </div>
+          <div class="flex items-center text-gray-600 mb-2">
+            <i class="fas fa-clock ml-2 text-indigo-600"></i>
+            <span>مفتوح حتى 23:00</span>
+          </div>
+          <div class="flex items-center text-gray-600 mb-4">
+            <i class="fas fa-map-marker-alt ml-2 text-indigo-600"></i>
+            <span>1.2 كم عن موقعك</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="far fa-star text-yellow-400"></i>
+              <span class="mr-2">(32)</span>
+            </div>
+            <a href="tel:+21253667890" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+              <i class="fas fa-phone ml-1"></i> اتصل
+            </a>
+          </div>
+        </div>
+        
+        <!-- Pharmacy Card 2 -->
+        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="font-bold text-xl text-gray-800">صيدلية الرحمة</h3>
+              <p class="text-gray-600">حي الرياض، شارع المستقبل</p>
+            </div>
+            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">مغلق</span>
+          </div>
+          <div class="flex items-center text-gray-600 mb-2">
+            <i class="fas fa-clock ml-2 text-indigo-600"></i>
+            <span>سيفتح غداً الساعة 8:00 ص</span>
+          </div>
+          <div class="flex items-center text-gray-600 mb-4">
+            <i class="fas fa-map-marker-alt ml-2 text-indigo-600"></i>
+            <span>2.5 كم عن موقعك</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <span class="mr-2">(45)</span>
+            </div>
+            <a href="tel:+212532234567" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full">
+              <i class="fas fa-phone ml-1"></i> اتصل
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Section -->
+  <section id="register" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-indigo-800 mb-12">تسجيل المهني</h2>
+      
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="md:flex">
+          <div class="md:w-1/2 bg-indigo-700 text-white p-8">
+            <h3 class="text-2xl font-bold mb-4">انضم إلى منصتنا</h3>
+            <p class="mb-6">سجّل الآن ووفر وقتك ومالك. تواصل مع آلاف العملاء المحتملين في إقليم بركان.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="fas fa-check-circle mt-1 mr-2 text-yellow-400"></i>
+                <span>عرض خدماتك لآلاف العملاء</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle mt-1 mr-2 text-yellow-400"></i>
+                <span>إدارة ملفك الشخصي بسهولة</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle mt-1 mr-2 text-yellow-400"></i>
+                <span>ردود فعل من العملاء</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle mt-1 mr-2 text-yellow-400"></i>
+                <span>أدوات تسويق مجانية</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="md:w-1/2 p-8">
+            <form>
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2" for="type">
+                  نوع النشاط
+                </label>
+                <select id="type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+                  <option value="">اختر نوع النشاط</option>
+                  <option value="service">خدمة حرفية</option>
+                  <option value="car">تأجير سيارات</option>
+                  <option value="pharmacy">صيدلية حراسة</option>
+                </select>
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2" for="name">
+                  الاسم التجاري
+                </label>
+                <input type="text" id="name" placeholder="أدخل اسم النشاط التجاري" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2" for="phone">
+                  رقم الهاتف
+                </label>
+                <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2" for="address">
+                  العنوان
+                </label>
+                <textarea id="address" placeholder="أدخل العنوان الكامل" 
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 h-24"></textarea>
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2" for="work-hours">
+                  أوقات العمل
+                </label>
+                <input type="text" id="work-hours" placeholder="مثال: 8:00 ص - 8:00 م" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2" for="description">
+                  وصف الخدمة
+                </label>
+                <textarea id="description" placeholder="صِف خدماتك بتفصيل" 
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 h-32"></textarea>
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2">
+                  أضف صور
+                </label>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+                  <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                  <p class="text-gray-600">اسحب الصور هنا أو اضغط للتحميل</p>
+                  <p class="text-sm text-gray-500 mt-1">ملفات JPG, PNG حتى 5MB</p>
+                </div>
+              </div>
+              
+              <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                إنشاء الحساب
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-indigo-800 mb-12">اتصل بنا</h2>
+      
+      <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">معلومات التواصل</h3>
+          
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <i class="fas fa-map-marker-alt text-indigo-600 text-xl mt-1 mr-4"></i>
+              <div>
+                <p class="font-bold text-gray-800">العنوان</p>
+                <p class="text-gray-600">مركز بركان للخدمات، شارع الاستقلال، بركان</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <i class="fas fa-phone text-indigo-600 text-xl mt-1 mr-4"></i>
+              <div>
+                <p class="font-bold text-gray-800">الهاتف</p>
+                <p class="text-gray-600">+212 5 36 67 89 01</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <i class="fas fa-envelope text-indigo-600 text-xl mt-1 mr-4"></i>
+              <div>
+                <p class="font-bold text-gray-800">البريد الإلكتروني</p>
+                <p class="text-gray-600">contact@berkaneconnect.ma</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <i class="fas fa-clock text-indigo-600 text-xl mt-1 mr-4"></i>
+              <div>
+                <p class="font-bold text-gray-800">ساعات العمل</p>
+                <p class="text-gray-600">الأحد - الخميس: 8:00 ص - 8:00 م</p>
+                <p class="text-gray-600">الجمعة - السبت: 9:00 ص - 5:00 م</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">أرسل لنا رسالة</h3>
+          
+          <form>
+            <div class="mb-6">
+              <input type="text" placeholder="الاسم الكامل" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+            </div>
+            
+            <div class="mb-6">
+              <input type="email" placeholder="البريد الإلكتروني" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+            </div>
+            
+            <div class="mb-6">
+              <input type="tel" placeholder="رقم الهاتف" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+            </div>
+            
+            <div class="mb-6">
+              <textarea placeholder="رسالتك" 
+                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 h-32"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition">
+              إرسال الرسالة
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center mb-4">
+            <i class="fas fa-handshake text-3xl text-yellow-500 mr-2"></i>
+            <h2 class="text-2xl font-bold">Berkane Connect</h2>
+          </div>
+          <p class="text-gray-400">منصة رقمية تجمع جميع الخدمات الأساسية في إقليم بركان - المغرب</p>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-bold mb-4">الروابط السريعة</h3>
+          <ul class="space-y-2">
+            <li><a href="#services" class="text-gray-400 hover:text-white transition">الخدمات</a></li>
+            <li><a href="#cars" class="text-gray-400 hover:text-white transition">تأجير السيارات</a></li>
+            <li><a href="#pharmacies" class="text-gray-400 hover:text-white transition">الصيدليات</a></li>
+            <li><a href="#register" class="text-gray-400 hover:text-white transition">التسجيل</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition">اتصل بنا</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-bold mb-4">الخدمات</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition">الميكانيكي</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">الكهربائي</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">الحداد</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">الحرفيون</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">تأجير السيارات</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-bold mb-4">تابعنا</h3>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xl hover:bg-indigo-600 transition">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xl hover:bg-indigo-600 transition">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xl hover:bg-indigo-600 transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xl hover:bg-indigo-600 transition">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          
+          <div class="mt-6">
+            <h4 class="font-bold mb-2">النشرة البريدية</h4>
+            <form class="flex">
+              <input type="email" placeholder="أدخل بريدك الإلكتروني" 
+                     class="px-4 py-2 w-full rounded-l-lg focus:outline-none">
+              <button class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-r-lg">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-12 pt-6 text-center text-gray-400">
+        <p>&copy; 2023 Berkane Connect. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
     
-    <!-- الكود الرئيسي -->
-    <script src="script.js"></script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Form submission handling
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('تم إرسال البيانات بنجاح! سيتواصل معك فريقنا قريبًا.');
+        form.reset();
+      });
+    });
+    
+    // Dynamic pharmacy update (simulated)
+    setInterval(() => {
+      const updateButton = document.querySelector('#pharmacies button');
+      updateButton.innerHTML = '<i class="fas fa-sync-alt animate-spin ml-2"></i> جاري التحديث...';
+      
+      setTimeout(() => {
+        updateButton.innerHTML = '<i class="fas fa-sync-alt ml-2"></i> تحديث تلقائي';
+      }, 2000);
+    }, 30000);
+  </script>
 </body>
     </html>
