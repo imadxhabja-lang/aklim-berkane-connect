@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بركان كونيكت - دليل الخدمات المحلي</title>
+    <title>بركان كونيكت - الخدمات الشاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
         .hero-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        .card-shadow { box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -20,132 +21,137 @@
                 <i class="fas fa-city text-blue-600 text-2xl"></i>
                 <span class="text-xl font-bold text-blue-900">بركان كونيكت</span>
             </div>
-            <a href="#register" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition">سجل كمهني</a>
+            <nav class="hidden md:flex space-x-4 space-x-reverse">
+                <a href="#pharmacies" class="hover:text-blue-600">الصيدليات</a>
+                <a href="#cars" class="hover:text-blue-600">كراء السيارات</a>
+                <a href="#register" class="bg-blue-600 text-white px-4 py-1 rounded-lg">سجل معنا</a>
+            </nav>
         </div>
     </header>
 
-    <section class="hero-gradient text-white py-16 px-4 text-center">
-        <h1 class="text-3xl md:text-5xl font-bold mb-4">دليل خدمات إقليم بركان</h1>
-        <p class="text-lg opacity-90 mb-8">ابحث عن أفضل الحرفيين والخدمات في أكليم، بركان والنواحي</p>
-        <div class="max-w-xl mx-auto flex bg-white rounded-full overflow-hidden shadow-xl">
-            <input type="text" placeholder="ما الذي تبحث عنه؟ (كهربائي، سباك...)" class="w-full px-6 py-3 text-gray-800 outline-none">
-            <button class="bg-yellow-500 px-6 text-gray-900 font-bold hover:bg-yellow-400 transition">بحث</button>
-        </div>
+    <section class="hero-gradient text-white py-12 px-4 text-center">
+        <h1 class="text-3xl font-bold mb-4">كل ما تحتاجه في إقليم بركان</h1>
+        <p class="opacity-90 mb-6">صيدليات، كراء سيارات، وحرفيين في مكان واحد</p>
     </section>
 
-    <section class="container mx-auto px-4 py-12">
-        <h2 class="text-2xl font-bold mb-8 text-center">أقسام الخدمات</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer">
-                <i class="fas fa-bolt text-3xl text-yellow-500 mb-3"></i>
-                <h3 class="font-bold">كهرباء</h3>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer">
-                <i class="fas fa-faucet text-3xl text-blue-500 mb-3"></i>
-                <h3 class="font-bold">ترصيص</h3>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer">
-                <i class="fas fa-car text-3xl text-red-500 mb-3"></i>
-                <h3 class="font-bold">ميكانيك</h3>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer">
-                <i class="fas fa-paint-roller text-3xl text-green-500 mb-3"></i>
-                <h3 class="font-bold">صباغة</h3>
-            </div>
+    <section id="pharmacies" class="container mx-auto px-4 py-10">
+        <div class="flex items-center mb-6">
+            <i class="fas fa-notes-medical text-red-600 text-2xl ml-2"></i>
+            <h2 class="text-2xl font-bold text-gray-800">صيدليات الحراسة اليوم</h2>
         </div>
-    </section>
-
-    <section id="register" class="bg-blue-50 py-16 px-4">
-        <div class="max-w-3xl mx-auto">
-            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
-                <div class="bg-blue-600 p-8 text-white md:w-1/3">
-                    <h2 class="text-2xl font-bold mb-4">هل أنت حرفي؟</h2>
-                    <p class="text-sm opacity-80 leading-relaxed">انضم لأكبر شبكة مهنية في المنطقة. سجل بياناتك الآن ليصل إليك الزبائن بسهولة وسرعة.</p>
-                    <ul class="mt-6 space-y-3 text-sm">
-                        <li><i class="fas fa-check-circle ml-2"></i> إدراج مجاني</li>
-                        <li><i class="fas fa-check-circle ml-2"></i> بدون تحميل صور</li>
-                        <li><i class="fas fa-check-circle ml-2"></i> تواصل مباشر هاتفياً</li>
-                    </ul>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-5 rounded-2xl card-shadow border-r-4 border-red-500 flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-lg text-gray-800">صيدلية الشفاء</h3>
+                    <p class="text-sm text-gray-500"><i class="fas fa-map-marker-alt ml-1"></i> شارع محمد الخامس، بركان</p>
+                    <span class="inline-block mt-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded">مفتوحة الآن</span>
                 </div>
-                <div class="p-8 md:w-2/3">
-                    <form id="proForm" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-bold mb-1">اسم المهني أو المحل *</label>
-                            <div class="relative">
-                                <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
-                                <input type="text" id="name" required class="w-full pl-10 pr-4 py-2 border rounded-xl outline-none focus:border-blue-500 transition">
-                            </div>
+                <a href="tel:0536XXXXXX" class="bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+            <div class="bg-white p-5 rounded-2xl card-shadow border-r-4 border-red-500 flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-lg text-gray-800">صيدلية أكليم</h3>
+                    <p class="text-sm text-gray-500"><i class="fas fa-map-marker-alt ml-1"></i> وسط المدينة، أكليم</p>
+                    <span class="inline-block mt-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded">مفتوحة الآن</span>
+                </div>
+                <a href="tel:0536XXXXXX" class="bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="cars" class="bg-gray-100 py-10 px-4">
+        <div class="container mx-auto">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-car-side text-blue-700 text-2xl ml-2"></i>
+                <h2 class="text-2xl font-bold text-gray-800">كراء السيارات</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-600 py-8 text-center text-white">
+                        <i class="fas fa-car text-5xl opacity-50"></i>
+                        <h3 class="text-xl font-bold mt-2">داسيا لوغان</h3>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between mb-4 border-b pb-2 text-sm">
+                            <span><i class="fas fa-gas-pump ml-1 text-gray-400"></i> ديزل</span>
+                            <span class="font-bold text-blue-600">250 درهم/يوم</span>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-bold mb-1">نوع الحرفة *</label>
-                                <select id="category" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-blue-500 transition bg-white">
-                                    <option>كهربائي</option>
-                                    <option>سباك (Plombier)</option>
-                                    <option>ميكانيكي</option>
-                                    <option>نجار</option>
-                                    <option>بناء</option>
-                                    <option>آخر</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold mb-1">رقم الهاتف *</label>
-                                <div class="relative">
-                                    <i class="fas fa-phone absolute left-3 top-3 text-gray-400"></i>
-                                    <input type="tel" id="phone" required class="w-full pl-10 pr-4 py-2 border rounded-xl outline-none focus:border-blue-500 transition text-left" dir="ltr" placeholder="06XXXXXXXX">
-                                </div>
-                            </div>
+                        <a href="https://wa.me/2126XXXXXXXX" class="block text-center bg-blue-100 text-blue-700 py-2 rounded-xl font-bold hover:bg-blue-200 transition">
+                            <i class="fab fa-whatsapp ml-1"></i> احجز عبر الواتساب
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-gray-800 py-8 text-white">
+                        <i class="fas fa-suv text-5xl opacity-50"></i>
+                        <h3 class="text-xl font-bold mt-2">داسيا دوستر</h3>
+                    </div>
+                    <div class="p-5 text-right">
+                        <div class="flex justify-between mb-4 border-b pb-2 text-sm">
+                            <span><i class="fas fa-cogs ml-1 text-gray-400"></i> يدوي</span>
+                            <span class="font-bold text-blue-600">400 درهم/يوم</span>
                         </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-1">المدينة / الحي *</label>
-                            <input type="text" id="address" placeholder="مثلاً: أكليم - حي الفرح" required class="w-full px-4 py-2 border rounded-xl outline-none focus:border-blue-500 transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-1">وصف قصير للخدمة</label>
-                            <textarea id="desc" placeholder="ما الذي تمتاز به؟" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-blue-500 transition h-24"></textarea>
-                        </div>
-                        <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-                            تأكيد التسجيل ونشر بياناتي
-                        </button>
-                    </form>
+                        <a href="tel:06XXXXXXXX" class="block text-center bg-blue-600 text-white py-2 rounded-xl font-bold hover:bg-blue-700 transition">
+                            <i class="fas fa-phone-alt ml-1"></i> اتصل الآن
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white py-8 text-center">
-        <p class="opacity-70">© 2025 بركان كونيكت - جميع الحقوق محفوظة</p>
-    </footer >
+    <section id="register" class="py-16 px-4">
+        <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+            <h2 class="text-2xl font-bold text-center mb-6">سجل خدمتك في الدليل</h2>
+            <form id="proForm" class="space-y-4">
+                <input type="text" id="name" placeholder="الاسم الكامل أو اسم المحل" required class="w-full px-4 py-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-500">
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="category" class="w-full px-4 py-3 bg-gray-50 border rounded-xl outline-none">
+                        <option>حرفي (كهرباء/سباكة)</option>
+                        <option>كراء السيارات</option>
+                        <option>طبيب/صيدلية</option>
+                    </select>
+                    <input type="tel" id="phone" placeholder="رقم الهاتف" required class="w-full px-4 py-3 bg-gray-50 border rounded-xl outline-none">
+                </div>
+                <input type="text" id="address" placeholder="المدينة والحي" required class="w-full px-4 py-3 bg-gray-50 border rounded-xl outline-none">
+                <textarea id="desc" placeholder="وصف الخدمة..." class="w-full px-4 py-3 bg-gray-50 border rounded-xl outline-none h-24"></textarea>
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 shadow-lg transition">
+                    تأكيد ونشر البيانات
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-6 text-center text-sm opacity-60">
+        © 2025 بركان كونيكت - جميع الحقوق محفوظة
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // إعدادات Firebase - استبدل هذه القيم ببيانات مشروعك الجديد
+        // إعدادات Firebase (استبدلها بمعلومات مشروعك)
         const firebaseConfig = {
             apiKey: "ضع_هنا_API_KEY",
-            authDomain: "ضع_هنا_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://ضع_هنا_PROJECT_ID.firebaseio.com",
+            databaseURL: "ضع_هنا_DATABASE_URL",
             projectId: "ضع_هنا_PROJECT_ID",
-            storageBucket: "ضع_هنا_PROJECT_ID.appspot.com",
-            messagingSenderId: "ضع_هنا_SENDER_ID",
             appId: "ضع_هنا_APP_ID"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Form Submission
         const form = document.getElementById('proForm');
         const btn = document.getElementById('submitBtn');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // تغيير حالة الزر
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin ml-2"></i> جاري الحفظ...';
+            btn.innerHTML = 'جاري الحفظ...';
 
             const data = {
                 name: document.getElementById('name').value,
@@ -157,18 +163,14 @@
             };
 
             try {
-                const dbRef = ref(db, 'professionals');
-                const newEntry = push(dbRef);
-                await set(newEntry, data);
-
-                alert('تم تسجيلك بنجاح! سيتم مراجعة بياناتك وظهورها للعملاء.');
+                await set(push(ref(db, 'registrations')), data);
+                alert('تم الحفظ بنجاح! شكراً لانضمامك لبركان كونيكت.');
                 form.reset();
-            } catch (error) {
-                console.error(error);
-                alert('عذراً، حدث خطأ. تأكد من إعدادات القواعد في Firebase (Rules).');
+            } catch (err) {
+                alert('خطأ في الاتصال بقاعدة البيانات');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = 'تأكيد التسجيل ونشر بياناتي';
+                btn.innerHTML = 'تأكيد ونشر البيانات';
             }
         });
     </script>
