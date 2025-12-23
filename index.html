@@ -1,98 +1,65 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصميم Berkane-Connect</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; }
-        .orange-gradient { background: linear-gradient(135deg, #fb923c, #f97316); }
-        .blue-gradient { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-
-    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black text-blue-900">BERKANE<span class="text-orange-500">.</span>CONNECT</div>
-            <button onclick="document.getElementById('formModal').classList.remove('hidden')" class="orange-gradient text-white px-5 py-2 rounded-full font-bold shadow-md hover:scale-105 transition">
-                + أضف مهنتك
-            </button>
+<section class="container mx-auto mt-6 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div class="bg-white border-r-4 border-green-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
+            <div>
+                <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold uppercase">أكليم</span>
+                <h2 id="pharmaNameAklim" class="font-bold text-gray-800 mt-1">جاري التحميل...</h2>
+            </div>
+            <div id="pharmaTimeAklim" class="text-green-600 font-bold text-sm">--:--</div>
         </div>
-    </nav>
 
-    <section class="container mx-auto mt-6 px-4">
-        <div class="bg-white border-2 border-green-500 p-6 rounded-2xl flex justify-between items-center shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-green-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">خدمة مستعجلة</div>
-            <div class="flex items-center gap-4">
-                <i class="fas fa-prescription-bottle-medical text-3xl text-green-500"></i>
-                <div>
-                    <h2 class="font-bold text-xl text-green-900">صيدلية الحراسة بـ "أكليم"</h2>
-                    <p class="text-gray-500 font-bold">صيدلية النور (كمثال)</p>
-                </div>
+        <div class="bg-white border-r-4 border-blue-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
+            <div>
+                <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase">بركان</span>
+                <h2 id="pharmaNameBerkane" class="font-bold text-gray-800 mt-1">جاري التحميل...</h2>
             </div>
-            <div class="text-green-600 font-black text-lg bg-green-50 px-4 py-2 rounded-xl">24h/24h</div>
+            <div id="pharmaTimeBerkane" class="text-blue-600 font-bold text-sm">--:--</div>
         </div>
-    </section>
 
-    <main class="container mx-auto py-10 px-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-xl transition group">
-                <div class="w-14 h-14 blue-gradient rounded-2xl flex items-center justify-center text-white text-2xl mb-4 shadow-lg group-hover:rotate-6 transition">
-                    <i class="fas fa-car"></i>
-                </div>
-                <h3 class="font-black text-xl mb-1">وكالة الأمانة للسيارات</h3>
-                <p class="text-gray-400 text-sm mb-4"><i class="fas fa-map-marker-alt"></i> أكليم المركز</p>
-                <div class="flex justify-between items-center border-t pt-4">
-                    <span class="font-bold text-blue-800">250 درهم/يوم</span>
-                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm"><i class="fab fa-whatsapp ml-1"></i> واتساب</button>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-xl transition group">
-                <div class="w-14 h-14 orange-gradient rounded-2xl flex items-center justify-center text-white text-2xl mb-4 shadow-lg group-hover:-rotate-6 transition">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <h3 class="font-black text-xl mb-1">المعلم مراد - كهربائي</h3>
-                <p class="text-gray-400 text-sm mb-4"><i class="fas fa-map-marker-alt"></i> حي الوداد، بركان</p>
-                <div class="flex justify-between items-center border-t pt-4">
-                    <span class="font-bold text-orange-600 italic">متاح الآن</span>
-                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm"><i class="fab fa-whatsapp ml-1"></i> واتساب</button>
-                </div>
-            </div>
-
-            <div class="col-span-full bg-blue-900 p-8 rounded-3xl text-white flex flex-col md:flex-row justify-between items-center relative overflow-hidden">
-                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-800 rounded-full opacity-50"></div>
-                <div class="relative z-10 text-center md:text-right">
-                    <h3 class="text-2xl font-black mb-2">أعلن عن شركتك هنا</h3>
-                    <p class="opacity-80">صل إلى زبنائك في بركان وأكليم بأسعار مناسبة</p>
-                </div>
-                <button class="mt-4 md:mt-0 relative z-10 bg-orange-500 px-8 py-3 rounded-xl font-black shadow-lg">احجز الآن</button>
-            </div>
-
-        </div>
-    </main>
-
-    <div id="formModal" class="fixed inset-0 bg-black/70 hidden z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl scale-up">
-            <h3 class="text-2xl font-black mb-6 text-blue-900 border-b pb-4">أضف نشاطك للمنصة</h3>
-            <div class="space-y-4">
-                <input type="text" placeholder="اسم الوكالة أو الحرفي" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl outline-none focus:border-orange-500 transition">
-                <select class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl">
-                    <option>كراء السيارات</option>
-                    <option>مهني / حرفي</option>
-                </select>
-                <div class="flex gap-4">
-                    <button onclick="document.getElementById('formModal').classList.add('hidden')" class="flex-1 py-4 font-bold text-gray-400">إلغاء</button>
-                    <button class="flex-1 orange-gradient text-white rounded-xl font-bold shadow-lg">نشر النشاط</button>
-                </div>
-            </div>
-        </div>
     </div>
+</section>
 
-</body>
-</html>
+<script type="module">
+    // ... (نفس إعدادات Firebase السابقة)
+
+    // الأكواد السرية (يمكنك تغييرها من هنا)
+    const CODES = {
+        "aklim": "1234",   // كود صيادلة أكليم
+        "berkane": "5678"  // كود صيادلة بركان
+    };
+
+    // دالة التحديث المحدثة لتشمل المدينتين
+    window.handlePharmacyUpdate = async () => {
+        const city = document.getElementById('selectedCity').value; // أكليم أو بركان
+        const code = document.getElementById('adminCode').value;
+        const name = document.getElementById('newPharmaName').value;
+        const time = document.getElementById('newPharmaTime').value;
+
+        if (code !== CODES[city]) {
+            alert("الكود السري غير صحيح لهذه المدينة!");
+            return;
+        }
+
+        try {
+            await setDoc(doc(db, "config", `pharmacy_${city}`), { name, time });
+            alert(`تم تحديث صيدلية ${city} بنجاح!`);
+            location.reload();
+        } catch (e) { alert("خطأ في الاتصال"); }
+    };
+
+    // دالة جلب البيانات لتشمل المدينتين
+    async function loadPharmacies() {
+        const cities = ['aklim', 'berkane'];
+        for (const city of cities) {
+            const snap = await getDoc(doc(db, "config", `pharmacy_${city}`));
+            if (snap.exists()) {
+                const elementId = city === 'aklim' ? 'PharmaNameAklim' : 'PharmaNameBerkane';
+                const timeId = city === 'aklim' ? 'PharmaTimeAklim' : 'PharmaTimeBerkane';
+                document.getElementById(`pharmaName${city.charAt(0).toUpperCase() + city.slice(1)}`).innerText = snap.data().name;
+                document.getElementById(`pharmaTime${city.charAt(0).toUpperCase() + city.slice(1)}`).innerText = snap.data().time;
+            }
+        }
+    }
+    loadPharmacies();
+</script>
