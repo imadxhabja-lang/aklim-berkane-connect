@@ -3,105 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | دليل بركان وأكليم</title>
+    <title>Berkane-Connect | دليل بركان وأكليم الاحترافي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
-        .hero-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        body { font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
+        .hero-bg { background: linear-gradient(rgba(30, 58, 138, 0.9), rgba(59, 130, 246, 0.8)), url('https://images.unsplash.com/photo-1543674892-7d64d45df18b?auto=format&fit=crop&q=80&w=1000'); background-size: cover; background-position: center; }
+        .ad-space { background: repeating-linear-gradient(45deg, #f3f4f6, #f3f4f6 10px, #ffffff 10px, #ffffff 20px); }
     </style>
 </head>
-<body>
+<body class="bg-gray-50">
 
-    <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
+    <nav class="bg-white shadow-lg p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold text-blue-700">BERKANE<span class="text-orange-500">-CONNECT</span></div>
-            <div class="hidden md:flex space-x-reverse space-x-6 font-medium">
+            <div class="text-2xl font-black text-blue-800 tracking-tighter">BERKANE<span class="text-orange-500 text-3xl">.</span>CONNECT</div>
+            <div class="hidden md:flex space-x-reverse space-x-6 font-bold text-gray-700">
                 <a href="#" class="hover:text-blue-600 transition">الرئيسية</a>
-                <a href="#" class="hover:text-blue-600 transition">الحرفيين</a>
-                <a href="#" class="hover:text-blue-600 transition">كراء السيارات</a>
-                <a href="#" class="hover:text-blue-600 transition">تواصل معنا</a>
+                <a href="#listings" class="hover:text-blue-600 transition">تصفح الخدمات</a>
+                <a href="#" onclick="alert('خدمة الخريطة ستتوفر قريباً!')" class="hover:text-blue-600 transition">الخريطة</a>
             </div>
-            <button class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold hover:bg-orange-600 transition">
-                + أضف نشاطك مجاناً
+            <button onclick="openModal()" class="bg-orange-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-orange-600 transform hover:scale-105 transition shadow-lg">
+                + أضف إعلانك
             </button>
         </div>
     </nav>
 
-    <header class="hero-gradient text-white py-20 px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">كل ما تحتاجه في بركان وأكليم في مكان واحد</h1>
-        <p class="text-xl mb-10 opacity-90">ابحث عن أفضل الحرفيين أو احجز سيارة للكراء بكل سهولة</p>
+    <header class="hero-bg text-white py-24 px-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 drop-shadow-lg">منصة بركان وأكليم الرقمية</h1>
+        <p class="text-xl mb-12 max-w-2xl mx-auto opacity-95">الرابط المباشر بين الحرفيين المهرة، وكالات كراء السيارات، والزبناء في إقليم بركان.</p>
         
-        <div class="max-w-4xl mx-auto bg-white p-4 rounded-lg shadow-2xl flex flex-col md:flex-row gap-4">
-            <input type="text" placeholder="ماذا تبحث؟ (نجار، كراء سيارات...)" class="flex-1 p-3 border rounded text-gray-800 outline-none focus:ring-2 focus:ring-blue-500">
-            <select class="p-3 border rounded text-gray-800 outline-none">
-                <option>كل المناطق</option>
-                <option>بركان المدينة</option>
-                <option>أكليم</option>
-                <option>سيدي سليمان</option>
+        <div class="max-w-4xl mx-auto bg-white p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-2">
+            <input id="searchInput" type="text" placeholder="ماذا تبحث؟ (ميكانيكي، سيارة، صباغ...)" class="flex-1 p-4 text-gray-800 outline-none rounded-xl">
+            <select id="locationInput" class="p-4 border-r border-gray-100 text-gray-600 outline-none font-bold">
+                <option value="all">كل المناطق</option>
+                <option value="berkane">بركان المدينة</option>
+                <option value="aklim">أكليم</option>
+                <option value="saidia">السعيدية</option>
             </select>
-            <button class="bg-blue-700 text-white px-8 py-3 rounded font-bold hover:bg-blue-800 transition">بحث الآن</button>
+            <button onclick="searchFunction()" class="bg-blue-700 hover:bg-blue-900 text-white px-10 py-4 rounded-xl font-bold transition-all">
+                إبحث الآن <i class="fas fa-search mr-2"></i>
+            </button>
         </div>
     </header>
 
-    <section class="container mx-auto my-10 px-4">
-        <div class="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-400">
-            <span class="text-gray-500 font-bold">مساحة إعلانية مميزة (Banner Ad)</span>
-        </div>
-    </section>
+    <main id="listings" class="container mx-auto py-16 px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-10 text-center">الإضافات الأخيرة والمساحات الإعلانية</h2>
 
-    <section class="container mx-auto py-10 px-4">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-right">الأصناف الأكثر طلباً</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center cursor-pointer border-b-4 border-blue-500">
-                <i class="fas fa-car text-4xl text-blue-600 mb-4"></i>
-                <h3 class="font-bold text-gray-700">كراء السيارات</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="cardsContainer">
             </div>
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center cursor-pointer border-b-4 border-orange-500">
-                <i class="fas fa-tools text-4xl text-orange-600 mb-4"></i>
-                <h3 class="font-bold text-gray-700">سباكة وكهرباء</h3>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center cursor-pointer border-b-4 border-green-500">
-                <i class="fas fa-hammer text-4xl text-green-600 mb-4"></i>
-                <h3 class="font-bold text-gray-700">نجارة وصباغة</h3>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center cursor-pointer border-b-4 border-red-500">
-                <i class="fas fa-building text-4xl text-red-600 mb-4"></i>
-                <h3 class="font-bold text-gray-700">عقارات وخدمات</h3>
+    </main>
+
+    <div id="addModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <h3 class="text-2xl font-bold mb-4 text-blue-800">إضافة نشاط جديد</h3>
+            <p class="text-gray-600 mb-6">المرجو إدخال معلوماتك ليتم مراجعتها ونشرها في الموقع.</p>
+            <input type="text" placeholder="اسم الوكالة أو الحرفي" class="w-full p-3 border rounded-lg mb-4 outline-none focus:border-blue-500">
+            <input type="tel" placeholder="رقم الهاتف (واتساب)" class="w-full p-3 border rounded-lg mb-6 outline-none focus:border-blue-500">
+            <div class="flex gap-4">
+                <button onclick="closeModal()" class="flex-1 bg-gray-200 py-3 rounded-lg font-bold">إلغاء</button>
+                <button onclick="alert('شكراً لك! سيتم التواصل معك لتفعيل الإعلان.'); closeModal();" class="flex-1 bg-orange-500 text-white py-3 rounded-lg font-bold">إرسال الطلب</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section class="bg-gray-100 py-16 px-4">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-right">أحدث الوكالات والمهنيين</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg overflow-hidden shadow">
-                    <img src="https://via.placeholder.com/400x250" alt="Car Rental" class="w-full h-48 object-cover">
-                    <div class="p-6 text-right">
-                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold">كراء السيارات</span>
-                        <h3 class="text-xl font-bold mt-3">وكالة النور - بركان</h3>
-                        <p class="text-gray-600 mt-2"><i class="fas fa-map-marker-alt"></i> شارع الوفاء، بركان</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <a href="#" class="bg-green-500 text-white px-4 py-2 rounded flex items-center gap-2">
-                                <i class="fab fa-whatsapp"></i> واتساب
-                            </a>
-                            <span class="font-bold text-blue-800">ابتداءً من 250 درهم</span>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-800 text-white py-10 text-center">
-        <p class="mb-4">جميع الحقوق محفوظة © 2024 Berkane-Connect</p>
-        <div class="flex justify-center gap-6">
-            <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f text-2xl"></i></a>
-            <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram text-2xl"></i></a>
+    <footer class="bg-gray-900 text-white py-12 mt-20">
+        <div class="container mx-auto text-center px-4">
+            <p class="text-lg font-bold mb-4">Berkane-Connect © 2024</p>
+            <p class="text-gray-400 text-sm mb-6">المنصة الأولى لدعم الحرفيين والشباب في منطقة بركان وأكليم.</p>
+            <div class="flex justify-center gap-4">
+                <a href="#" class="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-400 transition"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </footer>
 
+    <script>
+        // دالة لفتح وإغلاق النافذة
+        function openModal() { document.getElementById('addModal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('addModal').classList.add('hidden'); }
+
+        // دالة البحث
+        function searchFunction() {
+            const query = document.getElementById('searchInput').value;
+            const loc = document.getElementById('locationInput').value;
+            if(query === "") {
+                alert("المرجو كتابة شيء للبحث عنه");
+            } else {
+                alert("جاري البحث عن: " + query + " في منطقة: " + loc);
+            }
+        }
+
+        // بيانات تجريبية لتوليد البطاقات مع مساحات إعلانية كل 3 عناصر
+        const data = [
+            { name: "وكالة أكليم كراء السيارات", type: "سيارات", loc: "أكليم", price: "250 DH", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400" },
+            { name: "المعلم إدريس - كهربائي", type: "حرفي", loc: "بركان", price: "حسب العمل", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400" },
+            { name: "وكالة طريق السعيدية", type: "سيارات", loc: "بركان", price: "300 DH", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400" },
+            { name: "صباغة الديكور الحديث", type: "حرفي", loc: "أكليم", price: "اتصل بنا", img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400" },
+            { name: "كراء سيارات الدفع الرباعي", type: "سيارات", loc: "سيدي سليمان", price: "500 DH", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400" },
+            { name: "إصلاح الهواتف - يونس", type: "تقني", loc: "بركان", price: "سريع", img: "https://images.unsplash.com/photo-1512054192342-d98e8b663522?w=400" }
+        ];
+
+        const container = document.getElementById('cardsContainer');
+        
+        data.forEach((item, index) => {
+            // إضافة بطاقة العرض
+            container.innerHTML += `
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 transform hover:-translate-y-2 transition duration-300">
+                    <img src="${item.img}" class="w-full h-48 object-cover">
+                    <div class="p-5 text-right">
+                        <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">${item.type}</span>
+                        <h3 class="text-xl font-bold mt-3">${item.name}</h3>
+                        <p class="text-gray-500 text-sm mt-2"><i class="fas fa-map-marker-alt ml-1"></i> ${item.loc}</p>
+                        <div class="mt-6 flex justify-between items-center border-t pt-4">
+                            <span class="text-blue-800 font-bold">${item.price}</span>
+                            <button onclick="window.location.href='tel:0600000000'" class="bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-green-600">
+                                <i class="fab fa-whatsapp ml-1"></i> اتصل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // إضافة مساحة إعلانية بعد كل 3 بطاقات
+            if ((index + 1) % 3 === 0) {
+                container.innerHTML += `
+                    <div class="col-span-1 md:col-span-3 ad-space border-2 border-dashed border-blue-300 rounded-2xl p-8 flex flex-col items-center justify-center my-4">
+                        <span class="text-blue-500 font-bold mb-2">إعلان ممول - مساحة شاغرة</span>
+                        <h4 class="text-2xl font-black text-gray-800 mb-4">ضع إعلان شركتك هنا لتصل لآلاف الزوار</h4>
+                        <button onclick="openModal()" class="bg-blue-800 text-white px-8 py-2 rounded-full font-bold">احجز المساحة الآن</button>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
