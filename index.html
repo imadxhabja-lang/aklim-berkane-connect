@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | الدليل الرسمي</title>
+    <title>Berkane-Connect | الدليل المتكامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
         .gradient-blue { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
-        .marquee { background: #f97316; color: white; padding: 10px 0; overflow: hidden; white-space: nowrap; }
-        .marquee span { display: inline-block; padding-left: 100%; animation: marquee 20s linear infinite; font-weight: bold; }
+        .gradient-orange { background: linear-gradient(135deg, #f97316, #fb923c); }
+        .marquee { background: #f97316; color: white; padding: 10px 0; overflow: hidden; white-space: nowrap; font-weight: bold; }
+        .marquee span { display: inline-block; padding-left: 100%; animation: marquee 20s linear infinite; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(100%, 0); } }
     </style>
 </head>
@@ -20,73 +21,83 @@
     <nav class="bg-white shadow-md p-4 sticky top-0 z-50 flex justify-between items-center">
         <div class="text-2xl font-black text-blue-900 tracking-tighter">BERKANE<span class="text-orange-500">.</span>CONNECT</div>
         <div class="flex gap-2">
-            <button onclick="window.toggleAddModal()" class="gradient-blue text-white px-3 py-2 rounded-xl text-[10px] font-bold shadow-md"> + أضف مهنة </button>
+            <button onclick="window.toggleAddModal()" class="gradient-blue text-white px-4 py-2 rounded-xl text-xs font-bold shadow-md"> + أضف مهنتك </button>
             <button onclick="window.openAdmin()" class="bg-gray-100 p-2 rounded-xl text-gray-400"><i class="fas fa-cog"></i></button>
         </div>
     </nav>
 
-    <div class="marquee"><span id="newsTicker">جاري تحميل الأخبار...</span></div>
+    <div class="marquee"><span id="newsTicker">مرحباً بكم في Berkane-Connect.. دليلكم الشامل في بركان وأكليم!</span></div>
 
     <section class="container mx-auto mt-6 px-4">
-        <h3 class="font-black text-gray-800 mb-4 border-r-4 border-green-600 pr-2">صيدليات الحراسة</h3>
+        <h3 class="font-black text-gray-800 mb-4 border-r-4 border-green-600 pr-2 italic">صيدليات الحراسة</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-white rounded-3xl shadow-sm border border-blue-100 overflow-hidden">
-                <div class="bg-blue-600 p-3 text-white font-bold text-sm">بركان</div>
-                <div id="dispBerkane" class="p-4 min-h-[80px] text-sm">جاري التحميل...</div>
+                <div class="bg-blue-600 p-3 text-white font-bold text-sm flex justify-between"><span>بركان</span> <i class="fas fa-hospital-alt"></i></div>
+                <div id="dispBerkane" class="p-4 min-h-[80px]">جاري التحميل...</div>
             </div>
             <div class="bg-white rounded-3xl shadow-sm border border-green-100 overflow-hidden">
-                <div class="bg-green-600 p-3 text-white font-bold text-sm">أكليم</div>
-                <div id="dispAklim" class="p-4 min-h-[80px] text-sm">جاري التحميل...</div>
+                <div class="bg-green-600 p-3 text-white font-bold text-sm flex justify-between"><span>أكليم</span> <i class="fas fa-first-aid"></i></div>
+                <div id="dispAklim" class="p-4 min-h-[80px]">جاري التحميل...</div>
             </div>
         </div>
     </section>
 
-    <section class="container mx-auto mt-8 px-4">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+    <section class="container mx-auto mt-6 px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <a href="tel:15" class="bg-white p-3 rounded-2xl shadow-sm border border-red-50 flex items-center gap-3">
-                <div class="w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-xs">15</div>
-                <span class="text-[10px] font-bold text-gray-700">الإسعاف</span>
+                <div class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold">15</div>
+                <span class="text-xs font-bold">الإسعاف</span>
             </a>
             <a href="tel:19" class="bg-white p-3 rounded-2xl shadow-sm border border-blue-50 flex items-center gap-3">
-                <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">19</div>
-                <span class="text-[10px] font-bold text-gray-700">الشرطة</span>
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">19</div>
+                <span class="text-xs font-bold">الشرطة</span>
             </a>
         </div>
     </section>
 
-    <main class="container mx-auto py-8 px-4 flex-grow">
-        <h3 class="font-black text-gray-800 mb-4 border-r-4 border-blue-900 pr-2">دليل الحرفيين والخدمات</h3>
-        <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    <main class="container mx-auto py-10 px-4 flex-grow">
+        <h3 class="font-black text-gray-800 mb-6 border-r-4 border-blue-900 pr-2 italic">دليل الحرفيين والخدمات</h3>
+        <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div id="loader" class="col-span-full text-center py-20 text-gray-400">جاري تحميل الخدمات...</div>
+        </div>
     </main>
 
-    <div id="adminModal" class="fixed inset-0 bg-black/80 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-3xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <h3 class="font-bold text-blue-900 mb-4 border-b pb-2">الإدارة (الزيارات: <span id="vCount">0</span>)</h3>
-            <div class="space-y-4 text-right">
-                <div class="p-2 bg-orange-50 rounded-xl">
-                    <label class="text-[10px] font-bold text-orange-700">نص الشريط المتحرك:</label>
-                    <input type="text" id="admNews" class="w-full p-2 border rounded-lg text-sm">
-                </div>
-                <div class="p-3 bg-gray-50 rounded-xl">
+    <div id="adminModal" class="fixed inset-0 bg-black/80 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md text-right">
+        <div class="bg-white rounded-3xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <h3 class="font-bold text-blue-900 mb-4 border-b pb-2">لوحة التحكم (الزيارات: <span id="vCount">0</span>)</h3>
+            <div class="space-y-4">
+                <input type="text" id="admNews" placeholder="نص الشريط المتحرك" class="w-full p-3 border rounded-xl text-sm outline-none">
+                <div class="p-4 bg-gray-50 rounded-2xl">
                     <label class="text-[10px] font-bold text-blue-700">تحديث الصيدليات:</label>
-                    <select id="admCity" class="w-full p-2 mb-2 border rounded-lg text-xs"><option value="berkane">بركان</option><option value="aklim">أكليم</option></select>
-                    <textarea id="admNames" placeholder="اكتب كل صيدلية في سطر جديد..." class="w-full p-2 border rounded-lg h-24 text-sm"></textarea>
-                    <input type="text" id="admDays" placeholder="تاريخ الأسبوع" class="w-full p-2 mt-2 border rounded-lg text-xs">
+                    <select id="admCity" class="w-full p-2 mb-2 border rounded-xl text-sm"><option value="berkane">بركان</option><option value="aklim">أكليم</option></select>
+                    <textarea id="admNames" placeholder="الصيدلية الأولى&#10;الصيدلية الثانية..." class="w-full p-3 border rounded-xl h-24 text-sm"></textarea>
+                    <input type="text" id="admDays" placeholder="تاريخ الأسبوع" class="w-full p-3 mt-2 border rounded-xl text-sm">
                 </div>
-                <button onclick="window.saveAdmin()" class="w-full gradient-blue text-white py-3 rounded-xl font-bold shadow-lg">حفظ التعديلات</button>
-                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full text-gray-400 text-xs mt-2 underline text-center">إغلاق</button>
+                <button onclick="window.saveAdmin()" class="w-full gradient-blue text-white py-3 rounded-xl font-bold">حفظ كل التغييرات</button>
+                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full text-gray-400 text-xs mt-2 underline">إغلاق</button>
             </div>
+        </div>
+    </div>
+
+    <div id="detailsModal" class="fixed inset-0 bg-black/60 hidden z-[300] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 class="font-bold text-gray-800 mb-3 border-b pb-2">تفاصيل الخدمة</h3>
+            <p id="detailsText" class="text-gray-600 text-sm leading-relaxed mb-6"></p>
+            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="w-full py-3 gradient-blue text-white rounded-xl font-bold italic">إغلاق</button>
         </div>
     </div>
 
     <div id="addModal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm">
-            <h3 class="font-bold mb-4 text-blue-900">سجل مهنتك مجاناً</h3>
-            <input type="text" id="uName" placeholder="الاسم" class="w-full p-3 border rounded-xl mb-2 text-sm outline-none">
-            <input type="tel" id="uPhone" placeholder="رقم الهاتف (06..)" class="w-full p-3 border rounded-xl mb-2 text-sm outline-none">
-            <select id="uCat" class="w-full p-3 border rounded-xl mb-4 text-sm"><option value="bolt">كهرباء</option><option value="faucet">سباكة</option><option value="car">كراء سيارات</option><option value="briefcase">أخرى</option></select>
-            <button onclick="window.addService()" class="w-full gradient-blue text-white py-3 rounded-xl font-bold">نشر الآن</button>
-            <button onclick="window.toggleAddModal()" class="w-full text-gray-400 text-xs mt-3">إلغاء</button>
+            <h3 class="font-bold mb-4 text-blue-900">سجل مهنتك</h3>
+            <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-3 border rounded-xl mb-2 text-sm">
+            <input type="tel" id="uPhone" placeholder="رقم الهاتف (06...)" class="w-full p-3 border rounded-xl mb-2 text-sm">
+            <select id="uCat" class="w-full p-3 border rounded-xl mb-2 text-sm">
+                <option value="bolt">كهرباء</option><option value="faucet">سباكة</option>
+                <option value="car">كراء سيارات</option><option value="truck">توصيل</option><option value="briefcase">أخرى</option>
+            </select>
+            <textarea id="uDesc" placeholder="وصف للخدمة (اختياري)" class="w-full p-3 border rounded-xl mb-4 text-sm h-20"></textarea>
+            <button onclick="window.addService()" id="subBtn" class="w-full gradient-orange text-white py-3 rounded-xl font-bold shadow-lg">نشر الآن</button>
         </div>
     </div>
 
@@ -94,8 +105,16 @@
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
         const ADMIN_CODE = "2025";
 
+        const themeMap = {
+            'car': { icon: 'fa-car', color: '#1e3a8a', label: 'كراء السيارات' },
+            'bolt': { icon: 'fa-bolt', color: '#eab308', label: 'كهرباء' },
+            'faucet': { icon: 'fa-faucet', color: '#06b6d4', label: 'سباكة' },
+            'truck': { icon: 'fa-truck', color: '#ef4444', label: 'توصيل' },
+            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' }
+        };
+
         window.openAdmin = async () => {
-            if(prompt("الكود السري:") === ADMIN_CODE) {
+            if(prompt("كود الدخول:") === ADMIN_CODE) {
                 const res = await fetch(`${BASE}/admin/visitors.json`);
                 document.getElementById('vCount').innerText = await res.json() || 0;
                 document.getElementById('adminModal').classList.remove('hidden');
@@ -103,65 +122,77 @@
         };
 
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
+        window.showDetails = (t) => { document.getElementById('detailsText').innerText = t; document.getElementById('detailsModal').classList.remove('hidden'); };
 
         async function init() {
             try {
-                // تتبع الزوار
+                // Visitors
                 const vRes = await fetch(`${BASE}/admin/visitors.json`);
                 let count = await vRes.json() || 0;
                 fetch(`${BASE}/admin/visitors.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
 
-                // الشريط
+                // News
                 const nRes = await fetch(`${BASE}/admin/news.json`);
-                const news = await nRes.json();
-                document.getElementById('newsTicker').innerText = news || "مرحباً بكم في Berkane-Connect!";
+                document.getElementById('newsTicker').innerText = await nRes.json() || "مرحباً بكم!";
 
-                // الصيدليات
+                // Pharmacies
                 const pRes = await fetch(`${BASE}/pharmacies_v4.json`);
                 const pData = await pRes.json();
                 renderP('berkane', pData?.berkane, 'dispBerkane', 'blue');
                 renderP('aklim', pData?.aklim, 'dispAklim', 'green');
 
-                // الخدمات
+                // Services
                 const sRes = await fetch(`${BASE}/services.json`);
                 const sData = await sRes.json();
                 const container = document.getElementById('listingsContainer');
+                if(document.getElementById('loader')) document.getElementById('loader').remove();
+
                 if(sData) {
-                    container.innerHTML = Object.keys(sData).reverse().map(id => `
-                        <div class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
-                            <h4 class="font-bold text-gray-800 text-sm">${sData[id].name}</h4>
-                            <p class="text-[10px] text-gray-400 mb-3">${sData[id].phone}</p>
-                            <a href="https://wa.me/212${sData[id].phone.substring(1)}" target="_blank" class="block text-center bg-blue-600 text-white py-2 rounded-xl text-xs font-bold">تواصل واتساب</a>
-                        </div>
-                    `).join('');
+                    container.innerHTML = Object.keys(sData).reverse().map(id => {
+                        const item = sData[id];
+                        const theme = themeMap[item.category] || themeMap['briefcase'];
+                        const safeDesc = (item.description || "لا يوجد وصف حالياً لهذه الخدمة.").replace(/'/g, "\\'");
+                        return `
+                        <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 relative">
+                            <div class="flex items-center gap-4 mb-5">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md" style="background-color: ${theme.color}"><i class="fas ${theme.icon} text-lg"></i></div>
+                                <div><h4 class="font-extrabold text-gray-800">${item.name}</h4><p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">${theme.label}</p></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="window.showDetails('${safeDesc}')" class="flex-1 py-3 text-gray-500 border-2 border-gray-50 rounded-2xl font-bold text-xs hover:bg-gray-50 transition">التفاصيل</button>
+                                <a href="https://wa.me/212${item.phone.substring(1)}" target="_blank" class="flex-[2] block text-center py-3 rounded-2xl font-bold text-xs text-white shadow-lg transition" style="background-color: ${theme.color}">تواصل الآن</a>
+                            </div>
+                        </div>`;
+                    }).join('');
                 }
             } catch (e) { console.error(e); }
         }
 
         function renderP(city, data, elId, color) {
             const el = document.getElementById(elId);
-            if(!data) { el.innerHTML = `<p class="text-gray-400 italic text-xs">لا بيانات حالياً (استخدم لوحة التحكم).</p>`; return; }
-            const names = data.names.split('\n').map(n => `<div class="font-bold text-gray-800 border-b border-gray-50 py-1">📍 ${n}</div>`).join('');
-            el.innerHTML = `<div class="text-[10px] text-gray-400 mb-2 font-bold">${data.days}</div>${names}`;
+            if(!data) { el.innerHTML = "<p class='text-gray-400 text-xs italic'>لا بيانات متوفرة حالياً.</p>"; return; }
+            const list = data.names.split('\n').map(n => `<div class="font-bold text-gray-800 py-1 border-b border-gray-50">📍 ${n}</div>`).join('');
+            el.innerHTML = `<div class="text-[10px] text-gray-400 font-bold mb-2">${data.days}</div><div class="space-y-1">${list}</div>`;
         }
 
         window.saveAdmin = async () => {
             const city = document.getElementById('admCity').value;
             const news = document.getElementById('admNews').value;
-            const pharma = { names: document.getElementById('admNames').value, days: document.getElementById('admDays').value };
+            const ph = { names: document.getElementById('admNames').value, days: document.getElementById('admDays').value };
             if(news) await fetch(`${BASE}/admin/news.json`, { method: 'PUT', body: JSON.stringify(news) });
-            await fetch(`${BASE}/pharmacies_v4/${city}.json`, { method: 'PUT', body: JSON.stringify(pharma) });
-            alert("تم الحفظ بنجاح!");
+            await fetch(`${BASE}/pharmacies_v4/${city}.json`, { method: 'PUT', body: JSON.stringify(ph) });
             location.reload();
         };
 
         window.addService = async () => {
+            const btn = document.getElementById('subBtn');
+            btn.innerText = "..."; btn.disabled = true;
             const data = { 
                 name: document.getElementById('uName').value, 
                 phone: document.getElementById('uPhone').value, 
-                category: document.getElementById('uCat').value 
+                category: document.getElementById('uCat').value, 
+                description: document.getElementById('uDesc').value 
             };
-            if(!data.name || !data.phone) return alert("عمر الخانات!");
             await fetch(`${BASE}/services.json`, { method: 'POST', body: JSON.stringify(data) });
             location.reload();
         };
