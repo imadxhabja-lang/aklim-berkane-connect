@@ -3,93 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | الدليل المطور</title>
+    <title>Berkane-Connect | المنصة الشاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f9fafb; scroll-behavior: smooth; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; scroll-behavior: smooth; }
         .gradient-blue { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
         .gradient-orange { background: linear-gradient(135deg, #f97316, #fb923c); }
+        .marquee { white-space: nowrap; overflow: hidden; position: relative; }
+        .marquee span { display: inline-block; padding-left: 100%; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(100%, 0); } }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
+    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black text-blue-900">BERKANE<span class="text-orange-500">.</span>CONNECT</div>
+            <div class="text-2xl font-black text-blue-900 tracking-tighter">BERKANE<span class="text-orange-500">.</span>CONNECT</div>
             <div class="flex gap-2">
-                <button onclick="window.toggleAddModal()" class="gradient-blue text-white px-3 py-2 rounded-lg font-bold text-xs shadow-sm">
-                    + أضف مهنتك
-                </button>
-                <button onclick="window.openAdmin()" class="bg-gray-100 text-gray-400 px-2 py-2 rounded-lg text-xs">
-                    <i class="fas fa-lock"></i>
-                </button>
+                <button onclick="window.toggleAddModal()" class="gradient-blue text-white px-4 py-2 rounded-xl font-bold text-xs shadow-md"> + أضف مهنتك </button>
+                <button onclick="window.openAdmin()" class="bg-gray-100 text-gray-400 px-3 py-2 rounded-xl"> <i class="fas fa-cog"></i> </button>
             </div>
         </div>
     </nav>
 
+    <div class="bg-orange-500 text-white py-2 overflow-hidden shadow-inner">
+        <div class="marquee font-bold text-sm">
+            <span id="newsTicker">مرحباً بكم في Berkane-Connect.. دليلكم الشامل في بركان وأكليم!</span>
+        </div>
+    </div>
+
     <section class="container mx-auto mt-6 px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white border-r-4 border-green-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
+            <div class="bg-white border-r-4 border-green-500 p-4 rounded-2xl shadow-sm flex justify-between items-center">
                 <div>
-                    <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold uppercase">أكليم</span>
+                    <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">أكليم</span>
                     <h2 id="pharmaNameAklim" class="font-bold text-gray-800 mt-1 italic">جاري التحميل...</h2>
-                    <p id="pharmaDaysAklim" class="text-[10px] text-gray-400">الأيام: --</p>
+                    <p id="pharmaDaysAklim" class="text-[10px] text-gray-400 font-bold">الأيام: --</p>
                 </div>
                 <div id="pharmaTimeAklim" class="text-green-600 font-bold text-sm bg-green-50 p-2 rounded-lg">--:--</div>
             </div>
-            <div class="bg-white border-r-4 border-blue-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
+            <div class="bg-white border-r-4 border-blue-500 p-4 rounded-2xl shadow-sm flex justify-between items-center">
                 <div>
-                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase">بركان</span>
+                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">بركان</span>
                     <h2 id="pharmaNameBerkane" class="font-bold text-gray-800 mt-1 italic">جاري التحميل...</h2>
-                    <p id="pharmaDaysBerkane" class="text-[10px] text-gray-400">الأيام: --</p>
+                    <p id="pharmaDaysBerkane" class="text-[10px] text-gray-400 font-bold">الأيام: --</p>
                 </div>
                 <div id="pharmaTimeBerkane" class="text-blue-600 font-bold text-sm bg-blue-50 p-2 rounded-lg">--:--</div>
             </div>
         </div>
     </section>
 
+    <section class="container mx-auto mt-8 px-4">
+        <h3 class="font-black text-gray-800 mb-4 border-r-4 border-red-500 pr-2">أرقام تهمك (الطوارئ)</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="tel:15" class="bg-white p-3 rounded-xl shadow-sm border border-red-50 flex items-center gap-3">
+                <div class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold">15</div>
+                <span class="text-xs font-bold text-gray-700">الإسعاف</span>
+            </a>
+            <a href="tel:19" class="bg-white p-3 rounded-xl shadow-sm border border-blue-50 flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">19</div>
+                <span class="text-xs font-bold text-gray-700">الأمن الوطني</span>
+            </a>
+            <a href="tel:177" class="bg-white p-3 rounded-xl shadow-sm border border-gray-50 flex items-center gap-3">
+                <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-bold">177</div>
+                <span class="text-xs font-bold text-gray-700">الدرك الملكي</span>
+            </a>
+            <a href="tel:150" class="bg-white p-3 rounded-xl shadow-sm border border-red-50 flex items-center gap-3">
+                <div class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center font-bold"><i class="fas fa-fire-extinguisher text-xs"></i></div>
+                <span class="text-xs font-bold text-gray-700">الوقاية المدنية</span>
+            </a>
+        </div>
+    </section>
+
     <main class="container mx-auto py-10 px-4 flex-grow">
+        <h3 class="font-black text-gray-800 mb-4 border-r-4 border-blue-900 pr-2">دليل الخدمات والمهنيين</h3>
         <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div id="loader" class="col-span-full text-center py-20 text-gray-400">جاري تحميل البيانات...</div>
+            <div id="loader" class="col-span-full text-center py-20 text-gray-400 italic">جاري تحميل الخدمات...</div>
         </div>
     </main>
 
     <div id="detailsModal" class="fixed inset-0 bg-black/60 hidden z-[300] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div class="flex items-center gap-3 mb-4 border-b pb-3">
-                <i class="fas fa-info-circle text-blue-500 text-xl"></i>
-                <h3 class="font-bold text-gray-800">تفاصيل الخدمة</h3>
-            </div>
-            <p id="detailsText" class="text-gray-600 leading-relaxed text-sm mb-6">لا يوجد وصف متاح لهذه الخدمة.</p>
-            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition">إغلاق</button>
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 class="font-bold text-gray-800 mb-4 text-center border-b pb-2">تفاصيل الخدمة</h3>
+            <p id="detailsText" class="text-gray-600 leading-relaxed text-sm mb-6 text-center"></p>
+            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="w-full py-3 bg-blue-900 text-white rounded-2xl font-bold">فهمت</button>
         </div>
     </div>
 
     <div id="adminModal" class="fixed inset-0 bg-black/60 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
-            <h3 class="text-xl font-bold mb-4 text-red-600 border-b pb-2 text-center">لوحة التحكم</h3>
-            <div class="space-y-3">
-                <select id="admCity" class="w-full p-2 border rounded-lg">
-                    <option value="aklim">أكليم</option>
-                    <option value="berkane">بركان</option>
-                </select>
-                <input type="text" id="admPhName" placeholder="اسم الصيدلية" class="w-full p-2 border rounded-lg">
-                <input type="text" id="admPhTime" placeholder="توقيت الحراسة" class="w-full p-2 border rounded-lg">
-                <input type="text" id="admPhDays" placeholder="تاريخ/أيام الحراسة" class="w-full p-2 border rounded-lg">
-                <button onclick="window.updatePharma()" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold">تحديث البيانات</button>
-                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full text-gray-400 text-xs mt-2 underline">إغلاق</button>
+        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <h3 class="text-xl font-bold mb-4 text-blue-900 text-center border-b pb-2">الإدارة</h3>
+            <div class="space-y-4">
+                <div class="p-3 bg-orange-50 rounded-xl">
+                    <p class="text-xs font-bold text-orange-700 mb-2 underline">تحديث الشريط الإعلاني:</p>
+                    <input type="text" id="admNews" placeholder="اكتب الإعلان هنا..." class="w-full p-2 border rounded-lg text-sm">
+                </div>
+                <div class="p-3 bg-green-50 rounded-xl">
+                    <p class="text-xs font-bold text-green-700 mb-2 underline">تحديث الصيدليات:</p>
+                    <select id="admCity" class="w-full p-2 border rounded-lg mb-2">
+                        <option value="aklim">أكليم</option>
+                        <option value="berkane">بركان</option>
+                    </select>
+                    <input type="text" id="admPhName" placeholder="اسم الصيدلية" class="w-full p-2 border rounded-lg mb-2">
+                    <input type="text" id="admPhTime" placeholder="التوقيت" class="w-full p-2 border rounded-lg mb-2">
+                    <input type="text" id="admPhDays" placeholder="الأيام/التاريخ" class="w-full p-2 border rounded-lg">
+                </div>
+                <button onclick="window.updateAdminData()" class="w-full gradient-blue text-white py-3 rounded-xl font-bold shadow-lg">حفظ كافة التغييرات</button>
+                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full text-gray-400 text-xs mt-2 underline">إلغاء</button>
             </div>
         </div>
     </div>
 
     <div id="addModal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
-            <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">أضف مهنتك مجاناً</h3>
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
+            <h3 class="text-xl font-black mb-4 text-blue-900">سجل مهنتك مجاناً</h3>
             <form id="addServiceForm" class="space-y-4">
-                <input type="text" id="userName" placeholder="الاسم الشخصي أو اسم الوكالة" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
-                <select id="userCat" class="w-full p-3 bg-gray-50 border rounded-lg">
+                <input type="text" id="userName" placeholder="الاسم أو اسم الوكالة" required class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:ring-2 ring-blue-900 transition">
+                <select id="userCat" class="w-full p-3 bg-gray-50 border rounded-xl">
                     <option value="bolt">كهربائي</option>
                     <option value="faucet">سباك (Plombier)</option>
                     <option value="car">كراء السيارات</option>
@@ -97,25 +129,28 @@
                     <option value="hammer">نجارة وصباغة</option>
                     <option value="briefcase">خدمات أخرى</option>
                 </select>
-                <select id="userCity" class="w-full p-3 bg-gray-50 border rounded-lg">
+                <select id="userCity" class="w-full p-3 bg-gray-50 border rounded-xl">
                     <option value="بركان">بركان</option>
                     <option value="أكليم">أكليم</option>
                 </select>
-                <input type="tel" id="userPhone" placeholder="رقم الهاتف" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
-                <textarea id="userDesc" placeholder="اكتب تفاصيل عن خدمتك..." class="w-full p-3 bg-gray-50 border rounded-lg h-20 resize-none"></textarea>
+                <input type="tel" id="userPhone" placeholder="رقم الهاتف (مثال: 0600000000)" required class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:ring-2 ring-blue-900 transition">
+                <textarea id="userDesc" placeholder="صف خدمتك للناس (مثال: متوفر ليلاً، خبرة 10 سنوات...)" class="w-full p-3 bg-gray-50 border rounded-xl h-24 resize-none"></textarea>
                 <div class="flex gap-2">
                     <button type="button" onclick="window.toggleAddModal()" class="flex-1 py-3 text-gray-400 font-bold">إلغاء</button>
-                    <button type="submit" id="subBtn" class="flex-1 gradient-orange text-white rounded-lg font-bold">نشر الآن</button>
+                    <button type="submit" id="subBtn" class="flex-1 gradient-orange text-white rounded-xl font-bold shadow-lg hover:scale-105 transition">نشر الآن</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <footer class="bg-white border-t mt-10 py-6 text-center">
-        <p class="text-blue-900 font-bold mb-3">تواصل مع الإدارة</p>
-        <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-600">
-            <span><i class="fas fa-envelope ml-1"></i> contact.berkaneconnect@gmail.com</span>
-            <span><i class="fab fa-whatsapp ml-1"></i> +212 704-487952</span>
+    <footer class="bg-white border-t mt-auto py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-blue-900 font-black mb-2">تواصل مع الإدارة</p>
+            <div class="flex flex-col gap-1 text-xs text-gray-500 font-bold">
+                <span>contact.berkaneconnect@gmail.com</span>
+                <span>+212 704-487952</span>
+            </div>
+            <p class="mt-6 text-[10px] text-gray-300">© 2025 Berkane-Connect. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
@@ -125,13 +160,13 @@
 
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
         window.openAdmin = () => {
-            const pw = prompt("كود الإدارة:");
+            const pw = prompt("كود الإدارة السري:");
             if(pw === ADMIN_CODE) document.getElementById('adminModal').classList.remove('hidden');
+            else if(pw !== null) alert("خطأ!");
         };
 
-        // دالة عرض التفاصيل
         window.showDetails = (text) => {
-            document.getElementById('detailsText').innerText = text || "لا يوجد وصف متاح لهذه الخدمة.";
+            document.getElementById('detailsText').innerText = text || "لا يوجد وصف لهذه الخدمة.";
             document.getElementById('detailsModal').classList.remove('hidden');
         };
 
@@ -146,7 +181,12 @@
 
         async function init() {
             try {
-                // Fetch Pharmacies
+                // جلب أخبار الشريط
+                const newsRes = await fetch(`${BASE_URL}/admin/news.json`);
+                const newsData = await newsRes.json();
+                if(newsData) document.getElementById('newsTicker').innerText = newsData;
+
+                // جلب الصيدليات
                 const phRes = await fetch(`${BASE_URL}/pharmacies.json`);
                 const phData = await phRes.json();
                 if(phData){
@@ -160,14 +200,14 @@
                     });
                 }
 
-                // Fetch Services
+                // جلب الخدمات
                 const sRes = await fetch(`${BASE_URL}/services.json`);
                 const sData = await sRes.json();
                 const container = document.getElementById('listingsContainer');
                 if(document.getElementById('loader')) document.getElementById('loader').remove();
 
                 if(!sData) {
-                    container.innerHTML = '<p class="text-center col-span-full py-10 text-gray-400">لا توجد خدمات حالياً.</p>';
+                    container.innerHTML = '<p class="text-center col-span-full py-10 text-gray-400 italic">لا توجد خدمات مضافة حالياً.</p>';
                     return;
                 }
 
@@ -175,29 +215,25 @@
                 Object.keys(sData).reverse().forEach(id => {
                     const item = sData[id];
                     const theme = themeMap[item.category] || themeMap['briefcase'];
-                    // تحضير النص لتجنب المشاكل في الـ HTML
-                    const safeDesc = (item.description || "لا يوجد وصف لهذه الخدمة").replace(/'/g, "\\'");
+                    const safeDesc = (item.description || "لا يوجد وصف").replace(/'/g, "\\'");
                     
                     container.innerHTML += `
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-50 relative group">
-                            <button onclick="window.deleteService('${id}', '${item.phone}')" class="absolute top-2 left-2 text-gray-200 hover:text-red-500 transition">
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative hover:shadow-xl transition-all duration-300">
+                            <button onclick="window.deleteService('${id}', '${item.phone}')" class="absolute top-3 left-3 text-gray-200 hover:text-red-500 transition">
                                 <i class="fas fa-trash-alt text-[10px]"></i>
                             </button>
-                            <div class="flex items-center gap-4 mb-5">
-                                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-inner" style="background-color: ${theme.color}">
-                                    <i class="fas ${theme.icon} text-xl"></i>
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg" style="background-color: ${theme.color}">
+                                    <i class="fas ${theme.icon} text-2xl"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-gray-800 leading-tight">${item.name}</h3>
-                                    <p class="text-[10px] text-gray-400 font-bold uppercase mt-1">${theme.label} • ${item.city}</p>
+                                    <h3 class="font-black text-gray-800 text-lg">${item.name}</h3>
+                                    <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">${theme.label} • ${item.city}</p>
                                 </div>
                             </div>
-                            
                             <div class="flex gap-2">
-                                <button onclick="window.showDetails('${safeDesc}')" class="flex-1 py-2 text-gray-600 border border-gray-200 rounded-xl font-bold text-xs hover:bg-gray-50 transition">
-                                    التفاصيل
-                                </button>
-                                <a href="https://wa.me/212${item.phone.substring(1)}" target="_blank" class="flex-[2] block text-center py-2 rounded-xl font-bold text-xs text-white transition shadow-sm" style="background-color: ${theme.color}">
+                                <button onclick="window.showDetails('${safeDesc}')" class="flex-1 py-3 text-gray-500 border-2 border-gray-100 rounded-2xl font-bold text-xs hover:bg-gray-50 transition">التفاصيل</button>
+                                <a href="https://wa.me/212${item.phone.substring(1)}" target="_blank" class="flex-[2] block text-center py-3 rounded-2xl font-bold text-xs text-white shadow-md hover:brightness-110 transition" style="background-color: ${theme.color}">
                                     <i class="fab fa-whatsapp ml-1"></i> تواصل الآن
                                 </a>
                             </div>
@@ -206,20 +242,24 @@
             } catch (e) { console.error(e); }
         }
 
-        window.updatePharma = async () => {
+        window.updateAdminData = async () => {
             const city = document.getElementById('admCity').value;
-            const payload = {
+            const news = document.getElementById('admNews').value;
+            const pharma = {
                 name: document.getElementById('admPhName').value,
                 time: document.getElementById('admPhTime').value,
                 days: document.getElementById('admPhDays').value
             };
-            await fetch(`${BASE_URL}/pharmacies/${city}.json`, { method: 'PUT', body: JSON.stringify(payload) });
+
+            if(news) await fetch(`${BASE_URL}/admin/news.json`, { method: 'PUT', body: JSON.stringify(news) });
+            if(pharma.name) await fetch(`${BASE_URL}/pharmacies/${city}.json`, { method: 'PUT', body: JSON.stringify(pharma) });
+            
+            alert("تم تحديث البيانات بنجاح!");
             location.reload();
         };
 
         window.deleteService = async (id, phone) => {
-            const check = prompt("رقم الهاتف للتأكيد:");
-            if(check === phone) {
+            if(prompt("رقم الهاتف للتأكيد:") === phone) {
                 await fetch(`${BASE_URL}/services/${id}.json`, { method: 'DELETE' });
                 location.reload();
             }
