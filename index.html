@@ -3,63 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | دليل الخدمات</title>
+    <title>Berkane-Connect | دليل الخدمات وصيدليات الحراسة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f9fafb; }
-        .service-card { border-top: 5px solid; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f4f7f6; }
+        .pharmacy-border { border-right: 4px solid #10b981; }
     </style>
 </head>
 <body>
 
-    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
+    <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-xl font-black text-blue-900">BERKANE<span class="text-orange-500">.</span>CONNECT</h1>
-            <button onclick="toggleModal()" class="bg-blue-600 text-white px-5 py-2 rounded-lg font-bold text-sm hover:bg-blue-700">
-                + أضف نشاطك
-            </button>
+            <div class="flex gap-3">
+                <button onclick="openPharmacyModal()" class="bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-md">
+                    <i class="fas fa-clinic-medical ml-1"></i> تحديث الحراسة
+                </button>
+                <button onclick="toggleModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-md">
+                    + أضف مهنتك
+                </button>
+            </div>
         </div>
     </nav>
 
-    <div class="container mx-auto py-8 px-4">
+    <section class="container mx-auto mt-6 px-4">
+        <div class="bg-green-50 p-6 rounded-2xl pharmacy-border shadow-sm flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-4 mb-4 md:mb-0">
+                <div class="bg-green-500 p-3 rounded-full text-white animate-pulse">
+                    <i class="fas fa-hand-holding-medical text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-green-800 font-bold text-lg leading-none">صيدلية الحراسة بـ "أكليم"</h2>
+                    <p id="pharmacyName" class="text-gray-600 mt-1">جاري التحميل...</p>
+                </div>
+            </div>
+            <div id="pharmacyTime" class="text-green-700 font-bold bg-white px-4 py-2 rounded-full border border-green-200">
+                --:--
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto py-8 px-4">
         <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             </div>
-    </div>
+    </main>
 
-    <div id="formModal" class="fixed inset-0 bg-black/50 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl">
-            <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">تسجيل نشاط جديد</h3>
-            <form id="addServiceForm" class="space-y-4">
-                <input type="text" id="name" placeholder="الإسم الكامل أو اسم الوكالة" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
-                
-                <select id="category" class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
-                    <option value="car">كراء السيارات</option>
-                    <option value="bolt">كهربائي</option>
-                    <option value="faucet">سباك (Plombier)</option>
-                    <option value="hammer">نجار / صباغ</option>
-                    <option value="briefcase">مهن أخرى</option>
-                </select>
-
-                <select id="city" class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
-                    <option>بركان</option>
-                    <option>أكليم</option>
-                </select>
-
-                <input type="tel" id="phone" placeholder="رقم الهاتف (06...)" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
-                
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="toggleModal()" class="flex-1 py-3 text-gray-500 font-bold">إلغاء</button>
-                    <button type="submit" id="submitBtn" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-bold shadow-lg">نشر الآن</button>
+    <div id="pharmacyModal" class="fixed inset-0 bg-black/60 hidden z-[110] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 class="text-xl font-bold mb-4 text-green-800 border-b pb-2 text-center">تحديث صيدلية الحراسة</h3>
+            <div class="space-y-4">
+                <input type="password" id="adminCode" placeholder="أدخل الكود السري الخاص بك" class="w-full p-3 bg-gray-50 border rounded-lg text-center outline-none focus:ring-2 focus:ring-green-500">
+                <input type="text" id="newPharmacy" placeholder="اسم الصيدلية الحالية" class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
+                <input type="text" id="newTime" placeholder="توقيت الحراسة (مثلاً: 24h/24h)" class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
+                <div class="flex gap-2 pt-2">
+                    <button onclick="closePharmacyModal()" class="flex-1 py-3 text-gray-500 font-bold">إلغاء</button>
+                    <button onclick="updatePharmacy()" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold">تحديث الآن</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
+    <footer class="bg-gray-900 text-white py-12 mt-10">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-right">
+            <div>
+                <h4 class="text-xl font-bold mb-4">تواصل مع الإدارة</h4>
+                <p class="text-gray-400 mb-2 leading-relaxed">لطلب مساحات إعلانية خاصة أو للاستفسار، يرجى التواصل معنا عبر:</p>
+                <div class="flex flex-col gap-2 items-center md:items-start mt-4">
+                    <a href="mailto:contact.berkaneconnect@gmail.com" class="text-orange-400 hover:underline"><i class="fas fa-envelope ml-2"></i> contact.berkaneconnect@gmail.com</a>
+                    <a href="tel:+212704487952" class="text-orange-400 hover:underline font-bold tracking-wider"><i class="fas fa-phone-alt ml-2"></i> +212 704-487952</a>
+                </div>
+            </div>
+            <div class="flex flex-col justify-center items-center">
+                <div class="text-2xl font-black mb-4">BERKANE<span class="text-orange-500">.</span>CONNECT</div>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm">
+            &copy; 2024 Berkane-Connect. جميع الحقوق محفوظة لمدينة بركان وأكليم.
+        </div>
+    </footer>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
@@ -70,81 +101,133 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // خريطة الأيقونات والألوان حسب الصنف
-        const themeMap = {
-            'car': { icon: 'fa-car', color: '#3b82f6', label: 'كراء السيارات' },
-            'bolt': { icon: 'fa-bolt', color: '#eab308', label: 'كهرباء' },
-            'faucet': { icon: 'fa-faucet', color: '#06b6d4', label: 'سباكة' },
-            'hammer': { icon: 'fa-hammer', color: '#f97316', label: 'نجارة/صباغة' },
-            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'خدمات أخرى' }
-        };
+        // --- نظام صيدلية الحراسة ---
+        const SECRET_CODE = "2024"; // يمكنك تغيير هذا الكود وتزويده للصيدليات
 
-        // إرسال البيانات
-        document.getElementById('addServiceForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "جاري النشر...";
+        window.openPharmacyModal = () => document.getElementById('pharmacyModal').classList.remove('hidden');
+        window.closePharmacyModal = () => document.getElementById('pharmacyModal').classList.add('hidden');
+
+        window.updatePharmacy = async () => {
+            const code = document.getElementById('adminCode').value;
+            const name = document.getElementById('newPharmacy').value;
+            const time = document.getElementById('newTime').value;
+
+            if(code !== SECRET_CODE) { alert("كود سري خاطئ!"); return; }
+            if(!name || !time) { alert("المرجو ملئ كل الخانات"); return; }
 
             try {
-                await addDoc(collection(db, "services"), {
-                    name: document.getElementById('name').value,
-                    category: document.getElementById('category').value,
-                    city: document.getElementById('city').value,
-                    phone: document.getElementById('phone').value,
-                    createdAt: serverTimestamp()
-                });
-                alert("تم النشر بنجاح!");
+                await setDoc(doc(db, "config", "pharmacy_aklim"), { name, time });
+                alert("تم تحديث الصيدلية بنجاح");
                 location.reload();
-            } catch (error) { alert("خطأ في الاتصال"); btn.disabled = false; }
-        });
+            } catch (e) { console.error(e); }
+        };
 
-        // جلب البيانات وعرضها
+        async function loadPharmacy() {
+            const snap = await getDoc(doc(db, "config", "pharmacy_aklim"));
+            if (snap.exists()) {
+                document.getElementById('pharmacyName').innerText = snap.data().name;
+                document.getElementById('pharmacyTime').innerText = snap.data().time;
+            } else {
+                document.getElementById('pharmacyName').innerText = "لا توجد صيدلية حراسة مسجلة حالياً";
+            }
+        }
+
+        // --- نظام المهنيين (السابق مع تعديلات بسيطة) ---
+        // (أضف دوال loadData و submitForm هنا كما في الكود السابق)
+        
+        loadPharmacy();
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkane-Connect | Firebase Version</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; }
+        .ad-row { grid-column: 1 / -1; } /* لجعل الإعلان يأخذ العرض كاملاً */
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <nav class="bg-white shadow p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-black text-blue-800">BERKANE-CONNECT</div>
+            <button onclick="openModal()" class="bg-orange-500 text-white px-6 py-2 rounded-lg font-bold shadow-md"> + أضف نشاطك </button>
+        </div>
+    </nav>
+
+    <main class="container mx-auto py-12 px-4">
+        <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div id="loader" class="col-span-full text-center py-20 text-blue-600">جاري تحميل البيانات...</div>
+        </div>
+    </main>
+
+    <script type="module">
+        // استيراد Firebase (النسخة الحديثة v9+)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // إعدادات Firebase الخاصة بك (انقلها من Console)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // تفعيل Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // دالة لجلب البيانات وعرضها
         async function loadData() {
             const querySnapshot = await getDocs(collection(db, "services"));
             const container = document.getElementById('listingsContainer');
+            document.getElementById('loader').remove();
+            
             let count = 0;
 
             querySnapshot.forEach((doc) => {
                 const item = doc.data();
-                const theme = themeMap[item.category] || themeMap['briefcase'];
                 count++;
 
+                // إضافة بطاقة الحرفي/الوكالة
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 transition hover:shadow-md" style="border-top-color: ${theme.color}">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-inner" style="background-color: ${theme.color}">
-                                <i class="fas ${theme.icon} text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-gray-800 text-lg">${item.name}</h3>
-                                <p class="text-xs text-gray-500 font-bold uppercase">${theme.label} • ${item.city}</p>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border hover:shadow-xl transition">
+                        <img src="${item.imageUrl || 'https://via.placeholder.com/400x250?text=No+Image'}" class="w-full h-48 object-cover">
+                        <div class="p-5 text-right">
+                            <h3 class="text-xl font-bold">${item.name}</h3>
+                            <p class="text-gray-500 text-sm mt-1">${item.category} - ${item.city}</p>
+                            <div class="mt-4 flex justify-between items-center border-t pt-4">
+                                <span class="text-blue-700 font-bold">${item.price || ''}</span>
+                                <a href="https://wa.me/${item.phone}" class="bg-green-500 text-white px-4 py-2 rounded text-sm font-bold">واتساب</a>
                             </div>
                         </div>
-                        <a href="https://wa.me/${item.phone}" class="w-full block text-center border-2 py-2 rounded-lg font-bold transition hover:bg-gray-50" style="color: ${theme.color}; border-color: ${theme.color}">
-                            <i class="fab fa-whatsapp ml-1"></i> تواصل الآن
-                        </a>
                     </div>
                 `;
 
-                // إعلان بعد كل 3 عناصر
+                // إضافة مساحة إعلانية بعد كل 3 عناصر
                 if (count % 3 === 0) {
                     container.innerHTML += `
-                        <div class="col-span-full bg-gray-800 text-white p-6 rounded-xl flex justify-between items-center shadow-lg">
-                            <div>
-                                <span class="bg-orange-500 text-[10px] px-2 py-0.5 rounded font-bold">AD</span>
-                                <h4 class="text-lg font-bold mt-1">مساحة إعلانية لوكالات بركان</h4>
-                            </div>
-                            <button onclick="toggleModal()" class="bg-white text-gray-900 px-4 py-2 rounded-lg font-bold text-sm">أعلن هنا</button>
+                        <div class="ad-row bg-blue-50 border-2 border-dashed border-blue-200 rounded-xl p-8 text-center my-4">
+                            <p class="text-blue-400 font-bold mb-2 uppercase text-xs">مساحة إعلانية مميزة</p>
+                            <h2 class="text-2xl font-bold text-gray-800">أعلن هنا للوصول لزبناء بركان وأكليم</h2>
+                            <button class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-full text-sm">احجز الآن</button>
                         </div>
                     `;
                 }
             });
         }
-        loadData();
-    </script>
 
-    <script>
-        function toggleModal() { document.getElementById('formModal').classList.toggle('hidden'); }
+        loadData();
     </script>
 </body>
 </html>
