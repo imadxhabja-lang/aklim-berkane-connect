@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | دليل بركان وأكليم</title>
+    <title>Berkane-Connect | لوحة التحكم والدليل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -13,7 +13,7 @@
         .gradient-orange { background: linear-gradient(135deg, #f97316, #fb923c); }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
     <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
@@ -22,15 +22,72 @@
                 <button onclick="window.toggleAddModal()" class="gradient-blue text-white px-3 py-2 rounded-lg font-bold text-xs shadow-sm">
                     + أضف مهنتك
                 </button>
+                <button onclick="window.openAdmin()" class="bg-gray-100 text-gray-400 px-2 py-2 rounded-lg text-xs">
+                    <i class="fas fa-lock"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto py-10 px-4">
+    <section class="container mx-auto mt-6 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white border-r-4 border-green-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
+                <div>
+                    <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold uppercase">أكليم</span>
+                    <h2 id="pharmaNameAklim" class="font-bold text-gray-800 mt-1 italic">جاري التحميل...</h2>
+                </div>
+                <div id="pharmaTimeAklim" class="text-green-600 font-bold text-sm">--:--</div>
+            </div>
+            <div class="bg-white border-r-4 border-blue-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
+                <div>
+                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase">بركان</span>
+                    <h2 id="pharmaNameBerkane" class="font-bold text-gray-800 mt-1 italic">جاري التحميل...</h2>
+                </div>
+                <div id="pharmaTimeBerkane" class="text-blue-600 font-bold text-sm">--:--</div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto py-10 px-4 flex-grow">
         <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div id="loader" class="col-span-full text-center py-20 text-gray-400">جاري تحميل البيانات...</div>
         </div>
     </main>
+
+    <footer class="bg-white border-t mt-10 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h4 class="text-blue-900 font-bold mb-4">تواصل مع الإدارة</h4>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                <a href="mailto:contact.berkaneconnect@gmail.com" class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition">
+                    <i class="fas fa-envelope text-xl text-blue-500"></i>
+                    <span class="text-sm font-medium">contact.berkaneconnect@gmail.com</span>
+                </a>
+                <a href="https://wa.me/212704487952" target="_blank" class="flex items-center gap-2 text-gray-600 hover:text-green-600 transition">
+                    <i class="fab fa-whatsapp text-2xl text-green-500"></i>
+                    <span class="text-sm font-medium" dir="ltr">+212 704-487952</span>
+                </a>
+            </div>
+            <p class="text-[10px] text-gray-400 mt-8">© 2025 Berkane-Connect. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <div id="adminModal" class="fixed inset-0 bg-black/60 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <h3 class="text-xl font-bold mb-4 text-red-600 border-b pb-2">لوحة تحكم المدير</h3>
+            <div class="space-y-4">
+                <p class="text-sm font-bold text-gray-600">تحديث صيدليات الحراسة:</p>
+                <select id="admCity" class="w-full p-2 border rounded">
+                    <option value="aklim">أكليم</option>
+                    <option value="berkane">بركان</option>
+                </select>
+                <input type="text" id="admPhName" placeholder="اسم الصيدلية الجديد" class="w-full p-2 border rounded">
+                <input type="text" id="admPhTime" placeholder="التوقيت (مثلاً 24h/24)" class="w-full p-2 border rounded">
+                <button onclick="window.updatePharma()" class="w-full bg-green-600 text-white py-2 rounded font-bold">تحديث الصيدلية</button>
+                <hr>
+                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full py-2 text-gray-500 italic text-sm underline">إغلاق اللوحة</button>
+            </div>
+        </div>
+    </div>
 
     <div id="addModal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
@@ -59,43 +116,63 @@
     </div>
 
     <script type="module">
-        // رابط قاعدة البيانات الأساسي
-        const BASE_URL = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com/services";
+        const BASE_URL = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
+        const ADMIN_CODE = "2025"; 
 
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
+
+        window.openAdmin = () => {
+            const pw = prompt("أدخل كود الإدارة السري:");
+            if (pw === ADMIN_CODE) {
+                document.getElementById('adminModal').classList.remove('hidden');
+            } else if (pw !== null) {
+                alert("عذراً، الكود خاطئ!");
+            }
+        };
 
         const themeMap = {
             'car': { icon: 'fa-car', color: '#1e3a8a', label: 'كراء السيارات' },
             'bolt': { icon: 'fa-bolt', color: '#eab308', label: 'كهرباء' },
             'faucet': { icon: 'fa-faucet', color: '#06b6d4', label: 'سباكة' },
-            'truck': { icon: 'fa-truck', color: '#ef4444', label: 'خدمة التوصيل' },
+            'truck': { icon: 'fa-truck', color: '#ef4444', label: 'توصيل' },
             'hammer': { icon: 'fa-hammer', color: '#f97316', label: 'نجارة/صباغة' },
             'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'خدمات أخرى' }
         };
 
-        // دالة جلب البيانات
-        async function fetchServices() {
+        async function init() {
             try {
-                const response = await fetch(`${BASE_URL}.json`);
-                const data = await response.json();
+                const phRes = await fetch(`${BASE_URL}/pharmacies.json`);
+                const phData = await phRes.json();
+                if (phData) {
+                    if (phData.aklim) {
+                        document.getElementById('pharmaNameAklim').innerText = phData.aklim.name;
+                        document.getElementById('pharmaTimeAklim').innerText = phData.aklim.time;
+                    }
+                    if (phData.berkane) {
+                        document.getElementById('pharmaNameBerkane').innerText = phData.berkane.name;
+                        document.getElementById('pharmaTimeBerkane').innerText = phData.berkane.time;
+                    }
+                }
+
+                const sRes = await fetch(`${BASE_URL}/services.json`);
+                const sData = await sRes.json();
                 const container = document.getElementById('listingsContainer');
                 if (document.getElementById('loader')) document.getElementById('loader').remove();
                 
-                if (!data) {
-                    container.innerHTML = '<p class="col-span-full text-center text-gray-500">لا توجد خدمات مضافة بعد.</p>';
+                if (!sData) {
+                    container.innerHTML = '<p class="col-span-full text-center text-gray-500">لا توجد خدمات مضافة.</p>';
                     return;
                 }
 
                 container.innerHTML = "";
-                Object.keys(data).reverse().forEach(id => {
-                    const item = data[id];
+                Object.keys(sData).reverse().forEach(id => {
+                    const item = sData[id];
                     const theme = themeMap[item.category] || themeMap['briefcase'];
                     container.innerHTML += `
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition relative group">
-                            <button onclick="window.deleteService('${id}', '${item.phone}')" class="absolute top-2 left-2 text-gray-300 hover:text-red-500 transition p-2">
-                                <i class="fas fa-trash-alt text-sm"></i>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative">
+                            <button onclick="window.deleteService('${id}', '${item.phone}')" class="absolute top-2 left-2 text-gray-200 hover:text-red-500 transition">
+                                <i class="fas fa-trash-alt text-xs"></i>
                             </button>
-
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm" style="background-color: ${theme.color}">
                                     <i class="fas ${theme.icon} text-xl"></i>
@@ -110,62 +187,46 @@
                             </a>
                         </div>`;
                 });
-            } catch (e) { console.error("Error:", e); }
+            } catch (e) { console.error(e); }
         }
 
-        // دالة حذف الخدمة
-        window.deleteService = async (id, originalPhone) => {
-            const inputPhone = prompt("لحذف الخدمة، يرجى إدخال رقم الهاتف المرتبط بها للتأكيد:");
-            
-            if (inputPhone === originalPhone) {
-                if (confirm("هل أنت متأكد من حذف هذه الخدمة نهائياً؟")) {
-                    try {
-                        const response = await fetch(`${BASE_URL}/${id}.json`, {
-                            method: 'DELETE'
-                        });
-                        if (response.ok) {
-                            alert("تم حذف الخدمة بنجاح");
-                            location.reload();
-                        }
-                    } catch (e) {
-                        alert("حدث خطأ أثناء الحذف");
-                    }
-                }
-            } else if (inputPhone !== null) {
-                alert("رقم الهاتف غير صحيح! لا يمكنك حذف خدمات الآخرين.");
-            }
+        window.updatePharma = async () => {
+            const city = document.getElementById('admCity').value;
+            const name = document.getElementById('admPhName').value;
+            const time = document.getElementById('admPhTime').value;
+            if (!name || !time) return alert("أكمل البيانات!");
+
+            await fetch(`${BASE_URL}/pharmacies/${city}.json`, {
+                method: 'PUT',
+                body: JSON.stringify({ name, time })
+            });
+            alert("تم التحديث!");
+            location.reload();
         };
 
-        // إرسال خدمة جديدة
+        window.deleteService = async (id, phone) => {
+            const check = prompt("أدخل رقم الهاتف المرتبط بالخدمة لحذفها:");
+            if (check === phone) {
+                await fetch(`${BASE_URL}/services/${id}.json`, { method: 'DELETE' });
+                location.reload();
+            } else if (check !== null) alert("الرقم خاطئ!");
+        };
+
         document.getElementById('addServiceForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('subBtn');
-            btn.disabled = true; btn.innerText = "... جاري النشر";
-
+            btn.disabled = true; btn.innerText = "...";
             const payload = {
                 name: document.getElementById('userName').value,
                 category: document.getElementById('userCat').value,
                 city: document.getElementById('userCity').value,
-                phone: document.getElementById('userPhone').value,
-                timestamp: Date.now()
+                phone: document.getElementById('userPhone').value
             };
-
-            try {
-                const response = await fetch(`${BASE_URL}.json`, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                });
-                if (response.ok) {
-                    alert("تم النشر بنجاح!");
-                    location.reload();
-                }
-            } catch (err) {
-                alert("حدث خطأ في الاتصال");
-                btn.disabled = false; btn.innerText = "نشر الآن";
-            }
+            await fetch(`${BASE_URL}/services.json`, { method: 'POST', body: JSON.stringify(payload) });
+            location.reload();
         };
 
-        fetchServices();
+        init();
     </script>
 </body>
 </html>
