@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | لوحة التحكم والدليل</title>
+    <title>Berkane-Connect | الدليل الشامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -30,20 +30,23 @@
     </nav>
 
     <section class="container mx-auto mt-6 px-4">
+        <h3 class="text-sm font-bold text-gray-500 mb-3"><i class="fas fa-clinic-medical ml-1"></i> صيدليات الحراسة الحالية:</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-white border-r-4 border-green-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
                 <div>
                     <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold uppercase">أكليم</span>
-                    <h2 id="pharmaNameAklim" class="font-bold text-gray-800 mt-1 italic">جاري التحميل...</h2>
+                    <h2 id="pharmaNameAklim" class="font-bold text-gray-800 mt-1 italic text-lg">جاري التحميل...</h2>
+                    <p id="pharmaDaysAklim" class="text-[11px] text-gray-500 font-medium">الأيام: --</p>
                 </div>
-                <div id="pharmaTimeAklim" class="text-green-600 font-bold text-sm">--:--</div>
+                <div id="pharmaTimeAklim" class="text-green-600 font-bold text-sm bg-green-50 p-2 rounded-lg">--:--</div>
             </div>
             <div class="bg-white border-r-4 border-blue-500 p-4 rounded-xl shadow-sm flex justify-between items-center">
                 <div>
                     <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase">بركان</span>
-                    <h2 id="pharmaNameBerkane" class="font-bold text-gray-800 mt-1 italic">جاري التحميل...</h2>
+                    <h2 id="pharmaNameBerkane" class="font-bold text-gray-800 mt-1 italic text-lg">جاري التحميل...</h2>
+                    <p id="pharmaDaysBerkane" class="text-[11px] text-gray-500 font-medium">الأيام: --</p>
                 </div>
-                <div id="pharmaTimeBerkane" class="text-blue-600 font-bold text-sm">--:--</div>
+                <div id="pharmaTimeBerkane" class="text-blue-600 font-bold text-sm bg-blue-50 p-2 rounded-lg">--:--</div>
             </div>
         </div>
     </section>
@@ -67,30 +70,30 @@
                     <span class="text-sm font-medium" dir="ltr">+212 704-487952</span>
                 </a>
             </div>
-            <p class="text-[10px] text-gray-400 mt-8">© 2025 Berkane-Connect. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
     <div id="adminModal" class="fixed inset-0 bg-black/60 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl overflow-y-auto max-h-[90vh]">
             <h3 class="text-xl font-bold mb-4 text-red-600 border-b pb-2">لوحة تحكم المدير</h3>
             <div class="space-y-4">
-                <p class="text-sm font-bold text-gray-600">تحديث صيدليات الحراسة:</p>
+                <p class="text-sm font-bold text-gray-600">تحديث صيدلية الحراسة:</p>
                 <select id="admCity" class="w-full p-2 border rounded">
                     <option value="aklim">أكليم</option>
                     <option value="berkane">بركان</option>
                 </select>
-                <input type="text" id="admPhName" placeholder="اسم الصيدلية الجديد" class="w-full p-2 border rounded">
+                <input type="text" id="admPhName" placeholder="اسم الصيدلية" class="w-full p-2 border rounded">
                 <input type="text" id="admPhTime" placeholder="التوقيت (مثلاً 24h/24)" class="w-full p-2 border rounded">
-                <button onclick="window.updatePharma()" class="w-full bg-green-600 text-white py-2 rounded font-bold">تحديث الصيدلية</button>
+                <input type="text" id="admPhDays" placeholder="التاريخ أو الأيام (مثلاً: 20-27 دجنبر)" class="w-full p-2 border rounded">
+                <button onclick="window.updatePharma()" class="w-full bg-green-600 text-white py-2 rounded font-bold">حفظ التغييرات</button>
                 <hr>
-                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full py-2 text-gray-500 italic text-sm underline">إغلاق اللوحة</button>
+                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full py-2 text-gray-400 text-sm italic underline">إغلاق</button>
             </div>
         </div>
     </div>
 
     <div id="addModal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl overflow-y-auto max-h-[90vh]">
             <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">أضف معلوماتك مجاناً</h3>
             <form id="addServiceForm" class="space-y-4">
                 <input type="text" id="userName" placeholder="اسم الوكالة أو الحرفي" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
@@ -107,6 +110,9 @@
                     <option value="أكليم">أكليم</option>
                 </select>
                 <input type="tel" id="userPhone" placeholder="رقم الهاتف (مثال: 0612345678)" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
+                
+                <textarea id="userDesc" placeholder="صف مهنتك أو خدمتك هنا (مثلاً: متخصص في إصلاح الهواتف، متوفر 24 ساعة...)" class="w-full p-3 bg-gray-50 border rounded-lg outline-none h-24 resize-none"></textarea>
+
                 <div class="flex gap-2 pt-2">
                     <button type="button" onclick="window.toggleAddModal()" class="flex-1 py-3 text-gray-400 font-bold">إلغاء</button>
                     <button type="submit" id="subBtn" class="flex-1 gradient-orange text-white rounded-lg font-bold shadow-lg">نشر الآن</button>
@@ -123,11 +129,8 @@
 
         window.openAdmin = () => {
             const pw = prompt("أدخل كود الإدارة السري:");
-            if (pw === ADMIN_CODE) {
-                document.getElementById('adminModal').classList.remove('hidden');
-            } else if (pw !== null) {
-                alert("عذراً، الكود خاطئ!");
-            }
+            if (pw === ADMIN_CODE) document.getElementById('adminModal').classList.remove('hidden');
+            else if (pw !== null) alert("الكود خاطئ!");
         };
 
         const themeMap = {
@@ -141,26 +144,28 @@
 
         async function init() {
             try {
+                // جلب الصيدليات
                 const phRes = await fetch(`${BASE_URL}/pharmacies.json`);
                 const phData = await phRes.json();
                 if (phData) {
-                    if (phData.aklim) {
-                        document.getElementById('pharmaNameAklim').innerText = phData.aklim.name;
-                        document.getElementById('pharmaTimeAklim').innerText = phData.aklim.time;
-                    }
-                    if (phData.berkane) {
-                        document.getElementById('pharmaNameBerkane').innerText = phData.berkane.name;
-                        document.getElementById('pharmaTimeBerkane').innerText = phData.berkane.time;
-                    }
+                    ['aklim', 'berkane'].forEach(city => {
+                        if (phData[city]) {
+                            const c = city.charAt(0).toUpperCase() + city.slice(1);
+                            document.getElementById(`pharmaName${c}`).innerText = phData[city].name;
+                            document.getElementById(`pharmaTime${c}`).innerText = phData[city].time;
+                            document.getElementById(`pharmaDays${c}`).innerText = `الأيام: ${phData[city].days || '--'}`;
+                        }
+                    });
                 }
 
+                // جلب الخدمات
                 const sRes = await fetch(`${BASE_URL}/services.json`);
                 const sData = await sRes.json();
                 const container = document.getElementById('listingsContainer');
                 if (document.getElementById('loader')) document.getElementById('loader').remove();
                 
                 if (!sData) {
-                    container.innerHTML = '<p class="col-span-full text-center text-gray-500">لا توجد خدمات مضافة.</p>';
+                    container.innerHTML = '<p class="col-span-full text-center text-gray-500">لا توجد خدمات.</p>';
                     return;
                 }
 
@@ -173,16 +178,18 @@
                             <button onclick="window.deleteService('${id}', '${item.phone}')" class="absolute top-2 left-2 text-gray-200 hover:text-red-500 transition">
                                 <i class="fas fa-trash-alt text-xs"></i>
                             </button>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm" style="background-color: ${theme.color}">
+                            <div class="flex items-center gap-4 mb-3">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white" style="background-color: ${theme.color}">
                                     <i class="fas ${theme.icon} text-xl"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-gray-800">${item.name}</h3>
-                                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">${theme.label} • ${item.city}</p>
+                                    <p class="text-[10px] text-gray-400 font-bold uppercase">${theme.label} • ${item.city}</p>
                                 </div>
                             </div>
-                            <a href="https://wa.me/212${item.phone.startsWith('0') ? item.phone.substring(1) : item.phone}" target="_blank" class="w-full block text-center py-2 rounded-xl font-bold border-2 transition hover:bg-gray-50 shadow-sm" style="color: ${theme.color}; border-color: ${theme.color}">
+                            <p class="text-xs text-gray-500 mb-4 line-clamp-2">${item.description || 'لا يوجد وصف متاح.'}</p>
+                            
+                            <a href="https://wa.me/212${item.phone.startsWith('0') ? item.phone.substring(1) : item.phone}" target="_blank" class="w-full block text-center py-2 rounded-xl font-bold border-2 transition hover:bg-gray-50" style="color: ${theme.color}; border-color: ${theme.color}">
                                 <i class="fab fa-whatsapp ml-1"></i> تواصل الآن
                             </a>
                         </div>`;
@@ -192,24 +199,24 @@
 
         window.updatePharma = async () => {
             const city = document.getElementById('admCity').value;
-            const name = document.getElementById('admPhName').value;
-            const time = document.getElementById('admPhTime').value;
-            if (!name || !time) return alert("أكمل البيانات!");
+            const payload = {
+                name: document.getElementById('admPhName').value,
+                time: document.getElementById('admPhTime').value,
+                days: document.getElementById('admPhDays').value
+            };
+            if (!payload.name || !payload.time) return alert("الاسم والتوقيت ضروريان!");
 
-            await fetch(`${BASE_URL}/pharmacies/${city}.json`, {
-                method: 'PUT',
-                body: JSON.stringify({ name, time })
-            });
+            await fetch(`${BASE_URL}/pharmacies/${city}.json`, { method: 'PUT', body: JSON.stringify(payload) });
             alert("تم التحديث!");
             location.reload();
         };
 
         window.deleteService = async (id, phone) => {
-            const check = prompt("أدخل رقم الهاتف المرتبط بالخدمة لحذفها:");
+            const check = prompt("أدخل رقم الهاتف للحذف:");
             if (check === phone) {
                 await fetch(`${BASE_URL}/services/${id}.json`, { method: 'DELETE' });
                 location.reload();
-            } else if (check !== null) alert("الرقم خاطئ!");
+            } else if (check !== null) alert("خطأ!");
         };
 
         document.getElementById('addServiceForm').onsubmit = async (e) => {
@@ -220,7 +227,8 @@
                 name: document.getElementById('userName').value,
                 category: document.getElementById('userCat').value,
                 city: document.getElementById('userCity').value,
-                phone: document.getElementById('userPhone').value
+                phone: document.getElementById('userPhone').value,
+                description: document.getElementById('userDesc').value // إرسال الوصف
             };
             await fetch(`${BASE_URL}/services.json`, { method: 'POST', body: JSON.stringify(payload) });
             location.reload();
