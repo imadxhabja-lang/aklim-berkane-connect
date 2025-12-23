@@ -36,11 +36,12 @@
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">أضف معلوماتك مجاناً</h3>
             <form id="addServiceForm" class="space-y-4">
-                <input type="text" id="userName" placeholder="اسم الوكالة أو الحرفي" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" id="userName" placeholder="اسم الوكالة أو الحرفي" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
                 <select id="userCat" class="w-full p-3 bg-gray-50 border rounded-lg">
-                    <option value="car">كراء السيارات</option>
                     <option value="bolt">كهربائي</option>
                     <option value="faucet">سباك (Plombier)</option>
+                    <option value="car">كراء السيارات</option>
+                    <option value="truck">خدمة التوصيل (Livraison)</option>
                     <option value="hammer">نجارة وصباغة</option>
                     <option value="briefcase">خدمات أخرى</option>
                 </select>
@@ -48,7 +49,7 @@
                     <option value="بركان">بركان</option>
                     <option value="أكليم">أكليم</option>
                 </select>
-                <input type="tel" id="userPhone" placeholder="رقم الواتساب (0600000000)" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
+                <input type="tel" id="userPhone" placeholder="رقم الهاتف (مثال: 0612345678)" required class="w-full p-3 bg-gray-50 border rounded-lg outline-none">
                 <div class="flex gap-2 pt-2">
                     <button type="button" onclick="window.toggleAddModal()" class="flex-1 py-3 text-gray-400 font-bold">إلغاء</button>
                     <button type="submit" id="subBtn" class="flex-1 gradient-orange text-white rounded-lg font-bold shadow-lg">نشر الآن</button>
@@ -58,8 +59,8 @@
     </div>
 
     <script type="module">
-        // رابط قاعدة البيانات الخاص بك من الصورة التي أرسلتها
-        const DB_URL = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com/services.json";
+        // رابط قاعدة البيانات الأساسي
+        const BASE_URL = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com/services";
 
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
 
@@ -67,18 +68,18 @@
             'car': { icon: 'fa-car', color: '#1e3a8a', label: 'كراء السيارات' },
             'bolt': { icon: 'fa-bolt', color: '#eab308', label: 'كهرباء' },
             'faucet': { icon: 'fa-faucet', color: '#06b6d4', label: 'سباكة' },
+            'truck': { icon: 'fa-truck', color: '#ef4444', label: 'خدمة التوصيل' },
             'hammer': { icon: 'fa-hammer', color: '#f97316', label: 'نجارة/صباغة' },
             'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'خدمات أخرى' }
         };
 
-        // جلب البيانات وعرضها
+        // دالة جلب البيانات
         async function fetchServices() {
             try {
-                const response = await fetch(DB_URL);
+                const response = await fetch(`${BASE_URL}.json`);
                 const data = await response.json();
                 const container = document.getElementById('listingsContainer');
-                const loader = document.getElementById('loader');
-                if (loader) loader.remove();
+                if (document.getElementById('loader')) document.getElementById('loader').remove();
                 
                 if (!data) {
                     container.innerHTML = '<p class="col-span-full text-center text-gray-500">لا توجد خدمات مضافة بعد.</p>';
@@ -86,11 +87,15 @@
                 }
 
                 container.innerHTML = "";
-                Object.keys(data).forEach(id => {
+                Object.keys(data).reverse().forEach(id => {
                     const item = data[id];
                     const theme = themeMap[item.category] || themeMap['briefcase'];
                     container.innerHTML += `
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition relative group">
+                            <button onclick="window.deleteService('${id}', '${item.phone}')" class="absolute top-2 left-2 text-gray-300 hover:text-red-500 transition p-2">
+                                <i class="fas fa-trash-alt text-sm"></i>
+                            </button>
+
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm" style="background-color: ${theme.color}">
                                     <i class="fas ${theme.icon} text-xl"></i>
@@ -100,15 +105,38 @@
                                     <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">${theme.label} • ${item.city}</p>
                                 </div>
                             </div>
-                            <a href="https://wa.me/212${item.phone.substring(1)}" target="_blank" class="w-full block text-center py-2 rounded-xl font-bold border-2 transition hover:bg-gray-50 shadow-sm" style="color: ${theme.color}; border-color: ${theme.color}">
+                            <a href="https://wa.me/212${item.phone.startsWith('0') ? item.phone.substring(1) : item.phone}" target="_blank" class="w-full block text-center py-2 rounded-xl font-bold border-2 transition hover:bg-gray-50 shadow-sm" style="color: ${theme.color}; border-color: ${theme.color}">
                                 <i class="fab fa-whatsapp ml-1"></i> تواصل الآن
                             </a>
                         </div>`;
                 });
-            } catch (e) { console.error("Error fetching:", e); }
+            } catch (e) { console.error("Error:", e); }
         }
 
-        // إرسال البيانات
+        // دالة حذف الخدمة
+        window.deleteService = async (id, originalPhone) => {
+            const inputPhone = prompt("لحذف الخدمة، يرجى إدخال رقم الهاتف المرتبط بها للتأكيد:");
+            
+            if (inputPhone === originalPhone) {
+                if (confirm("هل أنت متأكد من حذف هذه الخدمة نهائياً؟")) {
+                    try {
+                        const response = await fetch(`${BASE_URL}/${id}.json`, {
+                            method: 'DELETE'
+                        });
+                        if (response.ok) {
+                            alert("تم حذف الخدمة بنجاح");
+                            location.reload();
+                        }
+                    } catch (e) {
+                        alert("حدث خطأ أثناء الحذف");
+                    }
+                }
+            } else if (inputPhone !== null) {
+                alert("رقم الهاتف غير صحيح! لا يمكنك حذف خدمات الآخرين.");
+            }
+        };
+
+        // إرسال خدمة جديدة
         document.getElementById('addServiceForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('subBtn');
@@ -119,11 +147,11 @@
                 category: document.getElementById('userCat').value,
                 city: document.getElementById('userCity').value,
                 phone: document.getElementById('userPhone').value,
-                date: new Date().toISOString()
+                timestamp: Date.now()
             };
 
             try {
-                const response = await fetch(DB_URL, {
+                const response = await fetch(`${BASE_URL}.json`, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
