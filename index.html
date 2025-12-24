@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | التحكم الكامل</title>
+    <title>Berkane-Connect | الدليل الشامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; }
-        /* ألوان جديدة فخمة */
+        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; scroll-behavior: smooth; }
         .gradient-dark { background: linear-gradient(135deg, #0f172a, #1e293b); }
         .accent-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .marquee { background: #1e293b; color: #fbbf24; padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #fbbf24; }
@@ -22,100 +21,116 @@
     <nav class="bg-white shadow-lg p-4 sticky top-0 z-50 flex justify-between items-center border-b-4 border-amber-500">
         <div class="text-2xl font-black text-slate-900 tracking-tighter">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
         <div class="flex gap-2">
-            <button onclick="window.toggleAddModal()" class="accent-gold text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg"> + أضف مهنة </button>
+            <button onclick="window.toggleAddModal()" class="accent-gold text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition transform active:scale-95"> + أضف خدمة/سناك </button>
             <button onclick="window.openAdmin()" class="bg-slate-100 p-2 rounded-xl text-slate-500"><i class="fas fa-user-shield"></i></button>
         </div>
     </nav>
 
-    <div class="marquee"><span id="newsTicker">مرحباً بكم في الدليل الرسمي والاحترافي لمدينة بركان وأكليم...</span></div>
+    <div class="marquee"><span id="newsTicker">دليلك الموثوق للمطاعم، الحرفيين وصيدليات الحراسة ببركان وأكليم...</span></div>
 
     <section class="container mx-auto mt-6 px-4">
         <h3 class="font-black text-slate-800 mb-4 border-r-4 border-amber-500 pr-2 italic text-lg">صيدليات الحراسة</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-                <div class="gradient-dark p-3 text-amber-400 font-bold text-sm flex justify-between"><span>مدينة بركان</span> <i class="fas fa-clinic-medical"></i></div>
-                <div id="dispBerkane" class="p-4 min-h-[80px]">جاري التحميل...</div>
+                <div class="gradient-dark p-3 text-amber-400 font-bold text-sm flex justify-between"><span>بركان</span> <i class="fas fa-hospital"></i></div>
+                <div id="dispBerkane" class="p-4 min-h-[60px]">جاري التحميل...</div>
             </div>
             <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-                <div class="bg-slate-700 p-3 text-amber-400 font-bold text-sm flex justify-between"><span>مدينة أكليم</span> <i class="fas fa-medkit"></i></div>
-                <div id="dispAklim" class="p-4 min-h-[80px]">جاري التحميل...</div>
+                <div class="bg-slate-700 p-3 text-amber-400 font-bold text-sm flex justify-between"><span>أكليم</span> <i class="fas fa-medkit"></i></div>
+                <div id="dispAklim" class="p-4 min-h-[60px]">جاري التحميل...</div>
             </div>
         </div>
     </section>
 
     <main class="container mx-auto py-10 px-4 flex-grow">
-        <h3 class="font-black text-slate-800 mb-6 border-r-4 border-slate-900 pr-2 italic text-lg">دليل الخدمات المحلي</h3>
+        <h3 class="font-black text-slate-800 mb-6 border-r-4 border-slate-900 pr-2 italic text-lg">الخدمات والمطاعم</h3>
         <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
     </main>
 
-    <footer class="gradient-dark text-white py-10 px-4 rounded-t-[3rem]">
-        <div class="container mx-auto text-center space-y-4">
-            <p class="text-amber-400 font-bold">تواصل مع الإدارة</p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="mailto:contact.berkaneconnect@gmail.com" class="bg-white/5 p-3 rounded-xl border border-white/10 text-sm">contact.berkaneconnect@gmail.com</a>
-                <a href="https://wa.me/212704487952" class="bg-green-600/20 p-3 rounded-xl border border-green-500/30 text-sm">+212 704-487952</a>
+    <footer class="gradient-dark text-white py-12 px-4 rounded-t-[3rem] mt-10">
+        <div class="container mx-auto text-center space-y-6">
+            <p class="text-amber-400 font-black text-xl">تواصل معنا</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                <a href="mailto:contact.berkaneconnect@gmail.com" class="bg-white/5 px-6 py-4 rounded-2xl border border-white/10 hover:bg-white/10 transition w-full md:w-auto font-bold italic">contact.berkaneconnect@gmail.com</a>
+                <a href="https://wa.me/212704487952" target="_blank" class="bg-green-600/20 px-6 py-4 rounded-2xl border border-green-500/30 hover:bg-green-600/30 transition w-full md:w-auto font-black text-green-400 tracking-widest">+212 704-487952</a>
             </div>
+            <p class="text-[10px] text-slate-500 pt-6">© 2025 Berkane-Connect | صنع ببركان بكل حب</p>
         </div>
     </footer>
 
-    <div id="adminModal" class="fixed inset-0 bg-slate-900/90 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-3xl p-6 max-w-xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
-            <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="absolute top-4 left-4 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="font-bold text-slate-900 mb-4 border-b pb-2">لوحة التحكم (الزيارات: <span id="vCount" class="text-amber-600">0</span>)</h3>
+    <div id="addModal" class="fixed inset-0 bg-black/70 hidden z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm relative shadow-2xl">
+            <button onclick="window.toggleAddModal()" class="absolute top-4 left-4 text-slate-300 hover:text-red-500 transition"><i class="fas fa-times-circle text-2xl"></i></button>
+            <h3 class="font-bold mb-4 text-slate-900 border-b pb-2">أضف خدمتك أو مطعمك</h3>
+            <div class="space-y-3">
+                <input type="text" id="uName" placeholder="اسم المحل أو الشخص" class="w-full p-3 border rounded-xl text-sm outline-none focus:border-amber-500">
+                <input type="tel" id="uPhone" placeholder="رقم الهاتف (06...)" class="w-full p-3 border rounded-xl text-sm outline-none focus:border-amber-500">
+                <select id="uCat" class="w-full p-3 border rounded-xl text-sm font-bold bg-slate-50">
+                    <option value="utensils">🍔 مطعم / سناك</option>
+                    <option value="bolt">⚡ كهرباء</option>
+                    <option value="faucet">🚰 سباكة</option>
+                    <option value="car">🚗 كراء السيارات</option>
+                    <option value="truck">🚚 توصيل</option>
+                    <option value="briefcase">💼 خدمات أخرى</option>
+                </select>
+                <textarea id="uDesc" placeholder="اكتب تخصصك (مثلاً: سندويتشات، طاكوس، شواية...)" class="w-full p-3 border rounded-xl h-24 text-sm outline-none focus:border-amber-500"></textarea>
+                <button onclick="window.addService()" id="subBtn" class="w-full accent-gold text-white py-4 rounded-xl font-bold shadow-lg">نشر الخدمة مجاناً</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/95 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-lg">
+        <div class="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative">
+            <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="absolute top-4 left-4 text-slate-300 hover:text-red-500 transition"><i class="fas fa-times-circle text-2xl"></i></button>
+            <h3 class="font-black text-slate-900 mb-4 flex justify-between items-center">إدارة الموقع <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs">الزيارات: <span id="vCount">0</span></span></h3>
             
             <div class="space-y-6">
-                <div class="p-4 bg-slate-50 rounded-2xl border">
-                    <label class="block font-bold text-xs mb-2">تحديث/حذف صيدليات بركان:</label>
-                    <div class="flex gap-2">
-                        <button onclick="window.deleteItem('pharmacies_v4/berkane')" class="bg-red-500 text-white px-3 rounded-lg text-xs"><i class="fas fa-trash"></i> مسح الكل</button>
-                        <button onclick="window.saveAdmin()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs flex-grow">حفظ التحديثات</button>
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                    <p class="font-bold text-xs mb-3 text-slate-500 uppercase">إدارة المحتوى</p>
+                    <div class="space-y-3">
+                        <input type="text" id="admNews" placeholder="نص الشريط المتحرك" class="w-full p-3 border rounded-xl text-sm">
+                        <textarea id="admNames" placeholder="الصيدليات (سطر بسطر)" class="w-full p-3 border rounded-xl h-20 text-sm"></textarea>
+                        <div class="flex gap-2">
+                            <select id="admCity" class="flex-1 p-3 border rounded-xl text-sm font-bold"><option value="berkane">بركان</option><option value="aklim">أكليم</option></select>
+                            <input type="text" id="admDays" placeholder="التاريخ" class="flex-1 p-3 border rounded-xl text-sm">
+                        </div>
+                        <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-3 rounded-xl font-bold shadow-md">تحديث البيانات</button>
                     </div>
                 </div>
 
-                <div class="p-4 bg-slate-50 rounded-2xl border">
-                    <label class="block font-bold text-xs mb-2">إدارة الخدمات المضافة (الحذف):</label>
-                    <div id="adminServiceList" class="space-y-2 max-h-40 overflow-y-auto text-xs"></div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-4">
-                    <input type="text" id="admNews" placeholder="نص الشريط المتحرك" class="w-full p-3 border rounded-xl text-sm">
-                    <textarea id="admNames" placeholder="الصيدليات (سطر بسطر)" class="w-full p-3 border rounded-xl h-20 text-sm"></textarea>
-                    <input type="text" id="admDays" placeholder="التاريخ" class="w-full p-3 border rounded-xl text-sm">
+                <div class="bg-red-50 p-4 rounded-2xl border border-red-100">
+                    <p class="font-bold text-xs mb-3 text-red-600 uppercase">حذف الخدمات والمطاعم</p>
+                    <div id="adminServiceList" class="space-y-2 max-h-48 overflow-y-auto text-xs"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="detailsModal" class="fixed inset-0 bg-black/60 hidden z-[300] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-6 max-w-sm w-full relative">
-            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-4 left-4 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="font-bold text-slate-800 mb-3 border-b pb-2">التفاصيل</h3>
-            <p id="detailsText" class="text-slate-600 text-sm leading-relaxed mb-6"></p>
-        </div>
-    </div>
-
-    <div id="addModal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-sm relative shadow-2xl">
-            <button onclick="window.toggleAddModal()" class="absolute top-4 left-4 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="font-bold mb-4 text-slate-900">إضافة خدمة جديدة</h3>
-            <div class="space-y-3">
-                <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-3 border rounded-xl text-sm">
-                <input type="tel" id="uPhone" placeholder="الهاتف" class="w-full p-3 border rounded-xl text-sm">
-                <select id="uCat" class="w-full p-3 border rounded-xl text-sm">
-                    <option value="bolt">كهرباء</option><option value="faucet">سباكة</option><option value="car">كراء السيارات</option><option value="truck">توصيل</option><option value="briefcase">أخرى</option>
-                </select>
-                <textarea id="uDesc" placeholder="وصف قصير..." class="w-full p-3 border rounded-xl h-20 text-sm"></textarea>
-                <button onclick="window.addService()" class="w-full accent-gold text-white py-4 rounded-xl font-bold shadow-lg">نشر الآن</button>
-            </div>
+    <div id="detailsModal" class="fixed inset-0 bg-black/60 hidden z-[300] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full relative text-center">
+            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-4 left-4 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-info-circle"></i></div>
+            <h3 class="font-black text-slate-800 mb-2">معلومات إضافية</h3>
+            <p id="detailsText" class="text-slate-600 text-sm leading-relaxed mb-6 italic"></p>
+            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="w-full py-3 gradient-dark text-white rounded-xl font-bold">حسناً</button>
         </div>
     </div>
 
     <script type="module">
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
         const ADMIN_CODE = "2025";
+        
+        const themeMap = {
+            'utensils': { icon: 'fa-utensils', color: '#ef4444', label: 'مطعم / سناك' },
+            'car': { icon: 'fa-car', color: '#1e3a8a', label: 'كراء السيارات' },
+            'bolt': { icon: 'fa-bolt', color: '#f59e0b', label: 'كهرباء' },
+            'faucet': { icon: 'fa-faucet', color: '#06b6d4', label: 'سباكة' },
+            'truck': { icon: 'fa-truck', color: '#10b981', label: 'توصيل' },
+            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' }
+        };
 
         window.openAdmin = async () => {
-            if(prompt("كود المشرف:") === ADMIN_CODE) {
+            if(prompt("كود الإدارة:") === ADMIN_CODE) {
                 const res = await fetch(`${BASE}/admin/visitors.json`);
                 document.getElementById('vCount').innerText = await res.json() || 0;
                 loadAdminServices();
@@ -127,17 +142,17 @@
             const res = await fetch(`${BASE}/services.json`);
             const data = await res.json();
             const list = document.getElementById('adminServiceList');
-            if(!data) { list.innerHTML = "لا توجد خدمات حالياً."; return; }
+            if(!data) { list.innerHTML = "<p class='text-slate-400'>لا يوجد شيء للحذف.</p>"; return; }
             list.innerHTML = Object.keys(data).map(id => `
-                <div class="flex justify-between items-center bg-white p-2 border rounded-lg">
-                    <span>${data[id].name}</span>
-                    <button onclick="window.deleteItem('services/${id}')" class="text-red-500 font-bold text-xs"><i class="fas fa-trash-alt"></i> حذف</button>
+                <div class="flex justify-between items-center bg-white p-2 border rounded-lg shadow-sm">
+                    <span class="font-bold">${data[id].name}</span>
+                    <button onclick="window.deleteItem('services/${id}')" class="text-red-500"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `).join('');
         }
 
         window.deleteItem = async (path) => {
-            if(confirm("هل أنت متأكد من الحذف؟")) {
+            if(confirm("هل تريد الحذف نهائياً؟")) {
                 await fetch(`${BASE}/${path}.json`, { method: 'DELETE' });
                 location.reload();
             }
@@ -170,14 +185,17 @@
                 if(sData) {
                     container.innerHTML = Object.keys(sData).reverse().map(id => {
                         const item = sData[id];
-                        const desc = (item.description || "لا توجد تفاصيل.").replace(/'/g, "\\'");
+                        const theme = themeMap[item.category] || themeMap['briefcase'];
+                        const desc = (item.description || "لا توجد تفاصيل إضافية.").replace(/'/g, "\\'");
                         return `
-                        <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
-                            <h4 class="font-extrabold text-slate-800 mb-1 text-sm">${item.name}</h4>
-                            <p class="text-[10px] text-slate-400 mb-4 font-bold tracking-widest uppercase">${item.category}</p>
+                        <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm" style="background-color: ${theme.color}"><i class="fas ${theme.icon}"></i></div>
+                                <div><h4 class="font-extrabold text-slate-800 text-sm">${item.name}</h4><p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">${theme.label}</p></div>
+                            </div>
                             <div class="flex gap-2">
-                                <button onclick="window.showDetails('${desc}')" class="flex-1 py-2 text-slate-400 border rounded-xl text-[10px] font-bold">تفاصيل</button>
-                                <a href="https://wa.me/212${item.phone.substring(1)}" target="_blank" class="flex-[2] block text-center py-2 bg-slate-800 text-amber-400 rounded-xl text-[10px] font-bold">واتساب</a>
+                                <button onclick="window.showDetails('${desc}')" class="flex-1 py-2 text-slate-400 border rounded-xl text-[10px] font-black hover:bg-slate-50">تفاصيل</button>
+                                <a href="https://wa.me/212${item.phone.substring(1)}" target="_blank" class="flex-[2] block text-center py-2 bg-slate-800 text-amber-400 rounded-xl text-[10px] font-black shadow-lg">واتساب</a>
                             </div>
                         </div>`;
                     }).join('');
@@ -189,7 +207,7 @@
             const el = document.getElementById(elId);
             if(!data) { el.innerHTML = "<p class='text-xs italic text-slate-300'>لا بيانات حالياً.</p>"; return; }
             const list = data.names.split('\n').map(n => `<div class="font-bold text-slate-800 py-1 border-b border-slate-50 text-sm italic">📍 ${n}</div>`).join('');
-            el.innerHTML = `<div class="text-[10px] text-amber-600 font-bold mb-2">${data.days}</div>${list}`;
+            el.innerHTML = `<div class="text-[10px] text-amber-600 font-black mb-2 tracking-tighter uppercase"><i class="far fa-calendar-alt"></i> ${data.days}</div>${list}`;
         }
 
         window.saveAdmin = async () => {
@@ -202,7 +220,9 @@
         };
 
         window.addService = async () => {
+            const btn = document.getElementById('subBtn'); btn.innerText = "جاري النشر...";
             const data = { name: document.getElementById('uName').value, phone: document.getElementById('uPhone').value, category: document.getElementById('uCat').value, description: document.getElementById('uDesc').value };
+            if(!data.name || !data.phone) { alert("من فضلك املأ الاسم والهاتف"); btn.innerText = "نشر الخدمة مجاناً"; return; }
             await fetch(`${BASE}/services.json`, { method: 'POST', body: JSON.stringify(data) });
             location.reload();
         };
