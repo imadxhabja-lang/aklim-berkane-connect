@@ -18,7 +18,6 @@
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .hidden { display: none !important; }
         .woman-card { border-bottom: 5px solid #ec4899 !important; }
-        #servicesCount { transition: all 0.5s ease; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen text-right">
@@ -74,9 +73,9 @@
     <main class="container mx-auto py-12 px-4 flex-grow">
         <div class="flex justify-between items-center mb-8 border-r-4 border-slate-800 pr-3">
             <h3 class="font-black text-slate-800 text-xl italic uppercase">الحرف والخدمات</h3>
-            <div class="bg-amber-500 text-slate-900 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-sm border border-amber-600">
-                <span class="text-[9px] font-black">إجمالي الخدمات:</span>
-                <span id="servicesCount" class="text-sm font-black">0</span>
+            <div class="bg-amber-500 text-slate-900 px-4 py-2 rounded-2xl shadow-lg border border-amber-600 flex items-center gap-2">
+                <span class="text-[10px] font-black">إجمالي المهنيين:</span>
+                <span id="servicesCount" class="text-lg font-black tracking-tighter">0</span>
             </div>
         </div>
         <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
@@ -102,7 +101,7 @@
                     </div>
                     <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-4 rounded-2xl font-black shadow-lg">تحديث البيانات</button>
                 </div>
-                <div class="bg-red-50 p-6 rounded-2xl border"><div id="adminServiceList" class="space-y-2 max-h-48 overflow-y-auto"></div></div>
+                <div id="adminServiceList" class="space-y-2 max-h-48 overflow-y-auto bg-slate-100 p-4 rounded-2xl"></div>
                 <div class="bg-amber-500 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg"><span class="font-black italic">إجمالي الزوار:</span><span id="vCount" class="text-4xl font-black tracking-tighter">0</span></div>
             </div>
         </div>
@@ -114,7 +113,7 @@
             <h3 class="font-black mb-6 text-xl italic text-slate-800">سجل خدمتك مجاناً</h3>
             <div class="space-y-4">
                 <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-4 border rounded-2xl text-sm">
-                <input type="tel" id="uPhone" placeholder="رقم الهاتف" class="w-full p-4 border rounded-2xl text-sm text-left">
+                <input type="tel" id="uPhone" placeholder="رقم الهاتف (مثال: 0612345678)" class="w-full p-4 border rounded-2xl text-sm text-left">
                 <select id="uCat" class="w-full p-4 border rounded-2xl text-sm font-black bg-slate-50">
                     <option value="utensils">🍔 مطعم</option>
                     <option value="car">🚗 كراء سيارات</option>
@@ -133,15 +132,17 @@
     <div id="detailsModal" class="fixed inset-0 bg-black/70 hidden z-[300] flex items-center justify-center p-4">
         <div class="bg-white rounded-[2rem] p-10 max-w-sm w-full relative text-right shadow-2xl border-t-8 border-amber-500">
             <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="font-black text-slate-800 mb-4 text-xl italic text-center">تفاصيل الخدمة</h3>
-            <p id="detailsText" class="text-slate-600 text-sm italic bg-slate-50 p-6 rounded-3xl min-h-[100px] leading-relaxed text-center font-bold"></p>
+            <h3 class="font-black text-slate-800 mb-4 text-xl italic">تفاصيل الخدمة</h3>
+            <p id="detailsText" class="text-slate-600 text-sm italic bg-slate-50 p-6 rounded-3xl min-h-[100px] leading-relaxed"></p>
             <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="w-full mt-6 py-5 gradient-dark text-white rounded-2xl font-black shadow-lg transition active:scale-95">إغلاق</button>
         </div>
     </div>
 
     <script type="module">
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const ADMIN_CODE = "2025";
+        // الكلمة السرية مشفرة (2025)
+        const _0x_v = "MjAyNQ=="; 
+
         const themeMap = { 
             'utensils': { icon: 'fa-utensils', color: '#ef4444', label: 'مأكولات' }, 
             'car': { icon: 'fa-car', color: '#1e3a8a', label: 'سيارات' }, 
@@ -152,12 +153,22 @@
             'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' } 
         };
 
-        // دوال الطقس والصلاة
+        // Weather & Prayers
         async function fetchWeather() { try { const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true`); const data = await res.json(); document.getElementById('temp').innerText = `${Math.round(data.current_weather.temperature)}°C`; } catch (e) {} }
         async function fetchPrayers() { try { const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3`); const data = await res.json(); const t = data.data.timings; document.getElementById('fajr').innerText = t.Fajr; document.getElementById('dhuhr').innerText = t.Dhuhr; document.getElementById('asr').innerText = t.Asr; document.getElementById('maghrib').innerText = t.Maghrib; document.getElementById('isha').innerText = t.Isha; } catch (e) {} }
 
-        // دوال الإدارة والخدمات
-        window.openAdmin = async () => { if(prompt("رمز الإدارة:") === ADMIN_CODE) { document.getElementById('adminModal').classList.remove('hidden'); loadStats(); loadAdminServices(); } };
+        // Admin Security (Base64)
+        window.openAdmin = async () => { 
+            const input = prompt("رمز الإدارة:"); 
+            if(input && btoa(input) === _0x_v) { 
+                document.getElementById('adminModal').classList.remove('hidden'); 
+                loadStats(); 
+                loadAdminServices(); 
+            } else if(input) {
+                alert("رمز الدخول غير صحيح!");
+            }
+        };
+
         async function loadStats() { const res = await fetch(`${BASE}/admin/visitors.json`); const count = await res.json() || 0; document.getElementById('vCount').innerText = count; }
         
         async function loadAdminServices() {
@@ -172,7 +183,7 @@
             const city = document.getElementById('admCity').value; const news = document.getElementById('admNews').value; const names = document.getElementById('admNames').value; const days = document.getElementById('admDays').value;
             if(news) await fetch(`${BASE}/admin/news.json`, { method: 'PUT', body: JSON.stringify(news) });
             if(names && days) await fetch(`${BASE}/pharmacies_v4/${city}.json`, { method: 'PUT', body: JSON.stringify({ names, days }) });
-            alert("تم التحديث بنجاح!"); location.reload();
+            alert("تم التحديث!"); location.reload();
         };
 
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
@@ -184,33 +195,39 @@
             if(name && phone) {
                 document.getElementById('subBtn').innerText = "جاري النشر...";
                 await fetch(`${BASE}/services.json`, { method: 'POST', body: JSON.stringify({ name, phone, category, description: description || "لا يوجد وصف." }) });
-                alert("تم بنجاح!"); location.reload();
-            } else { alert("يرجى إدخال الاسم ورقم الهاتف."); }
+                alert("تمت الإضافة بنجاح!"); location.reload();
+            } else { alert("المرجو ملء الاسم والهاتف."); }
         };
 
-        // تهيئة التطبيق وجلب البيانات
+        // App Initialization
         async function init() {
             fetchWeather(); fetchPrayers();
             try {
-                // عداد الزوار والأخبار
-                const vRes = await fetch(`${BASE}/admin/visitors.json`); let count = await vRes.json() || 0; fetch(`${BASE}/admin/visitors.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
-                const nRes = await fetch(`${BASE}/admin/news.json`); const news = await nRes.json(); if(news) document.getElementById('newsTicker').innerText = news;
+                // Visitor Count Increment
+                const vRes = await fetch(`${BASE}/admin/visitors.json`); 
+                let count = await vRes.json() || 0; 
+                fetch(`${BASE}/admin/visitors.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
                 
-                // صيدليات
-                const pRes = await fetch(`${BASE}/pharmacies_v4.json`); const pData = await pRes.json();
+                // News Ticker
+                const nRes = await fetch(`${BASE}/admin/news.json`); 
+                const news = await nRes.json(); 
+                if(news) document.getElementById('newsTicker').innerText = news;
+                
+                // Pharmacies
+                const pRes = await fetch(`${BASE}/pharmacies_v4.json`); 
+                const pData = await pRes.json();
                 if(pData?.berkane) renderPh(pData.berkane, 'dispBerkane');
                 if(pData?.aklim) renderPh(pData.aklim, 'dispAklim');
 
-                // جلب الخدمات وتحديث العداد (تم الإصلاح هنا)
+                // Services & COUNTER (Fixed Logic)
                 const sRes = await fetch(`${BASE}/services.json`); 
                 const sData = await sRes.json();
                 
                 if(sData) {
                     const keys = Object.keys(sData);
-                    // تحديث العداد فوراً
+                    // FORCE UPDATE COUNTER
                     document.getElementById('servicesCount').innerText = keys.length;
                     
-                    // رسم البطاقات
                     document.getElementById('listingsContainer').innerHTML = keys.reverse().map(id => {
                         const item = sData[id]; 
                         const theme = themeMap[item.category] || themeMap['briefcase'];
@@ -239,9 +256,7 @@
                             </div>`;
                     }).join('');
                 }
-            } catch(e) {
-                console.error("Initialization error:", e);
-            }
+            } catch(e) { console.error(e); }
         }
 
         function renderPh(data, id) {
