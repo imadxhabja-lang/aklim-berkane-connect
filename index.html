@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | الدليل الذكي</title>
+    <title>Berkane-Connect | النسخة المنفصلة</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -11,46 +11,35 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
         
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; transition: background 0.5s; }
+        .pink-mode { background-color: #fff1f2 !important; }
         
         .gradient-dark { background: linear-gradient(135deg, #0f172a, #1e293b); }
         .accent-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .pink-glow { background: linear-gradient(135deg, #ec4899, #be185d); }
+        .pink-glow { background: linear-gradient(135deg, #ec4899, #be185d); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3); }
         
-        /* شريط التصنيفات */
-        .category-chip {
-            flex: 0 0 auto;
-            padding: 12px 24px;
-            border-radius: 20px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            font-weight: 900;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .category-chip.active {
-            background: #f59e0b;
-            color: white;
-            border-color: #f59e0b;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
-        }
-        .scroll-hide::-webkit-scrollbar { display: none; }
+        .category-chip { flex: 0 0 auto; padding: 12px 24px; border-radius: 20px; background: white; border: 2px solid #e2e8f0; font-weight: 900; font-size: 13px; cursor: pointer; transition: all 0.3s; }
+        .category-chip.active { background: #f59e0b; color: white; border-color: #f59e0b; }
         
-        .marquee-container { background: #1e293b; color: #fbbf24; padding: 12px 0; overflow: hidden; border-bottom: 2px solid #fbbf24; }
-        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; padding-right: 100%; font-weight: bold; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
+        .woman-card { border: 2px solid #fce7f3 !important; background: #ffffff; border-bottom: 5px solid #ec4899 !important; }
+        
         #detailsModal .content { font-size: 1.4rem; line-height: 1.8; font-weight: 900; color: #1e293b; text-align: center; }
         .hidden { display: none !important; }
+        .scroll-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen text-right">
+<body class="flex flex-col min-h-screen text-right" id="mainBody">
 
-    <nav class="bg-white shadow-md p-4 sticky top-0 z-50 flex justify-between items-center border-b-4 border-amber-500">
+    <div id="womanHeader" class="hidden pink-glow p-6 text-white text-center shadow-xl mb-4">
+        <h2 class="text-2xl font-black">🌸 عالم سيدتي ببركان</h2>
+        <p class="text-xs opacity-90">مساحة خاصة بالجمال والخدمات النسائية</p>
+        <button onclick="window.exitWomanMode()" class="mt-4 bg-white/20 px-6 py-2 rounded-full text-[10px] font-bold border border-white/30">
+            العودة للدليل العام
+        </button>
+    </div>
+
+    <nav id="mainNav" class="bg-white shadow-md p-4 sticky top-0 z-50 flex justify-between items-center border-b-4 border-amber-500">
         <div class="text-2xl font-black text-slate-900 italic">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
         <div class="flex gap-2">
             <button onclick="window.shareSite()" class="bg-green-100 text-green-600 p-2 rounded-xl"><i class="fab fa-whatsapp text-xl"></i></button>
@@ -59,86 +48,76 @@
         </div>
     </nav>
 
-    <div class="marquee-container">
-        <div class="marquee-text" id="newsTicker">مرحباً بكم في الدليل الذكي لإقليم بركان.. جرب ميزة التصنيفات الجديدة!</div>
-    </div>
-
-    <section class="container mx-auto mt-4 px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="gradient-dark p-4 rounded-3xl text-white flex justify-between items-center shadow-lg border-b-4 border-amber-500">
-            <div><p class="text-[10px] font-bold text-amber-400 mb-1">طقس بركان</p><h4 id="temp" class="text-4xl font-black">--°C</h4></div>
+    <section id="statsSection" class="container mx-auto mt-4 px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="gradient-dark p-4 rounded-3xl text-white flex justify-between items-center border-b-4 border-amber-500">
+            <div><p class="text-[10px] font-bold text-amber-400">طقس بركان</p><h4 id="temp" class="text-4xl font-black">--°C</h4></div>
             <div class="text-5xl text-amber-400"><i class="fas fa-cloud-sun"></i></div>
         </div>
         <div class="bg-white p-4 rounded-3xl shadow-md border-b-4 border-slate-800 flex justify-around items-center text-[8px] font-bold">
-            <div class="text-center"><span>الفجر</span><p id="fajr" class="text-xs font-black text-slate-800">--:--</p></div>
-            <div class="text-center"><span>الظهر</span><p id="dhuhr" class="text-xs font-black text-slate-800">--:--</p></div>
+            <div class="text-center"><span>الفجر</span><p id="fajr" class="text-xs font-black">--:--</p></div>
+            <div class="text-center"><span>الظهر</span><p id="dhuhr" class="text-xs font-black">--:--</p></div>
             <div class="text-center text-amber-600"><span>العصر</span><p id="asr" class="text-xs font-black">--:--</p></div>
-            <div class="text-center"><span>المغرب</span><p id="maghrib" class="text-xs font-black text-slate-800">--:--</p></div>
-            <div class="text-center"><span>العشاء</span><p id="isha" class="text-xs font-black text-slate-800">--:--</p></div>
+            <div class="text-center"><span>المغرب</span><p id="maghrib" class="text-xs font-black">--:--</p></div>
+            <div class="text-center"><span>العشاء</span><p id="isha" class="text-xs font-black">--:--</p></div>
         </div>
     </section>
 
-    <section class="container mx-auto mt-6 px-4">
-        <h3 class="font-black text-slate-400 mb-3 text-[10px] uppercase">تصنيفات سريعة</h3>
+    <section id="catSection" class="container mx-auto mt-6 px-4">
         <div class="flex gap-3 overflow-x-auto pb-4 scroll-hide" id="categoryBar">
             <div onclick="window.filterByCat('all', this)" class="category-chip active">الكل ✨</div>
             <div onclick="window.filterByCat('utensils', this)" class="category-chip">مطاعم 🍔</div>
             <div onclick="window.filterByCat('carpenter', this)" class="category-chip">نجارين 🪚</div>
-            <div onclick="window.filterByCat('woman', this)" class="category-chip">سيدتي 🌸</div>
+            <div onclick="window.enterWomanMode(this)" class="category-chip border-pink-300 text-pink-600">سيدتي 🌸</div>
             <div onclick="window.filterByCat('car', this)" class="category-chip">سيارات 🚗</div>
             <div onclick="window.filterByCat('bolt', this)" class="category-chip">تقنيين ⚡</div>
-            <div onclick="window.filterByCat('faucet', this)" class="category-chip">رصاص 🚰</div>
         </div>
     </section>
 
     <section class="container mx-auto mt-2 px-4">
         <div class="relative">
-            <input type="text" id="searchInput" onkeyup="window.smartSearch()" 
-                   placeholder="ابحث عن: برجر، نجار، صباغ، أكليم..." 
-                   class="w-full p-5 pr-14 rounded-2xl bg-white border-2 border-slate-100 text-sm font-bold focus:border-amber-500 outline-none shadow-sm">
-            <div class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400">
-                <i class="fas fa-search text-xl"></i>
-            </div>
+            <input type="text" id="searchInput" onkeyup="window.smartSearch()" placeholder="ابحث عن خدمة أو هاشتاج..." class="w-full p-5 pr-14 rounded-2xl bg-white border-2 border-slate-100 text-sm font-bold outline-none shadow-sm">
+            <i class="fas fa-search absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl"></i>
         </div>
     </section>
 
     <main class="container mx-auto py-8 px-4 flex-grow">
         <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-        <div id="noResults" class="hidden text-center py-20 text-slate-400 font-bold italic">لا توجد نتائج تطابق بحثك...</div>
     </main>
+
+    <footer class="p-6 text-center">
+        <button onclick="alert('للتواصل معنا: 06XXXXXXXX')" class="text-slate-400 font-bold text-xs underline">
+            <i class="fas fa-envelope ml-1"></i> إتصل بنا (إدارة المنصة)
+        </button>
+    </footer>
 
     <div id="detailsModal" class="fixed inset-0 bg-black/90 hidden z-[300] flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white rounded-[2.5rem] p-8 max-w-md w-full relative text-right shadow-2xl">
             <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-3xl"></i></button>
-            <h3 class="font-black text-amber-500 mb-6 text-center text-lg">معلومات الخدمة</h3>
-            <div id="detailsText" class="content bg-slate-50 p-6 rounded-3xl mb-8 border border-slate-100"></div>
-            <div class="flex flex-col gap-3">
-                <a id="callLink" href="#" class="w-full py-5 bg-green-600 text-white rounded-2xl font-black text-center shadow-lg flex items-center justify-center gap-3 text-lg">
-                    <i class="fas fa-phone-alt"></i> إتصال مباشر
-                </a>
-                <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="w-full py-4 text-slate-400 font-bold">إغلاق</button>
-            </div>
+            <h3 class="font-black text-amber-500 mb-6 text-center" id="modalTitle">معلومات الخدمة</h3>
+            <div id="detailsText" class="content bg-slate-50 p-6 rounded-3xl mb-8"></div>
+            <a id="callLink" href="#" class="w-full py-5 bg-green-600 text-white rounded-2xl font-black text-center flex items-center justify-center gap-3 text-lg mb-2">
+                <i class="fas fa-phone-alt"></i> إتصال هاتفي
+            </a>
         </div>
     </div>
 
     <div id="addModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4">
         <div class="bg-white rounded-[2rem] p-8 w-full max-w-md relative text-right">
             <button onclick="window.toggleAddModal()" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="font-black mb-6 text-xl text-slate-800">سجل خدمتك مجاناً</h3>
+            <h3 class="font-black mb-6 text-xl">سجل خدمتك مجاناً</h3>
             <div class="space-y-4">
                 <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-4 border rounded-2xl text-right font-bold">
-                <input type="tel" id="uPhone" placeholder="رقم الهاتف (واتساب)" class="w-full p-4 border rounded-2xl text-right font-bold">
+                <input type="tel" id="uPhone" placeholder="رقم الهاتف" class="w-full p-4 border rounded-2xl text-right font-bold">
                 <div class="grid grid-cols-2 gap-2">
                     <select id="uCat" class="p-4 border rounded-2xl bg-slate-50 font-black text-[10px]">
                         <option value="utensils">🍔 مطعم</option><option value="carpenter">🪚 نجار</option>
-                        <option value="car">🚗 كراء سيارات</option><option value="bolt">⚡ تقني</option>
-                        <option value="woman">🌸 سيدتي</option><option value="faucet">🚰 رصاص</option>
-                        <option value="briefcase">💼 أخرى</option>
+                        <option value="woman">🌸 سيدتي</option><option value="bolt">⚡ تقني</option>
                     </select>
                     <select id="uCity" class="p-4 border rounded-2xl bg-slate-50 font-black text-[10px]">
                         <option value="بركان">بركان</option><option value="أكليم">أكليم</option>
                     </select>
                 </div>
-                <textarea id="uDesc" placeholder="اكتب هنا خدماتك والهاشتاجات (مثال: #برجر #بيتزا #نجارة_خشب)" class="w-full p-4 border rounded-2xl h-24 text-right font-bold"></textarea>
+                <textarea id="uDesc" placeholder="الوصف والهاشتاجات..." class="w-full p-4 border rounded-2xl h-24 text-right font-bold"></textarea>
                 <button onclick="window.addService()" id="subBtn" class="w-full accent-gold text-white py-5 rounded-2xl font-black shadow-lg">نشر الآن</button>
             </div>
         </div>
@@ -146,20 +125,43 @@
 
     <script type="module">
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const themeMap = { 
-            'utensils': { icon: 'fa-utensils', color: '#ef4444', label: 'مطاعم' }, 
-            'carpenter': { icon: 'fa-hammer', color: '#92400e', label: 'نجارة' },
-            'car': { icon: 'fa-car', color: '#1e3a8a', label: 'كراء' }, 
-            'bolt': { icon: 'fa-bolt', color: '#f59e0b', label: 'تقني' }, 
-            'woman': { icon: 'fa-venus', color: '#ec4899', label: 'سيدتي' }, 
-            'faucet': { icon: 'fa-faucet', color: '#06b6d4', label: 'رصاص' },
-            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' } 
+        const themeMap = { 'utensils': { icon: 'fa-utensils', color: '#ef4444', label: 'مطاعم' }, 'carpenter': { icon: 'fa-hammer', color: '#92400e', label: 'نجارة' }, 'car': { icon: 'fa-car', color: '#1e3a8a', label: 'كراء' }, 'bolt': { icon: 'fa-bolt', color: '#f59e0b', label: 'تقني' }, 'woman': { icon: 'fa-venus', color: '#ec4899', label: 'سيدتي' }, 'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' } };
+
+        const formatWA = (num) => {
+            let n = num.toString().replace(/\D/g, '');
+            if (n.startsWith('0')) n = '212' + n.substring(1);
+            if (!n.startsWith('212')) n = '212' + n;
+            return n;
+        };
+
+        // الدخول لوضع سيدتي المنفصل
+        window.enterWomanMode = (el) => {
+            document.getElementById('mainBody').classList.add('pink-mode');
+            document.getElementById('womanHeader').classList.remove('hidden');
+            document.getElementById('mainNav').classList.add('hidden');
+            document.getElementById('statsSection').classList.add('hidden');
+            document.getElementById('catSection').classList.add('hidden');
+            document.getElementById('modalTitle').className = "font-black text-pink-500 mb-6 text-center";
+            
+            window.filterByCat('woman', el);
+        };
+
+        // الخروج لوضع الدليل العام
+        window.exitWomanMode = () => {
+            document.getElementById('mainBody').classList.remove('pink-mode');
+            document.getElementById('womanHeader').classList.add('hidden');
+            document.getElementById('mainNav').classList.remove('hidden');
+            document.getElementById('statsSection').classList.remove('hidden');
+            document.getElementById('catSection').classList.remove('hidden');
+            document.getElementById('modalTitle').className = "font-black text-amber-500 mb-6 text-center";
+            
+            window.filterByCat('all', document.querySelector('.category-chip'));
         };
 
         async function fetchWeather() { try { const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true`); const d = await res.json(); document.getElementById('temp').innerText = `${Math.round(d.current_weather.temperature)}°C`; } catch(e){} }
         async function fetchPrayers() { try { const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3`); const d = await res.json(); const t = d.data.timings; document.getElementById('fajr').innerText = t.Fajr; document.getElementById('dhuhr').innerText = t.Dhuhr; document.getElementById('asr').innerText = t.Asr; document.getElementById('maghrib').innerText = t.Maghrib; document.getElementById('isha').innerText = t.Isha; } catch(e){} }
 
-        window.openAdmin = () => { if(prompt("الرمز:") === "2025") document.getElementById('adminModal').classList.remove('hidden'); };
+        window.openAdmin = () => { if(prompt("الرمز:") === "2025") alert("الوصول للإدارة متاح"); };
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
         window.shareSite = () => window.open(`https://wa.me/?text=${encodeURIComponent(window.location.href)}`, '_blank');
         
@@ -171,17 +173,14 @@
 
         window.smartSearch = () => {
             const q = document.getElementById('searchInput').value.toLowerCase();
-            let found = false;
-            document.querySelectorAll('.service-card').forEach(c => {
-                if(c.innerText.toLowerCase().includes(q)) { c.classList.remove('hidden'); found = true; }
-                else c.classList.add('hidden');
-            });
-            document.getElementById('noResults').classList.toggle('hidden', found);
+            document.querySelectorAll('.service-card').forEach(c => c.innerText.toLowerCase().includes(q) ? c.classList.remove('hidden') : c.classList.add('hidden'));
         };
 
         window.filterByCat = (cat, el) => {
-            document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
+            if(el) {
+                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                el.classList.add('active');
+            }
             document.querySelectorAll('.service-card').forEach(c => (cat === 'all' || c.getAttribute('data-cat') === cat) ? c.classList.remove('hidden') : c.classList.add('hidden'));
         };
 
@@ -196,9 +195,9 @@
             if(sd) {
                 document.getElementById('listingsContainer').innerHTML = Object.keys(sd).reverse().map(id => {
                     const i = sd[id], t = themeMap[i.category] || themeMap['briefcase'];
-                    const eDesc = encodeURIComponent(i.description || "لا يوجد وصف");
+                    const isWoman = i.category === 'woman';
                     return `
-                    <div class="service-card bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 transition-all" data-cat="${i.category}">
+                    <div class="service-card ${isWoman ? 'woman-card' : 'bg-white'} p-6 rounded-[2rem] shadow-sm border border-slate-100" data-cat="${i.category}">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow-md" style="background-color: ${t.color}"><i class="fas ${t.icon}"></i></div>
                             <div class="flex-1">
@@ -207,8 +206,8 @@
                             </div>
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="window.showDetails('${eDesc}', '${i.phone}')" class="flex-1 py-4 bg-slate-100 text-slate-700 rounded-2xl font-black text-[12px]"><i class="fas fa-eye ml-1"></i> تـفـاصـيـل</button>
-                            <a href="https://wa.me/${i.phone.replace(/\s/g,'')}" target="_blank" class="flex-1 py-4 bg-slate-900 text-amber-400 rounded-2xl font-black text-[12px] text-center">واتساب</a>
+                            <button onclick="window.showDetails('${encodeURIComponent(i.description)}', '${i.phone}')" class="flex-1 py-4 bg-slate-100 text-slate-700 rounded-2xl font-black text-[12px]">تـفـاصـيـل</button>
+                            <a href="https://wa.me/${formatWA(i.phone)}" target="_blank" class="flex-1 py-4 ${isWoman ? 'bg-pink-600' : 'bg-slate-900'} text-white rounded-2xl font-black text-[12px] text-center">واتساب</a>
                         </div>
                     </div>`;
                 }).join('');
