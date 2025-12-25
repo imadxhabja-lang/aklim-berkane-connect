@@ -74,7 +74,6 @@
         <div class="flex justify-between items-center mb-6 border-r-4 border-slate-800 pr-3">
             <h3 class="font-black text-slate-800 text-xl italic uppercase">قائمة المهنيين</h3>
             <div class="bg-amber-500 text-slate-900 px-4 py-2 rounded-2xl shadow-lg flex items-center gap-2">
-                <span class="text-[10px] font-black">العدد:</span>
                 <span id="servicesCount" class="text-lg font-black tracking-tighter">0</span>
             </div>
         </div>
@@ -95,8 +94,7 @@
 
     <footer class="gradient-dark text-white py-12 px-6 rounded-t-[3.5rem] mt-10 text-center">
         <p class="text-amber-400 font-black text-2xl italic mb-4">BERKANE-CONNECT</p>
-        <a href="https://wa.me/212704487952" target="_blank" class="bg-green-600/20 px-8 py-4 rounded-2xl border border-green-500/30 text-green-400 font-black tracking-widest">واتساب الإدارة: 212704487952+</a>
-        <p class="text-[10px] text-slate-600 pt-8 mt-8 border-t border-white/5 font-black tracking-widest italic">© 2025 Berkane-Connect | 🍊</p>
+        <a href="https://wa.me/212704487952" target="_blank" class="bg-green-600/20 px-8 py-4 rounded-2xl border border-green-500/30 text-green-400 font-black">واتساب الإدارة: 212704487952+</a>
     </footer>
 
     <div id="adminModal" class="fixed inset-0 bg-slate-900/98 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-xl">
@@ -108,10 +106,10 @@
                     <input type="text" id="admNews" placeholder="شريط الأخبار" class="w-full p-4 border rounded-2xl text-sm mb-4">
                     <textarea id="admNames" placeholder="الصيدليات (اسم في سطر)" class="w-full p-4 border rounded-2xl h-32 text-sm mb-3"></textarea>
                     <div class="flex gap-2 mb-4"><select id="admCity" class="flex-1 p-4 border rounded-2xl bg-white"><option value="berkane">بركان</option><option value="aklim">أكليم</option></select><input type="text" id="admDays" placeholder="تاريخ الحراسة" class="flex-1 p-4 border rounded-2xl"></div>
-                    <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-4 rounded-2xl font-black shadow-lg">تحديث البيانات</button>
+                    <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-4 rounded-2xl font-black">تحديث البيانات</button>
                 </div>
                 <div id="adminServiceList" class="space-y-2 max-h-48 overflow-y-auto bg-slate-100 p-4 rounded-2xl"></div>
-                <div class="bg-amber-500 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg"><span class="font-black italic">إجمالي الزوار:</span><span id="vCount" class="text-4xl font-black tracking-tighter">0</span></div>
+                <div class="bg-amber-500 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg"><span class="font-black italic">إجمالي الزوار:</span><span id="vCount" class="text-4xl font-black">0</span></div>
             </div>
         </div>
     </div>
@@ -136,7 +134,8 @@
 
     <script type="module">
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const _0x_v = "MjAyNQ=="; 
+        // الرمز الجديد المشفر: Aklim@123
+        const _0x_v = "QWtsaW1AMTIz"; 
 
         let allServices = {}; 
         let currentFilter = 'all';
@@ -151,7 +150,6 @@
             'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' } 
         };
 
-        // وظائف البحث والتصفية
         window.filterByCategory = function(cat, event) {
             currentFilter = cat;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -182,6 +180,7 @@
         window.openAdmin = async () => { 
             const input = prompt("رمز الإدارة:"); 
             if(input && btoa(input) === _0x_v) { document.getElementById('adminModal').classList.remove('hidden'); loadAdminServices(); loadStats(); }
+            else if(input) { alert("الرمز غير صحيح!"); }
         };
 
         async function loadStats() { const res = await fetch(`${BASE}/admin/visitors.json`); const count = await res.json() || 0; document.getElementById('vCount').innerText = count; }
@@ -196,7 +195,7 @@
             const city = document.getElementById('admCity').value; const news = document.getElementById('admNews').value; const names = document.getElementById('admNames').value; const days = document.getElementById('admDays').value;
             if(news) await fetch(`${BASE}/admin/news.json`, { method: 'PUT', body: JSON.stringify(news) });
             if(names && days) await fetch(`${BASE}/pharmacies_v4/${city}.json`, { method: 'PUT', body: JSON.stringify({ names, days }) });
-            location.reload();
+            alert("تم تحديث البيانات!"); location.reload();
         };
 
         window.addService = async () => {
@@ -211,11 +210,11 @@
         function renderListings(data) {
             const container = document.getElementById('listingsContainer');
             const keys = Object.keys(data);
-            if (keys.length === 0) { container.innerHTML = `<p class="col-span-full text-center py-10 font-bold text-slate-400 italic">لا توجد نتائج مطابقة لبحثك...</p>`; return; }
+            if (keys.length === 0) { container.innerHTML = `<p class="col-span-full text-center py-10 font-bold text-slate-400 italic">لا توجد نتائج مطابقة...</p>`; return; }
             container.innerHTML = keys.reverse().map(id => {
                 const item = data[id]; const theme = themeMap[item.category] || themeMap['briefcase']; const encodedDesc = encodeURIComponent(item.description);
                 let num = item.phone.trim().replace(/\s/g, '').replace('+', ''); if(num.startsWith('0')) num = '212' + num.substring(1);
-                return `<div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 text-right hover:shadow-lg transition-all ${item.category === 'woman' ? 'woman-card' : ''}"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg" style="background-color: ${theme.color}"><i class="fas ${theme.icon}"></i></div><div><h4 class="font-extrabold text-slate-800 text-base leading-tight">${item.name}</h4><p class="text-[9px] font-black uppercase mt-1 ${item.category === 'woman' ? 'text-pink-500' : 'text-slate-400'}">${theme.label}</p></div></div><div class="flex gap-2"><button onclick="window.showDetails('${encodedDesc}')" class="flex-1 py-3 text-slate-400 border border-slate-100 rounded-2xl text-[10px] font-black hover:bg-slate-50 transition">التفاصيل</button><a href="https://wa.me/${num}" target="_blank" class="flex-[2] block text-center py-3 ${item.category === 'woman' ? 'bg-pink-600' : 'bg-slate-900'} text-amber-400 rounded-2xl text-[10px] font-black italic shadow-lg active:scale-95 transition">واتساب</a></div></div>`;
+                return `<div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 text-right hover:shadow-lg transition-all ${item.category === 'woman' ? 'woman-card' : ''}"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg" style="background-color: ${theme.color}"><i class="fas ${theme.icon}"></i></div><div><h4 class="font-extrabold text-slate-800 text-base leading-tight">${item.name}</h4><p class="text-[9px] font-black uppercase mt-1 ${item.category === 'woman' ? 'text-pink-500' : 'text-slate-400'}">${theme.label}</p></div></div><div class="flex gap-2"><button onclick="window.showDetails('${encodedDesc}')" class="flex-1 py-3 text-slate-400 border border-slate-100 rounded-2xl text-[10px] font-black">التفاصيل</button><a href="https://wa.me/${num}" target="_blank" class="flex-[2] block text-center py-3 ${item.category === 'woman' ? 'bg-pink-600' : 'bg-slate-900'} text-amber-400 rounded-2xl text-[10px] font-black italic active:scale-95 transition shadow-lg">واتساب</a></div></div>`;
             }).join('');
         }
 
