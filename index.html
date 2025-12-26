@@ -13,11 +13,17 @@
         body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; scroll-behavior: smooth; }
         .gradient-dark { background: linear-gradient(135deg, #0f172a, #1e293b); }
         .accent-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        
+        /* تصميم أشرطة الأخبار والإهداءات */
         .marquee-container { background: #1e293b; color: #fbbf24; padding: 12px 0; overflow: hidden; border-bottom: 2px solid #fbbf24; }
-        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; padding-right: 100%; font-weight: bold; }
+        .greetings-container { background: #fdf2f8; color: #be185d; padding: 8px 0; overflow: hidden; border-bottom: 2px solid #ec4899; }
+        
+        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; padding-right: 100%; font-weight: bold; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        
         .hidden { display: none !important; }
         .woman-card { border-bottom: 5px solid #ec4899 !important; }
+        
         .filter-btn { white-space: nowrap; padding: 10px 20px; border-radius: 15px; border: 2px solid #e2e8f0; font-weight: bold; font-size: 12px; transition: all 0.3s ease; background: white; }
         .filter-btn.active { background-color: #f59e0b; color: white; border-color: #d97706; }
         .filter-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
@@ -49,7 +55,12 @@
         </div>
     </section>
 
-    <div class="marquee-container mt-4"><div class="marquee-text text-right" id="newsTicker">مرحباً بكم في الدليل الرقمي لبركان وأكليم...</div></div>
+    <div class="marquee-container mt-4">
+        <div class="marquee-text text-right" id="newsTicker">مرحباً بكم في الدليل الرقمي لبركان وأكليم...</div>
+    </div>
+    <div class="greetings-container">
+        <div class="marquee-text text-right" id="greetingsTicker">✨ ركن الإهداءات: ننتظر مراسلاتكم لمشاركة أفراحكم وتبريكاتكم هنا... ✨</div>
+    </div>
 
     <section class="container mx-auto mt-10 px-4">
         <h3 class="font-black text-slate-800 mb-6 border-r-4 border-amber-500 pr-3 text-xl italic uppercase">صيدليات الحراسة</h3>
@@ -67,13 +78,14 @@
 
     <main class="container mx-auto py-12 px-4 flex-grow">
         <div class="mb-6 relative">
-            <input type="text" id="nameSearch" onkeyup="window.filterByName()" placeholder="بحث باسم المهني أو الحرفة..." class="w-full p-5 pr-14 rounded-3xl border-2 border-slate-200 focus:border-amber-500 outline-none transition-all shadow-sm text-sm font-bold">
+            <input type="text" id="nameSearch" onkeyup="window.filterByName()" placeholder="بحث باسم المهني أو الحرفة..." class="w-full p-5 pr-14 rounded-3xl border-2 border-slate-200 focus:border-amber-500 outline-none transition-all shadow-sm text-sm font-bold text-right">
             <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
         </div>
 
         <div class="flex justify-between items-center mb-6 border-r-4 border-slate-800 pr-3">
             <h3 class="font-black text-slate-800 text-xl italic uppercase">قائمة المهنيين</h3>
             <div class="bg-amber-500 text-slate-900 px-4 py-2 rounded-2xl shadow-lg flex items-center gap-2">
+                <span class="text-[10px] font-black">العدد:</span>
                 <span id="servicesCount" class="text-lg font-black tracking-tighter">0</span>
             </div>
         </div>
@@ -94,19 +106,24 @@
 
     <footer class="gradient-dark text-white py-12 px-6 rounded-t-[3.5rem] mt-10 text-center">
         <p class="text-amber-400 font-black text-2xl italic mb-4">BERKANE-CONNECT</p>
-        <a href="https://wa.me/212704487952" target="_blank" class="bg-green-600/20 px-8 py-4 rounded-2xl border border-green-500/30 text-green-400 font-black">واتساب الإدارة: 212704487952+</a>
+        <a href="https://wa.me/212704487952" target="_blank" class="bg-green-600/20 px-8 py-4 rounded-2xl border border-green-500/30 text-green-400 font-black tracking-wider">واتساب الإدارة: 212704487952+</a>
+        <p class="text-[10px] text-slate-600 pt-8 mt-8 border-t border-white/5 font-black uppercase italic">© 2025 Berkane-Connect | 🍊</p>
     </footer>
 
     <div id="adminModal" class="fixed inset-0 bg-slate-900/98 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-xl">
         <div class="bg-white rounded-[2rem] p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto relative text-right shadow-2xl">
             <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-3xl"></i></button>
-            <h3 class="font-black text-slate-800 mb-6 border-b pb-2 text-xl italic">إدارة المحتوى</h3>
+            <h3 class="font-black text-slate-800 mb-6 border-b pb-2 text-xl italic text-right">إدارة المحتوى</h3>
             <div class="space-y-6">
                 <div class="bg-slate-50 p-6 rounded-2xl border">
-                    <input type="text" id="admNews" placeholder="شريط الأخبار" class="w-full p-4 border rounded-2xl text-sm mb-4">
+                    <input type="text" id="admNews" placeholder="شريط الأخبار العام" class="w-full p-4 border rounded-2xl text-sm mb-4">
+                    <input type="text" id="admGreetings" placeholder="شريط الإهداءات والتبريكات" class="w-full p-4 border rounded-2xl text-sm mb-4">
                     <textarea id="admNames" placeholder="الصيدليات (اسم في سطر)" class="w-full p-4 border rounded-2xl h-32 text-sm mb-3"></textarea>
-                    <div class="flex gap-2 mb-4"><select id="admCity" class="flex-1 p-4 border rounded-2xl bg-white"><option value="berkane">بركان</option><option value="aklim">أكليم</option></select><input type="text" id="admDays" placeholder="تاريخ الحراسة" class="flex-1 p-4 border rounded-2xl"></div>
-                    <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-4 rounded-2xl font-black">تحديث البيانات</button>
+                    <div class="flex gap-2 mb-4">
+                        <select id="admCity" class="flex-1 p-4 border rounded-2xl bg-white"><option value="berkane">بركان</option><option value="aklim">أكليم</option></select>
+                        <input type="text" id="admDays" placeholder="تاريخ الحراسة" class="flex-1 p-4 border rounded-2xl">
+                    </div>
+                    <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-4 rounded-2xl font-black shadow-lg">تحديث البيانات</button>
                 </div>
                 <div id="adminServiceList" class="space-y-2 max-h-48 overflow-y-auto bg-slate-100 p-4 rounded-2xl"></div>
                 <div class="bg-amber-500 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg"><span class="font-black italic">إجمالي الزوار:</span><span id="vCount" class="text-4xl font-black">0</span></div>
@@ -114,28 +131,31 @@
         </div>
     </div>
 
-    <div id="addModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-[2rem] p-8 w-full max-w-md relative text-right shadow-2xl">
-            <button onclick="window.toggleAddModal()" class="absolute top-6 left-6 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
+    <div id="addModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-[2rem] p-8 w-full max-w-md relative text-right">
+            <button onclick="window.toggleAddModal()" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
             <h3 class="font-black mb-6 text-xl italic text-slate-800">سجل خدمتك مجاناً</h3>
             <div class="space-y-4">
-                <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-4 border rounded-2xl text-sm"><input type="tel" id="uPhone" placeholder="رقم الهاتف" class="w-full p-4 border rounded-2xl text-sm text-left"><select id="uCat" class="w-full p-4 border rounded-2xl text-sm font-black bg-slate-50"><option value="utensils">🍔 مطعم</option><option value="car">🚗 كراء سيارات</option><option value="woman">🌸 عالم سيدتي</option><option value="bolt">⚡ كهربائي</option><option value="faucet">🚰 سباك</option><option value="truck">🚚 توصيل</option><option value="briefcase">💼 أخرى</option></select><textarea id="uDesc" placeholder="نبذة عن الخدمة..." class="w-full p-4 border rounded-2xl h-24 text-sm"></textarea><button onclick="window.addService()" id="subBtn" class="w-full accent-gold text-white py-5 rounded-2xl font-black shadow-lg">نشر الخدمة</button>
+                <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-4 border rounded-2xl text-sm text-right">
+                <input type="tel" id="uPhone" placeholder="رقم الهاتف" class="w-full p-4 border rounded-2xl text-sm text-left">
+                <select id="uCat" class="w-full p-4 border rounded-2xl text-sm font-black bg-slate-50 text-right"><option value="utensils">🍔 مطعم</option><option value="car">🚗 كراء سيارات</option><option value="woman">🌸 عالم سيدتي</option><option value="bolt">⚡ كهربائي</option><option value="faucet">🚰 سباك</option><option value="truck">🚚 توصيل</option><option value="briefcase">💼 أخرى</option></select>
+                <textarea id="uDesc" placeholder="نبذة عن الخدمة..." class="w-full p-4 border rounded-2xl h-24 text-sm text-right"></textarea>
+                <button onclick="window.addService()" id="subBtn" class="w-full accent-gold text-white py-5 rounded-2xl font-black shadow-lg">نشر الخدمة</button>
             </div>
         </div>
     </div>
 
     <div id="detailsModal" class="fixed inset-0 bg-black/70 hidden z-[300] flex items-center justify-center p-4">
         <div class="bg-white rounded-[2rem] p-10 max-w-sm w-full relative text-right shadow-2xl border-t-8 border-amber-500">
-            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
+            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
             <h3 class="font-black text-slate-800 mb-4 text-xl italic text-center">تفاصيل الخدمة</h3>
-            <p id="detailsText" class="text-slate-600 text-sm italic bg-slate-50 p-6 rounded-3xl min-h-[100px] leading-relaxed"></p>
+            <p id="detailsText" class="text-slate-600 text-sm italic bg-slate-50 p-6 rounded-3xl min-h-[100px] leading-relaxed text-right"></p>
         </div>
     </div>
 
     <script type="module">
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        // الرمز الجديد المشفر: Aklim@123
-        const _0x_v = "QWtsaW1AMTIz"; 
+        const _0x_v = "QWtsaW1AMTIz"; // كلمة السر المشفرة Aklim@123
 
         let allServices = {}; 
         let currentFilter = 'all';
@@ -191,16 +211,32 @@
         }
 
         window.deleteItem = async (path) => { if(confirm("حذف؟")) { await fetch(`${BASE}/${path}.json`, { method: 'DELETE' }); location.reload(); } };
+
         window.saveAdmin = async () => {
-            const city = document.getElementById('admCity').value; const news = document.getElementById('admNews').value; const names = document.getElementById('admNames').value; const days = document.getElementById('admDays').value;
+            const city = document.getElementById('admCity').value; 
+            const news = document.getElementById('admNews').value;
+            const greetings = document.getElementById('admGreetings').value;
+            const names = document.getElementById('admNames').value; 
+            const days = document.getElementById('admDays').value;
+
             if(news) await fetch(`${BASE}/admin/news.json`, { method: 'PUT', body: JSON.stringify(news) });
+            if(greetings) await fetch(`${BASE}/admin/greetings.json`, { method: 'PUT', body: JSON.stringify(greetings) });
             if(names && days) await fetch(`${BASE}/pharmacies_v4/${city}.json`, { method: 'PUT', body: JSON.stringify({ names, days }) });
-            alert("تم تحديث البيانات!"); location.reload();
+            
+            alert("تم تحديث البيانات بنجاح!");
+            location.reload();
         };
 
         window.addService = async () => {
-            const name = document.getElementById('uName').value; const phone = document.getElementById('uPhone').value; const category = document.getElementById('uCat').value; const description = document.getElementById('uDesc').value;
-            if(name && phone) { await fetch(`${BASE}/services.json`, { method: 'POST', body: JSON.stringify({ name, phone, category, description: description || "لا يوجد وصف." }) }); location.reload(); }
+            const name = document.getElementById('uName').value; 
+            const phone = document.getElementById('uPhone').value; 
+            const category = document.getElementById('uCat').value; 
+            const description = document.getElementById('uDesc').value;
+            if(name && phone) { 
+                document.getElementById('subBtn').innerText = "جاري النشر...";
+                await fetch(`${BASE}/services.json`, { method: 'POST', body: JSON.stringify({ name, phone, category, description: description || "لا يوجد وصف." }) }); 
+                location.reload(); 
+            }
         };
 
         window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
@@ -210,20 +246,25 @@
         function renderListings(data) {
             const container = document.getElementById('listingsContainer');
             const keys = Object.keys(data);
-            if (keys.length === 0) { container.innerHTML = `<p class="col-span-full text-center py-10 font-bold text-slate-400 italic">لا توجد نتائج مطابقة...</p>`; return; }
+            if (keys.length === 0) { container.innerHTML = `<p class="col-span-full text-center py-10 font-bold text-slate-400 italic">لا توجد نتائج مطابقة لبحثك...</p>`; return; }
             container.innerHTML = keys.reverse().map(id => {
                 const item = data[id]; const theme = themeMap[item.category] || themeMap['briefcase']; const encodedDesc = encodeURIComponent(item.description);
                 let num = item.phone.trim().replace(/\s/g, '').replace('+', ''); if(num.startsWith('0')) num = '212' + num.substring(1);
-                return `<div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 text-right hover:shadow-lg transition-all ${item.category === 'woman' ? 'woman-card' : ''}"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg" style="background-color: ${theme.color}"><i class="fas ${theme.icon}"></i></div><div><h4 class="font-extrabold text-slate-800 text-base leading-tight">${item.name}</h4><p class="text-[9px] font-black uppercase mt-1 ${item.category === 'woman' ? 'text-pink-500' : 'text-slate-400'}">${theme.label}</p></div></div><div class="flex gap-2"><button onclick="window.showDetails('${encodedDesc}')" class="flex-1 py-3 text-slate-400 border border-slate-100 rounded-2xl text-[10px] font-black">التفاصيل</button><a href="https://wa.me/${num}" target="_blank" class="flex-[2] block text-center py-3 ${item.category === 'woman' ? 'bg-pink-600' : 'bg-slate-900'} text-amber-400 rounded-2xl text-[10px] font-black italic active:scale-95 transition shadow-lg">واتساب</a></div></div>`;
+                return `<div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 text-right hover:shadow-lg transition-all ${item.category === 'woman' ? 'woman-card' : ''}"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg" style="background-color: ${theme.color}"><i class="fas ${theme.icon}"></i></div><div><h4 class="font-extrabold text-slate-800 text-base leading-tight">${item.name}</h4><p class="text-[9px] font-black uppercase mt-1 ${item.category === 'woman' ? 'text-pink-500' : 'text-slate-400'}">${theme.label}</p></div></div><div class="flex gap-2"><button onclick="window.showDetails('${encodedDesc}')" class="flex-1 py-3 text-slate-400 border border-slate-100 rounded-2xl text-[10px] font-black active:scale-95 transition">التفاصيل</button><a href="https://wa.me/${num}" target="_blank" class="flex-[2] block text-center py-3 ${item.category === 'woman' ? 'bg-pink-600' : 'bg-slate-900'} text-amber-400 rounded-2xl text-[10px] font-black italic shadow-lg active:scale-95 transition">واتساب</a></div></div>`;
             }).join('');
         }
 
         async function init() {
             fetchWeather(); fetchPrayers();
             try {
+                // زوار
                 const vRes = await fetch(`${BASE}/admin/visitors.json`); let count = await vRes.json() || 0; fetch(`${BASE}/admin/visitors.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
+                // أخبار وإهداءات
                 const nRes = await fetch(`${BASE}/admin/news.json`); const news = await nRes.json(); if(news) document.getElementById('newsTicker').innerText = news;
+                const gRes = await fetch(`${BASE}/admin/greetings.json`); const greetings = await gRes.json(); if(greetings) document.getElementById('greetingsTicker').innerText = "✨ " + greetings + " ✨";
+                // صيدليات
                 const pRes = await fetch(`${BASE}/pharmacies_v4.json`); const pData = await pRes.json(); if(pData?.berkane) renderPh(pData.berkane, 'dispBerkane'); if(pData?.aklim) renderPh(pData.aklim, 'dispAklim');
+                // خدمات
                 const sRes = await fetch(`${BASE}/services.json`); allServices = await sRes.json() || {};
                 document.getElementById('servicesCount').innerText = Object.keys(allServices).length;
                 renderListings(allServices);
