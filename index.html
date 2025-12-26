@@ -18,8 +18,19 @@
         .marquee-container { background: #1e293b; color: #fbbf24; padding: 12px 0; overflow: hidden; border-bottom: 2px solid #fbbf24; }
         .greetings-container { background: #fdf2f8; color: #be185d; padding: 8px 0; overflow: hidden; border-bottom: 2px solid #ec4899; }
         
-        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; padding-right: 100%; font-weight: bold; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* التعديل هنا: جعل الحركة من اليسار إلى اليمين */
+        .marquee-text { 
+            display: inline-block; 
+            white-space: nowrap; 
+            animation: marquee-left-to-right 25s linear infinite; 
+            padding-left: 100%; /* الحشو من اليسار */
+            font-weight: bold; 
+        }
+
+        @keyframes marquee-left-to-right { 
+            0% { transform: translateX(-100%); } 
+            100% { transform: translateX(100%); } 
+        }
         
         .hidden { display: none !important; }
         .woman-card { border-bottom: 5px solid #ec4899 !important; }
@@ -56,10 +67,10 @@
     </section>
 
     <div class="marquee-container mt-4">
-        <div class="marquee-text text-right" id="newsTicker">مرحباً بكم في الدليل الرقمي لبركان وأكليم...</div>
+        <div class="marquee-text" id="newsTicker">مرحباً بكم في الدليل الرقمي لبركان وأكليم...</div>
     </div>
     <div class="greetings-container">
-        <div class="marquee-text text-right" id="greetingsTicker">✨ ركن الإهداءات: ننتظر مراسلاتكم لمشاركة أفراحكم وتبريكاتكم هنا... ✨</div>
+        <div class="marquee-text" id="greetingsTicker">✨ ركن الإهداءات: ننتظر مراسلاتكم لمشاركة أفراحكم وتبريكاتكم هنا... ✨</div>
     </div>
 
     <section class="container mx-auto mt-10 px-4">
@@ -155,7 +166,7 @@
 
     <script type="module">
         const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const _0x_v = "QWtsaW1AMTIz"; // كلمة السر المشفرة Aklim@123
+        const _0x_v = "QWtsaW1AMTIz"; // Aklim@123
 
         let allServices = {}; 
         let currentFilter = 'all';
@@ -257,14 +268,10 @@
         async function init() {
             fetchWeather(); fetchPrayers();
             try {
-                // زوار
                 const vRes = await fetch(`${BASE}/admin/visitors.json`); let count = await vRes.json() || 0; fetch(`${BASE}/admin/visitors.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
-                // أخبار وإهداءات
                 const nRes = await fetch(`${BASE}/admin/news.json`); const news = await nRes.json(); if(news) document.getElementById('newsTicker').innerText = news;
                 const gRes = await fetch(`${BASE}/admin/greetings.json`); const greetings = await gRes.json(); if(greetings) document.getElementById('greetingsTicker').innerText = "✨ " + greetings + " ✨";
-                // صيدليات
                 const pRes = await fetch(`${BASE}/pharmacies_v4.json`); const pData = await pRes.json(); if(pData?.berkane) renderPh(pData.berkane, 'dispBerkane'); if(pData?.aklim) renderPh(pData.aklim, 'dispAklim');
-                // خدمات
                 const sRes = await fetch(`${BASE}/services.json`); allServices = await sRes.json() || {};
                 document.getElementById('servicesCount').innerText = Object.keys(allServices).length;
                 renderListings(allServices);
