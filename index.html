@@ -3,57 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | الدليل الآمن</title>
+    <title>Berkane-Connect | النسخة الكاملة والمحمية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; }
         .gradient-dark { background: linear-gradient(135deg, #0f172a, #1e293b); }
         .accent-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .woman-themed { border-bottom: 5px solid #ec4899 !important; }
         .marquee-container { background: #1e293b; color: #fbbf24; padding: 12px 0; overflow: hidden; border-bottom: 3px solid #fbbf24; }
         .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; font-weight: bold; }
         @keyframes marquee { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-        .filter-btn { white-space: nowrap; padding: 10px 20px; border-radius: 18px; border: 2px solid #e2e8f0; font-size: 12px; font-weight: bold; background: white; transition: 0.3s; cursor: pointer; }
+        .filter-btn { white-space: nowrap; padding: 10px 18px; border-radius: 15px; border: 2px solid #e2e8f0; font-size: 11px; font-weight: bold; background: white; transition: 0.3s; cursor: pointer; }
         .filter-btn.active { background: #f59e0b; color: white; border-color: #d97706; }
-        .service-count { background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 10px; margin-right: 5px; font-size: 10px; }
-        .glass-modal { backdrop-filter: blur(8px); background: rgba(15, 23, 42, 0.9); }
+        .service-count { background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 8px; margin-right: 4px; font-size: 10px; }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen text-right">
 
-    <nav class="bg-white shadow-md p-4 sticky top-0 z-[100] flex justify-between items-center border-b-4 border-amber-500">
-        <div class="text-2xl font-black italic">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
+    <nav class="bg-white shadow-lg p-4 sticky top-0 z-50 flex justify-between items-center border-b-4 border-amber-500">
+        <div class="text-2xl font-black text-slate-900 italic tracking-tighter">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
         <div class="flex gap-2">
-            <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="accent-gold text-white px-6 py-2 rounded-2xl text-xs font-black shadow-lg hover:scale-105 transition-transform"> + أضف خدمة </button>
-            <button onclick="window.openAdmin()" class="bg-slate-100 p-3 rounded-2xl text-slate-500 hover:bg-slate-200"><i class="fas fa-user-shield"></i></button>
+            <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="accent-gold text-white px-5 py-2 rounded-xl text-xs font-bold shadow-lg"> + أضف خدمة </button>
+            <button onclick="window.openAdmin()" class="bg-slate-100 p-2 rounded-xl text-slate-500"><i class="fas fa-user-shield"></i></button>
         </div>
     </nav>
 
-    <section class="container mx-auto mt-6 px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="gradient-dark p-6 rounded-[2.5rem] text-white flex justify-between items-center shadow-xl border-b-4 border-amber-500">
-            <div><p class="text-[10px] font-black text-amber-400 mb-1 uppercase tracking-widest">طقس بركان الآن</p><h4 id="temp" class="text-4xl font-black">--°C</h4></div>
-            <div class="text-6xl text-amber-400 opacity-80"><i class="fas fa-cloud-sun-rain"></i></div>
+    <section class="container mx-auto mt-4 px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="gradient-dark p-6 rounded-3xl text-white flex justify-between items-center shadow-lg border-b-4 border-amber-500">
+            <div><p class="text-[10px] font-bold text-amber-400 mb-1 uppercase">طقس بركان الآن</p><h4 id="temp" class="text-4xl font-black">--°C</h4></div>
+            <div class="text-5xl text-amber-400"><i class="fas fa-cloud-sun"></i></div>
         </div>
-        <div class="bg-white p-5 rounded-[2.5rem] shadow-sm border-b-4 border-slate-800 flex justify-around items-center text-[10px] font-black overflow-hidden">
-            <div class="text-center"><span>الفجر</span><p id="fajr" class="text-sm font-black text-slate-800">--:--</p></div>
-            <div class="text-center"><span>الظهر</span><p id="dhuhr" class="text-sm font-black text-slate-800">--:--</p></div>
-            <div class="text-center text-amber-600"><span>العصر</span><p id="asr" class="text-sm font-black">--:--</p></div>
-            <div class="text-center"><span>المغرب</span><p id="maghrib" class="text-sm font-black text-slate-800">--:--</p></div>
-            <div class="text-center"><span>العشاء</span><p id="isha" class="text-sm font-black text-slate-800">--:--</p></div>
+        <div class="bg-white p-4 rounded-3xl shadow-md border-b-4 border-slate-800 flex justify-around items-center text-[9px] font-bold">
+            <div class="text-center"><span>الفجر</span><p id="fajr" class="text-xs font-black">--:--</p></div>
+            <div class="text-center"><span>الظهر</span><p id="dhuhr" class="text-xs font-black">--:--</p></div>
+            <div class="text-center text-amber-600"><span>العصر</span><p id="asr" class="text-xs font-black">--:--</p></div>
+            <div class="text-center"><span>المغرب</span><p id="maghrib" class="text-xs font-black">--:--</p></div>
+            <div class="text-center"><span>العشاء</span><p id="isha" class="text-xs font-black">--:--</p></div>
         </div>
     </section>
 
-    <div class="marquee-container mt-6"><div class="marquee-text" id="newsTicker">جاري تحميل آخر الأخبار وصيدليات الحراسة ببركان وأكليم...</div></div>
+    <div class="marquee-container mt-4"><div class="marquee-text" id="newsTicker">مرحباً بكم في الدليل الرقمي لبركان وأكليم...</div></div>
 
-    <main class="container mx-auto py-10 px-4">
-        <div class="mb-8 relative max-w-2xl mx-auto">
-            <input type="text" id="nameSearch" onkeyup="window.filterByName()" placeholder="ابحث عن خياطة، ميكانيكي، أو اسم محل..." class="w-full p-6 pr-16 rounded-[2rem] border-2 border-slate-200 outline-none focus:border-amber-400 shadow-sm font-bold text-sm">
-            <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 text-xl"></i>
+    <main class="container mx-auto py-8 px-4 flex-grow">
+        <div class="mb-6 relative">
+            <input type="text" id="nameSearch" onkeyup="window.filterByName()" placeholder="بحث باسم المهني أو الحرفة..." class="w-full p-5 pr-14 rounded-3xl border-2 border-slate-200 outline-none text-sm font-bold">
+            <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
         </div>
 
-        <div class="flex gap-3 overflow-x-auto pb-6 no-scrollbar" id="filterContainer">
+        <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar" id="filterContainer">
             <button onclick="window.filterByCategory('all', event)" class="filter-btn active">الكل <span class="service-count" id="count-all">0</span></button>
             <button onclick="window.filterByCategory('kitchen', event)" class="filter-btn">🍳 مطبخ <span class="service-count" id="count-kitchen">0</span></button>
             <button onclick="window.filterByCategory('cosmetics', event)" class="filter-btn">💄 تجميل <span class="service-count" id="count-cosmetics">0</span></button>
@@ -61,59 +60,46 @@
             <button onclick="window.filterByCategory('car-wrench', event)" class="filter-btn">🛠️ ميكانيكي <span class="service-count" id="count-car-wrench">0</span></button>
         </div>
 
-        <div id="listingsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4"></div>
+        <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6"></div>
     </main>
 
-    <div id="addModal" class="fixed inset-0 glass-modal hidden z-[300] flex items-center justify-center p-4">
-        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-300">
-            <h3 class="font-black text-xl mb-6 text-center text-slate-800">إضافة خدمة جديدة</h3>
-            <div class="space-y-4">
-                <input type="text" id="newName" placeholder="إسم المهني أو المحل" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-amber-400 font-bold">
-                <input type="tel" id="newPhone" placeholder="رقم الواتساب (مثال: 0600000000)" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none font-bold">
-                <select id="newCat" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none font-bold">
-                    <option value="kitchen">🍳 مطبخ منزلي / حلويات</option>
-                    <option value="cosmetics">💄 تجميل / صالون</option>
-                    <option value="tailor">🧵 خياطة / قفطان</option>
-                    <option value="car-wrench">🛠️ ميكانيك / إصلاح</option>
-                    <option value="briefcase">💼 خدمات أخرى</option>
-                </select>
-                <textarea id="newDesc" placeholder="اكتب وصفاً قصيراً لخدماتك..." class="w-full p-4 bg-slate-50 border rounded-2xl outline-none h-32 font-bold"></textarea>
-                <div class="flex gap-2 pt-2">
-                    <button onclick="window.submitService()" class="flex-1 accent-gold text-white py-4 rounded-2xl font-black shadow-lg">إرسال الطلب</button>
-                    <button onclick="document.getElementById('addModal').classList.add('hidden')" class="flex-1 bg-slate-100 text-slate-500 py-4 rounded-2xl font-black">إلغاء</button>
-                </div>
+    <div id="addModal" class="fixed inset-0 bg-black/80 hidden z-[200] flex items-center justify-center p-4">
+        <div class="bg-white rounded-[2rem] p-6 w-full max-w-md">
+            <h3 class="font-black text-lg mb-4 text-center">إضافة خدمة جديدة</h3>
+            <input type="text" id="newName" placeholder="إسم المهني / المحل" class="w-full p-4 mb-3 border rounded-2xl font-bold text-sm outline-none">
+            <input type="tel" id="newPhone" placeholder="رقم الواتساب" class="w-full p-4 mb-3 border rounded-2xl font-bold text-sm outline-none">
+            <select id="newCat" class="w-full p-4 mb-3 border rounded-2xl font-bold text-sm outline-none">
+                <option value="kitchen">🍳 مطبخ منزلي</option>
+                <option value="cosmetics">💄 تجميل / صالون</option>
+                <option value="tailor">🧵 خياطة / قفطان</option>
+                <option value="car-wrench">🛠️ ميكانيكي</option>
+                <option value="briefcase">💼 أخرى</option>
+            </select>
+            <textarea id="newDesc" placeholder="وصف الخدمة..." class="w-full p-4 mb-4 border rounded-2xl font-bold text-sm outline-none h-24"></textarea>
+            <div class="flex gap-2">
+                <button onclick="window.submitService()" class="flex-1 accent-gold text-white py-4 rounded-2xl font-black">إرسال</button>
+                <button onclick="document.getElementById('addModal').classList.add('hidden')" class="flex-1 bg-slate-100 py-4 rounded-2xl font-black">إلغاء</button>
             </div>
         </div>
     </div>
 
-    <div id="adminModal" class="fixed inset-0 glass-modal hidden z-[400] flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-2xl my-8 relative shadow-2xl">
-            <div class="flex justify-between items-center mb-8 border-b pb-4">
-                <div><h3 class="font-black text-2xl text-slate-800">لوحة التحكم الأمنية</h3><p class="text-[10px] text-slate-400 font-bold">إدارة محتوى بركان وأكليم</p></div>
-                <button onclick="window.adminLogout()" class="bg-red-50 text-red-500 px-4 py-2 rounded-xl font-bold text-xs"><i class="fas fa-power-off ml-1"></i> خروج</button>
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/95 hidden z-[300] flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-[2rem] p-6 w-full max-w-lg my-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-black">لوحة الإدارة الآمنة</h3>
+                <button onclick="window.adminLogout()" class="text-red-500 font-bold text-xs">خروج</button>
             </div>
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-xs font-black mb-2 text-slate-500 uppercase">تحديث شريط الأخبار</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="admNews" class="flex-1 p-4 bg-slate-50 border rounded-2xl outline-none font-bold text-sm">
-                        <button onclick="window.saveAdminNews()" class="gradient-dark text-amber-400 px-6 rounded-2xl font-black">حفظ</button>
-                    </div>
-                </div>
-                <div class="border-t pt-6">
-                    <label class="block text-xs font-black mb-4 text-slate-500 uppercase">إدارة الخدمات المسجلة</label>
-                    <div id="adminServiceList" class="space-y-3"></div>
-                </div>
-            </div>
+            <input type="text" id="admNews" placeholder="تحديث الأخبار" class="w-full p-4 mb-4 border rounded-2xl text-sm">
+            <button onclick="window.saveAdminNews()" class="w-full gradient-dark text-amber-400 py-4 rounded-2xl font-black mb-6">حفظ الخبر</button>
+            <div id="adminServiceList" class="space-y-2"></div>
         </div>
     </div>
 
-    <div id="detailsModal" class="fixed inset-0 glass-modal hidden z-[500] flex items-center justify-center p-4">
-        <div class="bg-white rounded-[2.5rem] p-10 max-w-sm w-full relative border-t-8 border-amber-500 shadow-2xl text-center">
-            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300 hover:text-slate-500 transition-colors"><i class="fas fa-times-circle text-3xl"></i></button>
-            <div class="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-info-circle text-amber-500 text-4xl"></i></div>
-            <h3 class="font-black text-xl mb-4 text-slate-800">تفاصيل الخدمة</h3>
-            <div id="detailsText" class="text-slate-600 font-bold text-sm leading-relaxed bg-slate-50 p-6 rounded-[1.5rem] min-h-[120px]"></div>
+    <div id="detailsModal" class="fixed inset-0 bg-black/70 hidden z-[500] flex items-center justify-center p-4">
+        <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full relative text-center border-t-8 border-amber-500">
+            <button onclick="document.getElementById('detailsModal').classList.add('hidden')" class="absolute top-4 left-4 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
+            <h3 class="font-black mb-4">التفاصيل</h3>
+            <div id="detailsText" class="text-slate-600 text-sm font-bold bg-slate-50 p-6 rounded-2xl min-h-[100px]"></div>
         </div>
     </div>
 
@@ -122,7 +108,6 @@
         import { getDatabase, ref, set, push, get, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // إعدادات قاعدة البيانات (لا تلمسها)
         const firebaseConfig = { databaseURL: "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
@@ -132,28 +117,47 @@
         let currentFilter = 'all';
 
         const themeMap = {
-            'kitchen': { icon: 'fa-utensils', color: '#f97316', label: 'مطبخ منزلي' },
-            'cosmetics': { icon: 'fa-magic-wand-sparkles', color: '#db2777', label: 'تجميل' },
+            'kitchen': { icon: 'fa-utensils', color: '#f97316', label: 'مطبخ' },
+            'cosmetics': { icon: 'fa-spray-can-sparkles', color: '#db2777', label: 'تجميل' },
             'tailor': { icon: 'fa-scissors', color: '#be185d', label: 'خياطة' },
-            'car-wrench': { icon: 'fa-screwdriver-wrench', color: '#334155', label: 'ميكانيكي' },
-            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'خدمات أخرى' }
+            'car-wrench': { icon: 'fa-screwdriver-wrench', color: '#1e293b', label: 'ميكانيكي' },
+            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' }
         };
 
-        // --- نظام الحماية (Login) ---
+        // --- أوقات الصلاة والطقس (التي كانت ناقصة) ---
+        async function fetchPrayerTimes() {
+            try {
+                const res = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3');
+                const data = await res.json();
+                const t = data.data.timings;
+                document.getElementById('fajr').innerText = t.Fajr;
+                document.getElementById('dhuhr').innerText = t.Dhuhr;
+                document.getElementById('asr').innerText = t.Asr;
+                document.getElementById('maghrib').innerText = t.Maghrib;
+                document.getElementById('isha').innerText = t.Isha;
+            } catch (e) { console.error("Prayer Error"); }
+        }
+
+        async function fetchWeather() {
+            try {
+                const res = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Berkane&units=metric&appid=da04df2c75a468d601b08f413d800045');
+                const data = await res.json();
+                document.getElementById('temp').innerText = Math.round(data.main.temp) + '°C';
+            } catch (e) { console.error("Weather Error"); }
+        }
+
+        // --- نظام الحماية الجديد ---
         window.openAdmin = async () => {
-            if (auth.currentUser) return document.getElementById('adminModal').classList.remove('hidden');
-            const email = prompt("أدخل بريد المدير:");
-            if (!email) return;
-            const pass = prompt("أدخل كلمة المرور:");
-            if (!pass) return;
-            try { await signInWithEmailAndPassword(auth, email, pass); } 
-            catch (e) { alert("خطأ في البيانات!"); }
+            if(auth.currentUser) return;
+            const email = prompt("الإيميل:");
+            const pass = prompt("كلمة السر:");
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("بيانات خاطئة!"); }
         };
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if(user) {
                 document.getElementById('adminModal').classList.remove('hidden');
-                loadAdminPanel();
+                loadAdminList();
             } else {
                 document.getElementById('adminModal').classList.add('hidden');
             }
@@ -161,87 +165,83 @@
 
         window.adminLogout = () => signOut(auth).then(() => location.reload());
 
-        // --- معالجة البيانات ---
+        // --- إدارة البيانات ---
         window.submitService = async () => {
             const name = document.getElementById('newName').value;
             const phone = document.getElementById('newPhone').value;
             const category = document.getElementById('newCat').value;
             const description = document.getElementById('newDesc').value;
-
-            if(!name || !phone) return alert("يرجى ملء الإسم والهاتف!");
-
-            const newPostRef = push(ref(db, 'services'));
-            await set(newPostRef, { name, phone, category, description, status: 'pending', timestamp: Date.now() });
-            
-            alert("تم إرسال طلبك بنجاح! سيتم المراجعة والنشر فوراً.");
+            if(!name || !phone) return alert("الاسم والهاتف ضروريان!");
+            await push(ref(db, 'services'), { name, phone, category, description, timestamp: Date.now() });
+            alert("تم الإرسال بنجاح!");
             document.getElementById('addModal').classList.add('hidden');
         };
 
-        window.deleteService = async (id) => {
-            if(confirm("هل أنت متأكد من حذف هذه الخدمة نهائياً؟")) {
-                await remove(ref(db, `services/${id}`));
-                loadAdminPanel();
-            }
-        };
-
         window.saveAdminNews = async () => {
-            const news = document.getElementById('admNews').value;
-            await set(ref(db, 'admin/news'), news);
-            alert("تم تحديث شريط الأخبار.");
+            await set(ref(db, 'admin/news'), document.getElementById('admNews').value);
+            alert("تم التحديث!");
         };
 
-        // --- العرض والفلترة ---
-        function updateUI(data) {
-            const container = document.getElementById('listingsContainer');
-            const counters = { all: 0, kitchen: 0, cosmetics: 0, tailor: 0, 'car-wrench': 0 };
-            
-            container.innerHTML = Object.keys(data).reverse().map(id => {
-                const item = data[id];
-                counters.all++;
-                if(counters[item.category] !== undefined) counters[item.category]++;
+        window.deleteService = async (id) => {
+            if(confirm("حذف؟")) await remove(ref(db, `services/${id}`));
+        };
 
-                const theme = themeMap[item.category] || themeMap['briefcase'];
-                const isWoman = ['kitchen', 'cosmetics', 'tailor'].includes(item.category);
-
-                return `
-                <div class="bg-white p-7 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-xl transition-all group ${isWoman ? 'woman-themed' : ''}">
-                    <div class="flex items-center gap-5 mb-6">
-                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg transform group-hover:rotate-12 transition-transform" style="background:${theme.color}">
-                            <i class="fas ${theme.icon}"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-black text-slate-800 leading-tight">${item.name}</h4>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">${theme.label}</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="window.showDetails('${encodeURIComponent(item.description)}')" class="flex-1 py-3 text-slate-400 border-2 border-slate-50 rounded-2xl text-[10px] font-black hover:bg-slate-50">التفاصيل</button>
-                        <a href="https://wa.me/${item.phone}" class="flex-[2] py-3 bg-slate-900 text-amber-400 text-center rounded-2xl text-[10px] font-black hover:bg-black transition-colors">واتساب</a>
-                    </div>
-                </div>`;
-            }).join('');
-
-            // تحديث العدادات
-            Object.keys(counters).forEach(c => {
-                const el = document.getElementById(`count-${c}`);
-                if(el) el.innerText = counters[c];
+        function updateCounters() {
+            const counts = { all: 0, kitchen: 0, cosmetics: 0, tailor: 0, 'car-wrench': 0 };
+            Object.values(allServices).forEach(s => {
+                counts.all++;
+                if(counts[s.category] !== undefined) counts[s.category]++;
             });
-        }
-
-        function loadAdminPanel() {
-            const list = document.getElementById('adminServiceList');
-            list.innerHTML = Object.keys(allServices).map(id => `
-                <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl border">
-                    <span class="font-bold text-sm">${allServices[id].name}</span>
-                    <button onclick="window.deleteService('${id}')" class="text-red-500 p-2"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            `).join('');
+            Object.keys(counts).forEach(k => {
+                const el = document.getElementById(`count-${k}`);
+                if(el) el.innerText = counts[k];
+            });
         }
 
         window.showDetails = (txt) => {
             document.getElementById('detailsText').innerText = decodeURIComponent(txt);
             document.getElementById('detailsModal').classList.remove('hidden');
         };
+
+        function renderListings(data) {
+            const container = document.getElementById('listingsContainer');
+            container.innerHTML = Object.keys(data).reverse().map(id => {
+                const item = data[id];
+                const theme = themeMap[item.category] || themeMap['briefcase'];
+                const isWoman = ['kitchen', 'cosmetics', 'tailor'].includes(item.category);
+                return `
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 ${isWoman ? 'woman-themed' : ''}">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl" style="background:${theme.color}"><i class="fas ${theme.icon}"></i></div>
+                            <div><h4 class="font-bold text-sm">${item.name}</h4><p class="text-[9px] text-slate-400 font-bold uppercase">${theme.label}</p></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="window.showDetails('${encodeURIComponent(item.description)}')" class="flex-1 py-3 text-slate-400 border rounded-2xl text-[10px] font-black">التفاصيل</button>
+                            <a href="https://wa.me/${item.phone}" class="flex-[2] py-3 bg-slate-900 text-amber-400 text-center rounded-2xl text-[10px] font-black">واتساب</a>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function loadAdminList() {
+            const list = document.getElementById('adminServiceList');
+            list.innerHTML = Object.keys(allServices).map(id => `
+                <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border">
+                    <span class="font-bold text-xs">${allServices[id].name}</span>
+                    <button onclick="window.deleteService('${id}')" class="text-red-500"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const term = document.getElementById('nameSearch').value.toLowerCase();
+            const filtered = {};
+            Object.keys(allServices).forEach(k => {
+                const s = allServices[k];
+                if((currentFilter === 'all' || s.category === currentFilter) && s.name.toLowerCase().includes(term)) filtered[k] = s;
+            });
+            renderListings(filtered);
+        }
 
         window.filterByCategory = (cat, e) => {
             currentFilter = cat;
@@ -252,33 +252,21 @@
 
         window.filterByName = () => applyFilters();
 
-        function applyFilters() {
-            const term = document.getElementById('nameSearch').value.toLowerCase();
-            const filtered = {};
-            Object.keys(allServices).forEach(k => {
-                const s = allServices[k];
-                const matchName = s.name.toLowerCase().includes(term);
-                const matchCat = currentFilter === 'all' || s.category === currentFilter;
-                if(matchName && matchCat) filtered[k] = s;
-            });
-            updateUI(filtered);
-        }
-
-        // البداية
+        // السلوك الأساسي
         onValue(ref(db, 'services'), (snap) => {
             allServices = snap.val() || {};
+            updateCounters();
             applyFilters();
+            if(auth.currentUser) loadAdminList();
         });
-        
+
         onValue(ref(db, 'admin/news'), (snap) => {
-            document.getElementById('newsTicker').innerText = snap.val() || "مرحباً بكم في بركان كونيكت";
+            document.getElementById('newsTicker').innerText = snap.val() || "";
             document.getElementById('admNews').value = snap.val() || "";
         });
 
-        // جلب الطقس (مثال)
-        fetch('https://api.openweathermap.org/data/2.5/weather?q=Berkane&units=metric&appid=da04df2c75a468d601b08f413d800045')
-            .then(r => r.json()).then(d => document.getElementById('temp').innerText = Math.round(d.main.temp) + '°C');
-
+        fetchPrayerTimes();
+        fetchWeather();
     </script>
 </body>
 </html>
