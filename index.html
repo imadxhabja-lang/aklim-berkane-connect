@@ -31,7 +31,9 @@
             <div>الفجر<p id="fjr" class="text-slate-500 text-xs">--</p></div><div>الظهر<p id="dhr" class="text-slate-500 text-xs">--</p></div><div>العصر<p id="asr" class="text-slate-500 text-xs">--</p></div><div class="text-amber-600">المغرب<p id="mgh" class="text-xs">--</p></div><div>العشاء<p id="ish" class="text-slate-500 text-xs">--</p></div>
         </div>
         <div class="bg-red-50 p-3 rounded-3xl border-2 border-red-200 text-center">
-            <h6 class="text-red-600 font-bold text-[10px] mb-1">صيدلية الحراسة:</h6><p id="phName" class="text-slate-800 font-black text-xs">--</p>
+            <h6 class="text-red-600 font-bold text-[10px] mb-1">صيدلية الحراسة اليوم:</h6>
+            <p id="phName" class="text-slate-800 font-black text-xs">--</p>
+            <p id="phCity" class="text-[9px] text-red-400 font-bold">--</p>
         </div>
     </section>
 
@@ -39,7 +41,7 @@
         <select id="fCat" onchange="filterS()" class="w-full p-3 rounded-2xl border-2 border-amber-200 font-bold text-sm bg-white shadow-sm">
             <option value="all">🔍 جميع الخدمات</option>
             <option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهربائي</option><option value="rep">🛠️ إصلاحات</option>
-            <option value="car">🚗 كراء السيارات</option><option value="woman">💄 عالم المرأة</option><option value="mech">🔧 ميكانيك</option>
+            <option value="delivery">🛵 توصيل (Livraison)</option><option value="car">🚗 كراء السيارات</option><option value="woman">💄 عالم المرأة</option><option value="mech">🔧 ميكانيك</option>
         </select>
     </div>
 
@@ -47,13 +49,19 @@
 
     <div id="admMod" class="fixed inset-0 bg-slate-900/98 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white rounded-3xl p-6 w-full max-w-md text-right">
-            <h3 class="font-black mb-4 border-b pb-2">لوحة التحكم</h3>
-            <label class="text-[10px] text-slate-400">شريط الأخبار:</label><input type="text" id="aN" class="w-full p-2 border rounded-xl mb-2 text-sm">
-            <label class="text-[10px] text-slate-400">صيدلية الحراسة:</label><input type="text" id="aPh" class="w-full p-2 border rounded-xl mb-4 text-sm">
-            <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-3 rounded-xl font-bold">حفظ التعديلات</button>
-            <div class="mt-4 text-[10px] font-bold text-slate-500 mb-2">الخدمات المسجلة (الاسم | المدينة):</div>
-            <div id="aL" class="max-h-32 overflow-y-auto border-t pt-2 space-y-1 text-[10px]"></div>
-            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-xs text-red-500 font-bold">إغلاق</button>
+            <h3 class="font-black mb-4 border-b pb-2">الإدارة</h3>
+            <label class="text-[10px] text-slate-400">الأخبار:</label><input type="text" id="aN" class="w-full p-2 border rounded-xl mb-2 text-sm">
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <div><label class="text-[10px] text-slate-400">الصيدلية:</label><input type="text" id="aPh" class="w-full p-2 border rounded-xl text-sm"></div>
+                <div><label class="text-[10px] text-slate-400">مدينة الصيدلية:</label>
+                    <select id="aPhCity" class="w-full p-2 border rounded-xl text-sm font-bold bg-slate-50">
+                        <option value="بركان">بركان</option><option value="أكليم">أكليم</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-3 rounded-xl font-bold">حفظ</button>
+            <div id="aL" class="mt-4 max-h-32 overflow-y-auto border-t pt-2 space-y-1 text-[10px]"></div>
+            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-xs text-red-500">إغلاق</button>
         </div>
     </div>
 
@@ -67,7 +75,8 @@
             </select>
             <select id="uC" class="w-full p-3 border rounded-xl mb-2 text-sm font-bold bg-slate-50">
                 <option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهربائي</option><option value="rep">🛠️ إصلاحات</option>
-                <option value="car">🚗 كراء السيارات</option><option value="woman">💄 عالم المرأة</option><option value="mech">🔧 ميكانيك</option><option value="etc">💼 أخرى</option>
+                <option value="delivery">🛵 توصيل</option><option value="car">🚗 كراء السيارات</option><option value="woman">💄 عالم المرأة</option><option value="mech">🔧 ميكانيك</option>
+                <option value="etc">💼 أخرى</option>
             </select>
             <textarea id="uD" placeholder="وصف الخدمة" class="w-full p-3 border rounded-xl mb-3 text-sm h-16"></textarea>
             <button onclick="addS()" class="w-full bg-amber-500 text-white py-3 rounded-xl font-bold">نشر الآن</button>
@@ -77,22 +86,17 @@
 
     <script type="module">
         const B = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const T = { plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, elec:{i:'fa-bolt',c:'#f59e0b',l:'كهربائي'}, rep:{i:'fa-tools',c:'#b45',l:'إصلاحات'}, car:{i:'fa-car',c:'#1e293b',l:'كراء السيارات'}, woman:{i:'fa-heart',c:'#ec4899',l:'عالم المرأة'}, mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, etc:{i:'fa-briefcase',c:'#636',l:'أخرى'} };
+        const T = { plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, elec:{i:'fa-bolt',c:'#f59e0b',l:'كهربائي'}, rep:{i:'fa-tools',c:'#b45',l:'إصلاحات'}, delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'}, car:{i:'fa-car',c:'#1e293b',l:'كراء السيارات'}, woman:{i:'fa-heart',c:'#ec4899',l:'عالم المرأة'}, mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, etc:{i:'fa-briefcase',c:'#636',l:'أخرى'} };
         let allS = {};
 
         window.adminIn = () => { if(prompt("Pass:")==="2025"){ document.getElementById('admMod').classList.remove('hidden'); loadA(); } };
         async function loadA() {
             const r = await fetch(`${B}/.json`), d = await r.json() || {};
-            document.getElementById('aN').value = d.admin?.news || ""; document.getElementById('aPh').value = d.admin?.pharma || "";
-            const s = d.services||{}; 
-            document.getElementById('aL').innerHTML = Object.keys(s).map(id => `
-                <div class="flex justify-between p-2 bg-slate-50 border-b">
-                    <span>${s[id].name} - <b>${s[id].city||'بركان'}</b></span>
-                    <button onclick="del('${id}')" class="text-red-500 font-bold">حذف</button>
-                </div>`).reverse().join('');
+            document.getElementById('aN').value = d.admin?.news || ""; document.getElementById('aPh').value = d.admin?.pharma || ""; document.getElementById('aPhCity').value = d.admin?.pharma_city || "بركان";
+            const s = d.services||{}; document.getElementById('aL').innerHTML = Object.keys(s).map(id => `<div class="flex justify-between p-2 bg-slate-50 border-b"><span>${s[id].name} (${s[id].city||'بركان'})</span><button onclick="del('${id}')" class="text-red-500 font-bold">حذف</button></div>`).reverse().join('');
         }
         window.saveA = async () => {
-            await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, pharma:document.getElementById('aPh').value})});
+            await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, pharma:document.getElementById('aPh').value, pharma_city:document.getElementById('aPhCity').value})});
             location.reload();
         };
         window.del = async (id) => { if(confirm("حذف؟")){ await fetch(`${B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
@@ -125,6 +129,7 @@
             const r = await fetch(`${B}/.json`), d = await r.json()||{};
             document.getElementById('newsT').innerText = d.admin?.news||"مرحباً بكم في بركان كونيكت";
             document.getElementById('phName').innerText = d.admin?.pharma||"لا توجد معلومات";
+            document.getElementById('phCity').innerText = d.admin?.pharma_city||"";
             allS = d.services||{}; render(Object.keys(allS));
         }
         init();
