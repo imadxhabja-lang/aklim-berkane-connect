@@ -27,7 +27,7 @@
     </nav>
 
     <div class="bg-slate-900 text-amber-400 py-2 overflow-hidden border-b border-amber-400/20 text-center">
-        <div class="marquee font-black text-sm" id="newsT">...</div>
+        <div class="marquee font-black text-sm" id="newsT">جاري التحميل...</div>
     </div>
 
     <section class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -63,6 +63,11 @@
             <button onclick="filterCat('plumb', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🚰 سباكة</button>
             <button onclick="filterCat('elec', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">⚡ كهرباء</button>
             <button onclick="filterCat('delivery', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🛵 توصيل</button>
+            <button onclick="filterCat('car', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🚗 كراء</button>
+            <button onclick="filterCat('mech', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🔧 ميكانيك</button>
+            <button onclick="filterCat('rep', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🛠️ إصلاح</button>
+            <button onclick="filterCat('woman', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">💄 تجميل</button>
+            <button onclick="filterCat('etc', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">💼 أخرى</button>
         </div>
     </div>
 
@@ -81,7 +86,7 @@
                 <div id="aL" class="border-t pt-4 space-y-2"></div>
             </div>
             <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-4 rounded-2xl font-black mt-6">حفظ المعلومات</button>
-            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-[10px] text-slate-400 font-black text-center">إغلاق</button>
+            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-[10px] text-slate-400 font-black text-center italic">إغلاق</button>
         </div>
     </div>
 
@@ -94,19 +99,30 @@
                 <div class="grid grid-cols-2 gap-2">
                     <select id="uCity" class="p-4 bg-slate-50 border-none rounded-2xl text-sm font-black"><option value="بركان">📍 بركان</option><option value="أكليم">📍 أكليم</option></select>
                     <select id="uC" class="p-4 bg-slate-50 border-none rounded-2xl text-sm font-black">
-                        <option value="food">🍔 مطاعم</option><option value="law">⚖️ محاماة</option><option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهرباء</option><option value="delivery">🛵 توصيل</option><option value="rep">🛠️ إصلاح</option><option value="car">🚗 كراء</option><option value="woman">💄 تجميل</option><option value="mech">🔧 ميكانيك</option><option value="etc">💼 أخرى</option>
+                        <option value="food">🍔 مطاعم</option><option value="law">⚖️ محاماة</option><option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهرباء</option><option value="delivery">🛵 توصيل</option><option value="car">🚗 كراء</option><option value="mech">🔧 ميكانيك</option><option value="rep">🛠️ إصلاح</option><option value="woman">💄 تجميل</option><option value="etc">💼 أخرى</option>
                     </select>
                 </div>
                 <textarea id="uD" placeholder="وصف الخدمة..." class="w-full p-4 bg-slate-50 border-none rounded-2xl text-sm font-black h-20"></textarea>
             </div>
-            <button onclick="addS()" class="w-full bg-amber-500 text-white py-4 rounded-2xl font-black mt-6">نشر الآن</button>
-            <button onclick="document.getElementById('addM').classList.add('hidden')" class="w-full mt-4 text-center block text-[10px] text-slate-400">إلغاء</button>
+            <button onclick="addS()" class="w-full bg-amber-500 text-white py-4 rounded-2xl font-black mt-6 shadow-lg shadow-amber-100">نشر الآن</button>
+            <button onclick="document.getElementById('addM').classList.add('hidden')" class="w-full mt-4 text-center block text-[10px] text-slate-400 font-black italic">إلغاء</button>
         </div>
     </div>
 
     <script type="module">
         const _B = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const _T = { food:{i:'fa-utensils',c:'#f97316',l:'مطاعم'}, law:{i:'fa-scale-balanced',c:'#1e293b',l:'محاماة'}, plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, elec:{i:'fa-bolt',c:'#f59e0b',l:'كهرباء'}, delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'}, rep:{i:'fa-tools',c:'#b45',l:'إصلاح'}, car:{i:'fa-car',c:'#1e293b',l:'كراء'}, woman:{i:'fa-heart',c:'#ec4899',l:'تجميل'}, mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, etc:{i:'fa-briefcase',c:'#64748b',l:'أخرى'} };
+        const _T = { 
+            food:{i:'fa-utensils',c:'#f97316',l:'مطاعم'}, 
+            law:{i:'fa-scale-balanced',c:'#1e293b',l:'محاماة'}, 
+            plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, 
+            elec:{i:'fa-bolt',c:'#f59e0b',l:'كهرباء'}, 
+            delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'},
+            car:{i:'fa-car',c:'#334155',l:'كراء'},
+            mech:{i:'fa-gears',c:'#475569',l:'ميكانيك'},
+            rep:{i:'fa-tools',c:'#b45309',l:'إصلاح'},
+            woman:{i:'fa-heart',c:'#db2777',l:'تجميل'},
+            etc:{i:'fa-briefcase',c:'#64748b',l:'أخرى'}
+        };
         let allS = {};
 
         window._chk_sys = (v) => {
@@ -119,7 +135,10 @@
             }
         };
 
-        window.searchS = () => { const val = document.getElementById('sIn').value.toLowerCase(); render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)))); };
+        window.searchS = () => { 
+            const val = document.getElementById('sIn').value.toLowerCase(); 
+            render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)))); 
+        };
         
         async function loadA() {
             const r = await fetch(`${_B}/.json`), d = await r.json() || {};
@@ -136,24 +155,32 @@
                 return `<div class="p-3 bg-slate-50 rounded-2xl border-r-4 border-amber-500 mb-2 flex justify-between items-center">
                     <span class="font-black text-[10px] text-slate-800">${i.name}</span>
                     <div class="flex gap-1">
-                        <a href="https://wa.me/${phWA}?text=${encodeURIComponent(msg)}" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded text-[8px] font-black italic">قبول</a>
+                        <a href="https://wa.me/${phWA}?text=${encodeURIComponent(msg)}" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded text-[8px] font-black italic">تفعيل</a>
                         <button onclick="del('${id}')" class="bg-red-50 text-red-500 px-2 py-1 rounded text-[8px] font-black">حذف</button>
                     </div>
                 </div>`;
             }).reverse().join('');
         }
 
-        window.saveA = async () => { await fetch(`${_B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, p_time:document.getElementById('aPT').value, ph_berkane:document.getElementById('aPhB').value, ph_aklim:document.getElementById('aPhA').value})}); location.reload(); };
+        window.saveA = async () => { 
+            await fetch(`${_B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, p_time:document.getElementById('aPT').value, ph_berkane:document.getElementById('aPhB').value, ph_aklim:document.getElementById('aPhA').value})}); 
+            location.reload(); 
+        };
+
         window.del = async (id) => { if(confirm("حذف؟")){ await fetch(`${_B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
+
         window.addS = async () => {
             const n=document.getElementById('uN').value, p=document.getElementById('uP').value; if(!n||!p) return alert("الاسم والهاتف ضروري!");
-            await fetch(`${_B}/services.json`,{method:'POST',body:JSON.stringify({name:n, phone:p, city:document.getElementById('uCity').value, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."})}); alert("تم الإرسال للإدارة!"); location.reload();
+            await fetch(`${_B}/services.json`,{method:'POST',body:JSON.stringify({name:n, phone:p, city:document.getElementById('uCity').value, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."})}); 
+            alert("تم الإرسال للإدارة!"); location.reload();
         };
+
         window.filterCat = (cat, btn) => {
             document.querySelectorAll('#catS button').forEach(b => b.classList.remove('border-amber-500'));
             btn.classList.add('border-amber-500');
             render(cat === 'all' ? Object.keys(allS) : Object.keys(allS).filter(k => allS[k].category === cat));
         };
+
         window.showDesc = (b) => alert(decodeURIComponent(escape(window.atob(b))));
         
         function render(ks) {
