@@ -30,10 +30,12 @@
         <div class="bg-white p-4 rounded-3xl shadow flex justify-around items-center text-[9px] font-black text-center">
             <div>الفجر<p id="fjr" class="text-slate-500 text-xs">--</p></div><div>الظهر<p id="dhr" class="text-slate-500 text-xs">--</p></div><div>العصر<p id="asr" class="text-slate-500 text-xs">--</p></div><div class="text-amber-600">المغرب<p id="mgh" class="text-xs">--</p></div><div>العشاء<p id="ish" class="text-slate-500 text-xs">--</p></div>
         </div>
-        <div class="bg-red-50 p-3 rounded-3xl border-2 border-red-200 text-center">
-            <h6 class="text-red-600 font-bold text-[10px] mb-1">صيدلية الحراسة اليوم:</h6>
-            <p id="phName" class="text-slate-800 font-black text-xs">--</p>
-            <p id="phCity" class="text-[9px] text-red-400 font-bold">--</p>
+        <div class="bg-red-50 p-3 rounded-3xl border-2 border-red-200">
+            <h6 class="text-red-600 font-bold text-[10px] mb-1 text-center"><i class="fas fa-notes-medical"></i> صيدليات الحراسة:</h6>
+            <div class="text-[10px] leading-relaxed">
+                <div id="phB" class="text-slate-800 font-bold border-b border-red-100 pb-1">بركان: <span class="font-normal text-slate-600 text-[9px]">--</span></div>
+                <div id="phA" class="text-slate-800 font-bold pt-1">أكليم: <span class="font-normal text-slate-600 text-[9px]">--</span></div>
+            </div>
         </div>
     </section>
 
@@ -41,7 +43,7 @@
         <select id="fCat" onchange="filterS()" class="w-full p-3 rounded-2xl border-2 border-amber-200 font-bold text-sm bg-white shadow-sm">
             <option value="all">🔍 جميع الخدمات</option>
             <option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهربائي</option><option value="rep">🛠️ إصلاحات</option>
-            <option value="delivery">🛵 توصيل (Livraison)</option><option value="car">🚗 كراء السيارات</option><option value="woman">💄 عالم المرأة</option><option value="mech">🔧 ميكانيك</option>
+            <option value="delivery">🛵 توصيل</option><option value="car">🚗 كراء السيارات</option><option value="woman">💄 عالم المرأة</option><option value="mech">🔧 ميكانيك</option>
         </select>
     </div>
 
@@ -49,19 +51,19 @@
 
     <div id="admMod" class="fixed inset-0 bg-slate-900/98 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white rounded-3xl p-6 w-full max-w-md text-right">
-            <h3 class="font-black mb-4 border-b pb-2">الإدارة</h3>
-            <label class="text-[10px] text-slate-400">الأخبار:</label><input type="text" id="aN" class="w-full p-2 border rounded-xl mb-2 text-sm">
-            <div class="grid grid-cols-2 gap-2 mb-4">
-                <div><label class="text-[10px] text-slate-400">الصيدلية:</label><input type="text" id="aPh" class="w-full p-2 border rounded-xl text-sm"></div>
-                <div><label class="text-[10px] text-slate-400">مدينة الصيدلية:</label>
-                    <select id="aPhCity" class="w-full p-2 border rounded-xl text-sm font-bold bg-slate-50">
-                        <option value="بركان">بركان</option><option value="أكليم">أكليم</option>
-                    </select>
-                </div>
+            <h3 class="font-black mb-4 border-b pb-2 text-sm">لوحة التحكم</h3>
+            <label class="text-[10px] text-slate-400">شريط الأخبار:</label><input type="text" id="aN" class="w-full p-2 border rounded-xl mb-2 text-sm">
+            
+            <div class="grid grid-cols-1 gap-2 mb-4">
+                <label class="text-[10px] text-red-500 font-bold">صيدليات بركان (يمكنك كتابة عدة صيدليات):</label>
+                <textarea id="aPhB" class="w-full p-2 border rounded-xl text-xs h-12" placeholder="صيدلية 1، صيدلية 2..."></textarea>
+                <label class="text-[10px] text-red-500 font-bold">صيدليات أكليم:</label>
+                <textarea id="aPhA" class="w-full p-2 border rounded-xl text-xs h-12" placeholder="صيدلية 1، صيدلية 2..."></textarea>
             </div>
-            <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-3 rounded-xl font-bold">حفظ</button>
-            <div id="aL" class="mt-4 max-h-32 overflow-y-auto border-t pt-2 space-y-1 text-[10px]"></div>
-            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-xs text-red-500">إغلاق</button>
+            
+            <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-3 rounded-xl font-bold mb-2">حفظ كل التغييرات</button>
+            <div id="aL" class="max-h-24 overflow-y-auto border-t pt-2 space-y-1 text-[10px]"></div>
+            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-xs text-red-500 font-bold">خروج</button>
         </div>
     </div>
 
@@ -92,11 +94,22 @@
         window.adminIn = () => { if(prompt("Pass:")==="2025"){ document.getElementById('admMod').classList.remove('hidden'); loadA(); } };
         async function loadA() {
             const r = await fetch(`${B}/.json`), d = await r.json() || {};
-            document.getElementById('aN').value = d.admin?.news || ""; document.getElementById('aPh').value = d.admin?.pharma || ""; document.getElementById('aPhCity').value = d.admin?.pharma_city || "بركان";
-            const s = d.services||{}; document.getElementById('aL').innerHTML = Object.keys(s).map(id => `<div class="flex justify-between p-2 bg-slate-50 border-b"><span>${s[id].name} (${s[id].city||'بركان'})</span><button onclick="del('${id}')" class="text-red-500 font-bold">حذف</button></div>`).reverse().join('');
+            document.getElementById('aN').value = d.admin?.news || ""; 
+            document.getElementById('aPhB').value = d.admin?.ph_berkane || "";
+            document.getElementById('aPhA').value = d.admin?.ph_aklim || "";
+            const s = d.services||{}; 
+            document.getElementById('aL').innerHTML = Object.keys(s).map(id => `
+                <div class="flex justify-between p-2 bg-slate-50 border-b">
+                    <span>${s[id].name} (${s[id].city||'بركان'})</span>
+                    <button onclick="del('${id}')" class="text-red-500 font-bold">حذف</button>
+                </div>`).reverse().join('');
         }
         window.saveA = async () => {
-            await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, pharma:document.getElementById('aPh').value, pharma_city:document.getElementById('aPhCity').value})});
+            await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify({
+                news:document.getElementById('aN').value, 
+                ph_berkane:document.getElementById('aPhB').value,
+                ph_aklim:document.getElementById('aPhA').value
+            })});
             location.reload();
         };
         window.del = async (id) => { if(confirm("حذف؟")){ await fetch(`${B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
@@ -128,8 +141,8 @@
             fetch(`https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3`).then(r=>r.json()).then(d=>{const t=d.data.timings; document.getElementById('fjr').innerText=t.Fajr; document.getElementById('dhr').innerText=t.Dhuhr; document.getElementById('asr').innerText=t.Asr; document.getElementById('mgh').innerText=t.Maghrib; document.getElementById('ish').innerText=t.Isha;});
             const r = await fetch(`${B}/.json`), d = await r.json()||{};
             document.getElementById('newsT').innerText = d.admin?.news||"مرحباً بكم في بركان كونيكت";
-            document.getElementById('phName').innerText = d.admin?.pharma||"لا توجد معلومات";
-            document.getElementById('phCity').innerText = d.admin?.pharma_city||"";
+            document.getElementById('phB').innerHTML = `بركان: <span class="font-normal text-slate-600 text-[9px]">${d.admin?.ph_berkane||'--'}</span>`;
+            document.getElementById('phA').innerHTML = `أكليم: <span class="font-normal text-slate-600 text-[9px]">${d.admin?.ph_aklim||'--'}</span>`;
             allS = d.services||{}; render(Object.keys(allS));
         }
         init();
