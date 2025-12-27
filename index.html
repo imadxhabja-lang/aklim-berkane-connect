@@ -71,6 +71,7 @@
         
         <div id="catS" class="flex gap-3 overflow-x-auto no-scrollbar py-2 px-1">
             <button onclick="filterCat('all', this)" class="shrink-0 bg-white px-6 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-amber-500">الكل</button>
+            <button onclick="filterCat('food', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🍔 مطاعم</button>
             <button onclick="filterCat('plumb', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🚰 سباكة</button>
             <button onclick="filterCat('elec', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">⚡ كهرباء</button>
             <button onclick="filterCat('delivery', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🛵 توصيل</button>
@@ -115,7 +116,7 @@
                 <div class="grid grid-cols-2 gap-2">
                     <select id="uCity" class="p-4 bg-slate-50 border-none rounded-2xl text-sm font-black"><option value="بركان">📍 بركان</option><option value="أكليم">📍 أكليم</option></select>
                     <select id="uC" class="p-4 bg-slate-50 border-none rounded-2xl text-sm font-black">
-                        <option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهرباء</option><option value="delivery">🛵 توصيل</option><option value="rep">🛠️ إصلاح</option><option value="car">🚗 كراء</option><option value="woman">💄 تجميل</option><option value="mech">🔧 ميكانيك</option><option value="clean">🧼 مواد تنظيف</option><option value="etc">💼 أخرى</option>
+                        <option value="food">🍔 مطاعم وسناك</option><option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهرباء</option><option value="delivery">🛵 توصيل</option><option value="rep">🛠️ إصلاح</option><option value="car">🚗 كراء</option><option value="woman">💄 تجميل</option><option value="mech">🔧 ميكانيك</option><option value="clean">🧼 مواد تنظيف</option><option value="etc">💼 أخرى</option>
                     </select>
                 </div>
                 <textarea id="uD" placeholder="وصف الخدمة..." class="w-full p-4 bg-slate-50 border-none rounded-2xl text-sm font-black h-20"></textarea>
@@ -127,8 +128,18 @@
 
     <script type="module">
         const B = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        // قاموس الأيقونات المحدث
-        const T = { plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, elec:{i:'fa-bolt',c:'#f59e0b',l:'كهربائي'}, rep:{i:'fa-tools',c:'#b45',l:'إصلاحات'}, delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'}, car:{i:'fa-car',c:'#1e293b',l:'كراء'}, woman:{i:'fa-heart',c:'#ec4899',l:'تجميل'}, mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, clean:{i:'fa-soap',c:'#0ea5e9',l:'مواد تنظيف'}, etc:{i:'fa-briefcase',c:'#64748b',l:'أخرى'} };
+        const T = { 
+            food:{i:'fa-utensils',c:'#f97316',l:'مطاعم وسناك'},
+            plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, 
+            elec:{i:'fa-bolt',c:'#f59e0b',l:'كهربائي'}, 
+            rep:{i:'fa-tools',c:'#b45',l:'إصلاحات'}, 
+            delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'}, 
+            car:{i:'fa-car',c:'#1e293b',l:'كراء'}, 
+            woman:{i:'fa-heart',c:'#ec4899',l:'تجميل'}, 
+            mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, 
+            clean:{i:'fa-soap',c:'#0ea5e9',l:'مواد تنظيف'}, 
+            etc:{i:'fa-briefcase',c:'#64748b',l:'أخرى'} 
+        };
         let allS = {};
 
         window.adminIn = () => { if(prompt("كلمة المرور:")==="2025"){ document.getElementById('admMod').classList.remove('hidden'); loadA(); } };
@@ -147,23 +158,26 @@
             const n=document.getElementById('uN').value, p=document.getElementById('uP').value; if(!n||!p) return alert("المرجو إدخال الاسم والهاتف!");
             await fetch(`${B}/services.json`,{method:'POST',body:JSON.stringify({name:n, phone:p, city:document.getElementById('uCity').value, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."})}); location.reload();
         };
-        window.searchS = () => { const val = document.getElementById('sIn').value.toLowerCase(); render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || allS[id].description.toLowerCase().includes(val) || T[allS[id].category]?.l.toLowerCase().includes(val))); };
+        window.searchS = () => { const val = document.getElementById('sIn').value.toLowerCase(); render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)) || T[allS[id].category]?.l.toLowerCase().includes(val))); };
         window.filterCat = (cat, btn) => {
             document.querySelectorAll('#catS button').forEach(b => b.classList.remove('border-amber-500'));
             btn.classList.add('border-amber-500');
             render(cat === 'all' ? Object.keys(allS) : Object.keys(allS).filter(k => allS[k].category === cat));
         };
+        window.showDesc = (desc) => { alert(desc || "لا يوجد وصف حالياً"); };
         function render(ks) {
             document.getElementById('list').innerHTML = ks.reverse().map(id => {
                 const i=allS[id], t=T[i.category]||T.etc;
                 let phRaw = i.phone.replace(/\s/g,''); let phWA = phRaw.startsWith('0') ? '212'+phRaw.substring(1) : phRaw;
+                // إصلاح مشكلة زر التفاصيل
+                let cleanDesc = i.description ? i.description.replace(/'/g, "\\'").replace(/"/g, '&quot;') : "لا يوجد وصف";
                 return `<div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-50">
                     <div class="flex items-center gap-4 mb-4 text-right">
                         <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-lg shadow-lg" style="background:${t.c}"><i class="fas ${t.i}"></i></div>
                         <div class="flex-1"><h4 class="font-black text-slate-800 text-sm">${i.name} <span class="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-black">${i.city}</span></h4><p class="text-[9px] text-slate-400 font-black uppercase">${t.l}</p></div>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="alert('${i.description}')" class="flex-1 py-3 text-slate-400 bg-slate-50 rounded-2xl text-[10px] font-black italic">التفاصيل</button>
+                        <button onclick="showDesc('${cleanDesc}')" class="flex-1 py-3 text-slate-400 bg-slate-50 rounded-2xl text-[10px] font-black italic">التفاصيل</button>
                         <a href="https://wa.me/${phWA}" target="_blank" class="flex-[2] bg-green-600 text-white py-3 rounded-2xl text-center text-[10px] font-black flex items-center justify-center gap-2 italic"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>`;
