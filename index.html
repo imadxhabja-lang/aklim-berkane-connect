@@ -3,143 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane-Connect | النسخة المتكاملة</title>
+    <title>Berkane Connect 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; direction: rtl; }
-        .gradient-dark { background: linear-gradient(135deg, #0f172a, #1e293b); }
+        body { font-family: 'Tajawal', sans-serif; background: #f1f5f9; direction: rtl; }
         .marquee { white-space: nowrap; animation: scroll 20s linear infinite; display: inline-block; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .card-woman { border-bottom: 6px solid #ec4899 !important; background: #fff5f7 !important; }
-        .hidden { display: none !important; }
     </style>
 </head>
 <body class="min-h-screen text-right">
-    <nav class="bg-white shadow-lg p-4 sticky top-0 z-50 flex justify-between items-center border-b-4 border-amber-500">
-        <div class="text-2xl font-black text-slate-900 italic uppercase">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
+    <nav class="bg-white shadow p-4 sticky top-0 z-50 flex justify-between items-center border-b-4 border-amber-500">
+        <div class="text-xl font-black italic">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
         <div class="flex gap-2">
-            <button onclick="window.toggleAddModal()" class="bg-amber-500 text-white px-5 py-2 rounded-xl text-xs font-bold shadow-lg">+ أضف خدمة</button>
-            <button onclick="window.openAdmin()" class="bg-slate-100 p-2 rounded-xl text-slate-500"><i class="fas fa-user-shield"></i></button>
+            <button onclick="document.getElementById('addM').classList.remove('hidden')" class="bg-amber-500 text-white px-3 py-2 rounded-xl text-[10px] font-bold">+ إضافة</button>
+            <button onclick="adminIn()" class="bg-slate-100 p-2 rounded-xl text-slate-500"><i class="fas fa-lock"></i></button>
         </div>
     </nav>
 
-    <div class="bg-slate-900 text-amber-400 py-2 overflow-hidden border-b-2 border-amber-400">
-        <div class="marquee font-bold" id="newsTicker">مرحباً بكم في بركان كونيكت... جاري جلب الأخبار...</div>
+    <div class="bg-slate-900 text-amber-400 py-2 overflow-hidden border-b border-amber-400">
+        <div class="marquee font-bold" id="newsT">جاري التحميل...</div>
     </div>
-    <div class="bg-blue-700 text-white py-1 overflow-hidden text-xs">
-        <div class="marquee" id="giftTicker">قسم الإهداءات: تابعوا آخر التبريكات والإهداءات هنا...</div>
+    <div class="bg-blue-700 text-white py-1 overflow-hidden text-[10px]">
+        <div class="marquee" id="giftT">قسم الإهداءات...</div>
     </div>
 
-    <section class="container mx-auto mt-4 px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="gradient-dark p-6 rounded-3xl text-white flex justify-between items-center shadow-xl border-b-4 border-amber-500">
-            <div><p class="text-[10px] text-amber-400 font-bold uppercase">طقس بركان</p><h4 id="temp" class="text-4xl font-black">--°C</h4></div>
-            <i class="fas fa-cloud-sun text-5xl text-amber-400 opacity-30"></i>
+    <section class="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="bg-white p-4 rounded-3xl shadow flex justify-around items-center text-[9px] font-black text-center">
+            <div>الفجر<p id="fjr">--</p></div>
+            <div>الظهر<p id="dhr">--</p></div>
+            <div>العصر<p id="asr">--</p></div>
+            <div class="text-amber-600">المغرب<p id="mgh">--</p></div>
+            <div>العشاء<p id="ish">--</p></div>
         </div>
-        <div class="bg-white p-4 rounded-3xl shadow-md border-b-4 border-slate-800 flex justify-around items-center text-[10px] font-bold">
-            <div class="text-center"><span>الفجر</span><p id="fajr" class="text-sm font-black">--:--</p></div>
-            <div class="text-center text-amber-600"><span>المغرب</span><p id="maghrib" class="text-sm font-black">--:--</p></div>
-            <div class="text-center"><span>العشاء</span><p id="isha" class="text-sm font-black">--:--</p></div>
+        <div class="bg-red-50 p-3 rounded-3xl border-2 border-red-200 text-center">
+            <h6 class="text-red-600 font-bold text-[10px]"><i class="fas fa-hospital-user"></i> صيدلية الحراسة:</h6>
+            <p id="phName" class="text-slate-800 font-black text-xs">--</p>
         </div>
     </section>
 
-    <main class="container mx-auto py-10 px-4">
-        <h3 class="font-black text-slate-800 mb-8 border-r-4 border-slate-800 pr-3 text-xl italic uppercase">الدليل المهني والخدماتي</h3>
-        <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    <div class="px-4 mb-4">
+        <select id="fCat" onchange="filterS()" class="w-full p-3 rounded-2xl border-2 border-amber-200 font-bold text-sm bg-white shadow-sm">
+            <option value="all">🔍 بحث في جميع الفئات</option>
+            <option value="woman">💄 عالم المرأة</option>
+            <option value="car">🚗 كراء السيارات</option>
+            <option value="mech">🔧 ميكانيك</option>
+            <option value="rep">🛠️ إصلاحات</option>
+            <option value="food">🍔 مأكولات</option>
+        </select>
+    </div>
+
+    <main class="px-4 pb-10">
+        <div id="list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     </main>
 
-    <div id="adminModal" class="fixed inset-0 bg-slate-900/98 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-xl">
-        <div class="bg-white rounded-[2rem] p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto relative text-right shadow-2xl">
-            <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-3xl"></i></button>
-            <h3 class="font-black text-slate-800 mb-4 border-b pb-2">لوحة التحكم</h3>
-            <div class="grid grid-cols-2 gap-2 mb-4 text-center text-white text-[10px] font-bold">
-                <div class="bg-blue-600 p-3 rounded-xl">المسجلين: <b id="servCount">0</b></div>
-                <div class="bg-amber-500 p-3 rounded-xl">الزوار: <b id="vCount">0</b></div>
-            </div>
-            <div class="space-y-3">
-                <input type="text" id="admNews" placeholder="تحديث شريط الأخبار" class="w-full p-3 border rounded-xl text-sm">
-                <textarea id="admGifts" placeholder="تحديث شريط الإهداءات" class="w-full p-3 border rounded-xl text-sm h-16"></textarea>
-                <button onclick="window.saveAdmin()" class="w-full gradient-dark text-amber-400 py-3 rounded-xl font-bold">حفظ التغييرات</button>
-                <div id="adminServiceList" class="space-y-2 mt-4 pt-4 border-t max-h-40 overflow-y-auto"></div>
-            </div>
+    <div id="admMod" class="fixed inset-0 bg-slate-900/98 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-md text-right">
+            <h3 class="font-black mb-4">الإدارة (زوار: <span id="vC">0</span>)</h3>
+            <input type="text" id="aN" placeholder="الأخبار" class="w-full p-3 border rounded-xl mb-2 text-sm">
+            <textarea id="aG" placeholder="الإهداءات" class="w-full p-3 border rounded-xl mb-2 text-sm h-12"></textarea>
+            <input type="text" id="aPh" placeholder="صيدلية الحراسة" class="w-full p-3 border rounded-xl mb-4 text-sm">
+            <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-3 rounded-xl font-bold">حفظ الكل</button>
+            <div id="aL" class="mt-4 max-h-32 overflow-y-auto border-t pt-2 space-y-1 text-[10px]"></div>
+            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-xs text-red-500 text-center">خروج</button>
         </div>
     </div>
 
-    <div id="addModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-[2rem] p-8 w-full max-w-md relative text-right shadow-2xl">
-            <button onclick="window.toggleAddModal()" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="font-black mb-6 text-xl text-slate-800">سجل خدمتك مجاناً</h3>
-            <div class="space-y-4 text-right">
-                <input type="text" id="uName" placeholder="الاسم الكامل" class="w-full p-4 border rounded-2xl text-sm">
-                <input type="tel" id="uPhone" placeholder="رقم الهاتف" class="w-full p-4 border rounded-2xl text-sm">
-                <select id="uCat" class="w-full p-4 border rounded-2xl text-sm font-bold bg-slate-50">
-                    <option value="woman">💄 عالم المرأة (خياطة، طبخ، حلاقة)</option>
-                    <option value="mechanic">🔧 ميكانيكي / كهرباء سيارات</option>
-                    <option value="repair">🛠️ إصلاحات منزلية</option>
-                    <option value="utensils">🍔 مأكولات ومطاعم</option>
-                    <option value="truck">🚚 توصيل</option>
-                    <option value="briefcase">💼 أخرى</option>
-                </select>
-                <textarea id="uDesc" placeholder="وصف قصير للخدمة..." class="w-full p-4 border rounded-2xl h-20 text-sm"></textarea>
-                <button onclick="window.addService()" id="subBtn" class="w-full gradient-dark text-white py-4 rounded-2xl font-bold">نشر الخدمة</button>
-            </div>
+    <div id="addM" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4 text-right">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-md">
+            <h3 class="font-black mb-4">أضف خدمتك</h3>
+            <input type="text" id="uN" placeholder="الاسم" class="w-full p-3 border rounded-xl mb-2 text-sm">
+            <input type="tel" id="uP" placeholder="الهاتف" class="w-full p-3 border rounded-xl mb-2 text-sm">
+            <select id="uC" class="w-full p-3 border rounded-xl mb-2 text-sm font-bold">
+                <option value="woman">💄 عالم المرأة</option>
+                <option value="car">🚗 كراء السيارات</option>
+                <option value="mech">🔧 ميكانيك</option>
+                <option value="rep">🛠️ إصلاحات</option>
+                <option value="food">🍔 مأكولات</option>
+                <option value="etc">💼 أخرى</option>
+            </select>
+            <textarea id="uD" placeholder="الوصف" class="w-full p-3 border rounded-xl mb-3 text-sm h-16"></textarea>
+            <button onclick="addS()" class="w-full bg-amber-500 text-white py-3 rounded-xl font-bold">نشر الآن</button>
+            <button onclick="document.getElementById('addM').classList.add('hidden')" class="w-full mt-2 text-xs text-center w-full block">إلغاء</button>
         </div>
     </div>
 
     <script type="module">
-        const BASE = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const themeMap = { 
-            'woman': { icon: 'fa-heart', color: '#ec4899', label: 'عالم المرأة', class: 'card-woman' },
-            'mechanic': { icon: 'fa-gears', color: '#334155', label: 'ميكانيكي' },
-            'repair': { icon: 'fa-screwdriver-wrench', color: '#b45309', label: 'إصلاحات' },
-            'utensils': { icon: 'fa-utensils', color: '#ef4444', label: 'مأكولات' },
-            'truck': { icon: 'fa-truck', color: '#10b981', label: 'توصيل' },
-            'briefcase': { icon: 'fa-briefcase', color: '#6366f1', label: 'أخرى' }
+        const B = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
+        const T = { 
+            woman:{i:'fa-heart',c:'#ec4899',l:'عالم المرأة'}, 
+            car:{i:'fa-car',c:'#1e293b',l:'كراء السيارات'}, 
+            mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, 
+            rep:{i:'fa-tools',c:'#b45',l:'إصلاحات'}, 
+            food:{i:'fa-utensils',c:'#ef4',l:'مأكولات'}, 
+            etc:{i:'fa-briefcase',c:'#636',l:'أخرى'} 
         };
+        let allS = {};
 
-        window.openAdmin = () => { if(prompt("Pass:") === "2025") { document.getElementById('adminModal').classList.remove('hidden'); loadAdmin(); } };
-        window.toggleAddModal = () => document.getElementById('addModal').classList.toggle('hidden');
-        
-        async function loadAdmin() {
-            const r = await fetch(`${BASE}/.json`); const d = await r.json() || {};
-            document.getElementById('vCount').innerText = d.admin?.visitors || 0;
-            const s = d.services || {}; const keys = Object.keys(s);
-            document.getElementById('servCount').innerText = keys.length;
-            document.getElementById('adminServiceList').innerHTML = keys.map(id => `<div class="flex justify-between p-2 bg-slate-50 rounded text-[10px]"><span>${s[id].name}</span><button onclick="window.del('${id}')" class="text-red-500">حذف</button></div>`).reverse().join('');
+        window.adminIn = () => { if(prompt("Pass:")==="2025"){ document.getElementById('admMod').classList.remove('hidden'); loadA(); } };
+
+        async function loadA() {
+            const r = await fetch(`${B}/.json`), d = await r.json() || {};
+            document.getElementById('vC').innerText = d.admin?.visitors || 0;
+            document.getElementById('aN').value = d.admin?.news || "";
+            document.getElementById('aG').value = d.admin?.gifts || "";
+            document.getElementById('aPh').value = d.admin?.pharma || "";
+            const s = d.services||{};
+            document.getElementById('aL').innerHTML = Object.keys(s).map(id => `
+                <div class="flex justify-between p-1 bg-slate-50 border-b">
+                    <span>${s[id].name}</span>
+                    <button onclick="del('${id}')" class="text-red-500 font-bold">حذف</button>
+                </div>`).reverse().join('');
         }
 
-        window.saveAdmin = async () => {
-            const n = document.getElementById('admNews').value; const g = document.getElementById('admGifts').value;
-            await fetch(`${BASE}/admin/news.json`, { method:'PUT', body: JSON.stringify(n) });
-            await fetch(`${BASE}/admin/gifts.json`, { method:'PUT', body: JSON.stringify(g) });
+        window.saveA = async () => {
+            const data = {
+                news: document.getElementById('aN').value,
+                gifts: document.getElementById('aG').value,
+                pharma: document.getElementById('aPh').value
+            };
+            await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify(data)});
             location.reload();
         };
 
-        window.del = async (id) => { if(confirm("حذف؟")) { await fetch(`${BASE}/services/${id}.json`, { method:'DELETE' }); loadAdmin(); } };
+        window.del = async (id) => { if(confirm("حذف؟")){ await fetch(`${B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
 
-        window.addService = async () => {
-            const n = document.getElementById('uName').value; const p = document.getElementById('uPhone').value;
-            if(!n || !p) return alert("الاسم والهاتف!");
-            await fetch(`${BASE}/services.json`, { method:'POST', body: JSON.stringify({ name:n, phone:p, category: document.getElementById('uCat').value, description: document.getElementById('uDesc').value || "..." }) });
+        window.addS = async () => {
+            const n=document.getElementById('uN').value, p=document.getElementById('uP').value;
+            if(!n||!p) return alert("عمر البيانات");
+            await fetch(`${B}/services.json`,{method:'POST',body:JSON.stringify({
+                name:n, phone:p, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."
+            })});
             location.reload();
         };
+
+        window.filterS = () => {
+            const cat = document.getElementById('fCat').value;
+            render(cat === 'all' ? Object.keys(allS) : Object.keys(allS).filter(k => allS[k].category === cat));
+        };
+
+        function render(ks) {
+            document.getElementById('list').innerHTML = ks.reverse().map(id => {
+                const i=allS[id], t=T[i.category]||T.etc;
+                let ph=i.phone.replace(/\s/g,''); if(ph.startsWith('0')) ph='212'+ph.substring(1);
+                return `
+                <div class="bg-white p-4 rounded-3xl shadow-sm border-r-4" style="border-color:${t.c}">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white" style="background:${t.c}"><i class="fas ${t.i}"></i></div>
+                        <div><h4 class="font-black text-sm">${i.name}</h4><p class="text-[8px] text-slate-400 font-bold uppercase">${t.label}</p></div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="alert('${i.description}')" class="flex-1 py-2 text-slate-400 border rounded-xl text-[9px]">تفاصيل</button>
+                        <a href="https://wa.me/${ph}" class="flex-[2] bg-slate-900 text-amber-400 py-2 rounded-xl text-center text-[9px] font-black italic shadow-lg">واتساب</a>
+                    </div>
+                </div>`;
+            }).join('');
+        }
 
         async function init() {
-            fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true`).then(r=>r.json()).then(d=>document.getElementById('temp').innerText=`${Math.round(d.current_weather.temperature)}°C`);
-            fetch(`https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3`).then(r=>r.json()).then(d=>{const t=d.data.timings; document.getElementById('fajr').innerText=t.Fajr; document.getElementById('maghrib').innerText=t.Maghrib; document.getElementById('isha').innerText=t.Isha;});
+            // مواقيت الصلاة كاملة
+            fetch(`https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3`)
+                .then(r=>r.json()).then(d=>{
+                    const t=d.data.timings;
+                    document.getElementById('fjr').innerText=t.Fajr;
+                    document.getElementById('dhr').innerText=t.Dhuhr;
+                    document.getElementById('asr').innerText=t.Asr;
+                    document.getElementById('mgh').innerText=t.Maghrib;
+                    document.getElementById('ish').innerText=t.Isha;
+                });
             
-            const r = await fetch(`${BASE}/.json`); const d = await r.json() || {};
-            if(d.admin?.news) document.getElementById('newsTicker').innerText = d.admin.news;
-            if(d.admin?.gifts) document.getElementById('giftTicker').innerText = d.admin.gifts;
-
-            const s = d.services || {};
-            document.getElementById('listingsContainer').innerHTML = Object.keys(s).reverse().map(id => {
-                const i = s[id]; const t = themeMap[i.category] || themeMap['briefcase'];
-                let p = i.phone.replace(/\s/g,''); if(p.startsWith('0')) p='212'+p.substring(1);
-                return `<div class="bg-white p-6 rounded-[2rem] shadow-sm border ${t.class||''}"><div class="flex items-center gap-4 mb-4"><div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow" style="background:${t.color}"><i class="fas ${t.icon}"></i></div><div><h4 class="font-black text-slate-800">${i.name}</h4><p class="text-[9px] text-slate-400 font-bold uppercase">${t.label}</p></div></div><div class="flex gap-2"><button onclick="alert('${i.description}')" class="flex-1 py-2 text-slate-400 border rounded-xl text-[9px] font-bold">تفاصيل</button><a href="https://wa.me/${p}" target="_blank" class="flex-[2] bg-slate-900 text-amber-400 py-2 rounded-xl text-center text-[9px] font-black italic shadow-lg">واتساب</a></div></div>`;
-            }).join('');
-            fetch(`${BASE}/admin/visitors.json`, { method:'PUT', body: JSON.stringify((d.admin?.visitors||0)+1) });
+            const r = await fetch(`${B}/.json`), d = await r.json()||{};
+            document.getElementById('newsT').innerText = d.admin?.news||"مرحباً بكم في بركان كونيكت";
+            document.getElementById('giftT').innerText = d.admin?.gifts||"قسم الإهداءات الرسمية";
+            document.getElementById('phName').innerText = d.admin?.pharma||"لا توجد معلومات";
+            allS = d.services||{};
+            render(Object.keys(allS));
+            fetch(`${B}/admin/visitors.json`,{method:'PUT',body:JSON.stringify((d.admin?.visitors||0)+1)});
         }
         init();
     </script>
