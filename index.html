@@ -103,7 +103,7 @@
                 </div>
             </div>
             <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-4 rounded-2xl font-black mt-6">حفظ المعلومات</button>
-            <div id="aL" class="mt-6 max-h-32 overflow-y-auto border-t pt-4"></div>
+            <div id="aL" class="mt-6 max-h-48 overflow-y-auto border-t pt-4 space-y-2"></div>
             <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-[10px] text-slate-400 font-black">إغلاق</button>
         </div>
     </div>
@@ -152,7 +152,21 @@
             document.getElementById('aPhB').value = d.admin?.ph_berkane || "";
             document.getElementById('aPhA').value = d.admin?.ph_aklim || "";
             const s = d.services||{}; 
-            document.getElementById('aL').innerHTML = Object.keys(s).map(id => `<div class="flex justify-between p-3 bg-slate-50 rounded-xl mb-2 text-[10px] font-black border-r-4 border-slate-300"><span>${s[id].name}</span><button onclick="del('${id}')" class="text-red-500">حذف</button></div>`).reverse().join('');
+            document.getElementById('aL').innerHTML = Object.keys(s).map(id => {
+                const i = s[id];
+                let phRaw = i.phone.replace(/\s/g,'');
+                let phWA = phRaw.startsWith('0') ? '212'+phRaw.substring(1) : phRaw;
+                const msg = "السلام عليكم، معك إدارة Berkane-Connect. تم قبول خدمتك بنجاح 🍊. شرفنا بزيارة الموقع: https://aklim-berkane-connect.vercel.app/";
+                return `<div class="flex flex-col gap-2 p-3 bg-slate-50 rounded-2xl border-r-4 border-amber-500 mb-2">
+                    <div class="flex justify-between items-center text-[10px]">
+                        <span class="font-black text-slate-800">${i.name}</span>
+                        <div class="flex gap-2">
+                            <a href="https://wa.me/${phWA}?text=${encodeURIComponent(msg)}" target="_blank" class="bg-green-500 text-white px-3 py-1 rounded-lg font-black">WhatsApp</a>
+                            <button onclick="del('${id}')" class="bg-red-50 text-red-500 px-3 py-1 rounded-lg font-black">حذف</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).reverse().join('');
         }
         window.saveA = async () => { await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, p_time:document.getElementById('aPT').value, ph_berkane:document.getElementById('aPhB').value, ph_aklim:document.getElementById('aPhA').value})}); location.reload(); };
         window.del = async (id) => { if(confirm("حذف هذه الخدمة؟")){ await fetch(`${B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
@@ -160,21 +174,18 @@
             const n=document.getElementById('uN').value, p=document.getElementById('uP').value; if(!n||!p) return alert("المرجو إدخال الاسم والهاتف!");
             await fetch(`${B}/services.json`,{method:'POST',body:JSON.stringify({name:n, phone:p, city:document.getElementById('uCity').value, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."})}); location.reload();
         };
-        window.searchS = () => { const val = document.getElementById('sIn').value.toLowerCase(); render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)) || T[allS[id].category]?.l.toLowerCase().includes(val))); };
+        window.searchS = () => { const val = document.getElementById('sIn').value.toLowerCase(); render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)))); };
         window.filterCat = (cat, btn) => {
             document.querySelectorAll('#catS button').forEach(b => b.classList.remove('border-amber-500'));
             btn.classList.add('border-amber-500');
             render(cat === 'all' ? Object.keys(allS) : Object.keys(allS).filter(k => allS[k].category === cat));
         };
-        // دالة عرض الوصف لإصلاح مشكلة الرموز
-        window.showDesc = (desc) => { alert(decodeURIComponent(desc) || "لا يوجد وصف حالياً"); };
-        
+        window.showDesc = (b64) => { alert(decodeURIComponent(escape(window.atob(b64)))); };
         function render(ks) {
             document.getElementById('list').innerHTML = ks.reverse().map(id => {
                 const i=allS[id], t=T[i.category]||T.etc;
                 let phRaw = i.phone.replace(/\s/g,''); let phWA = phRaw.startsWith('0') ? '212'+phRaw.substring(1) : phRaw;
-                // تشفير الوصف لتفادي مشاكل الرموز
-                let safeDesc = encodeURIComponent(i.description || "...");
+                let safeDesc = window.btoa(unescape(encodeURIComponent(i.description || "...")));
                 return `<div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-50">
                     <div class="flex items-center gap-4 mb-4 text-right">
                         <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-lg shadow-lg" style="background:${t.c}"><i class="fas ${t.i}"></i></div>
@@ -193,11 +204,9 @@
             document.getElementById('newsT').innerText = d.admin?.news||"مرحباً بكم في بركان كونيكت";
             document.getElementById('pTime').innerText = d.admin?.p_time||'-- / --';
             document.getElementById('phB').innerText = d.admin?.ph_berkane||'--'; document.getElementById('phA').innerText = d.admin?.ph_aklim||'--';
-            allS = d.services||{}; 
-            document.getElementById('count').innerText = Object.keys(allS).length;
-            render(Object.keys(allS));
+            allS = d.services||{}; document.getElementById('count').innerText = Object.keys(allS).length; render(Object.keys(allS));
         }
         init();
     </script>
 </body>
-                </html>
+</html>
