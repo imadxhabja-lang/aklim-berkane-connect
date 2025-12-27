@@ -3,405 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليلك للخدمات المحلية - بحث سهل وسريع</title>
+    <title>دليل خدمات بركان وأكليم - النسخة المستقرة</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom styles to enhance the Tailwind design and support Arabic layout */
-        :root {
-            --primary-color: #1a56db; /* Tailwind blue-600 equivalent */
-            --secondary-color: #059669; /* Tailwind green-600 equivalent */
-            --background-color: #f9fafb; /* Tailwind gray-50 equivalent */
-        }
-
-        body {
-            font-family: 'Tajawal', sans-serif; /* Using a standard modern font stack for Arabic */
-            background-color: var(--background-color);
-            direction: rtl;
-            text-align: right;
-        }
-
-        /* Custom font loading (If Tailwind cannot load from Google Fonts directly, we simulate) */
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-
-        /* Smooth transitions for hover effects */
-        .transition-all {
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Card effects */
-        .service-card {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Call to Action Button Style */
-        .cta-button {
-            background-image: linear-gradient(to left, var(--primary-color), #2563eb);
-            box-shadow: 0 4px 15px rgba(26, 86, 219, 0.4);
-        }
-        .cta-button:hover {
-             background-image: linear-gradient(to right, var(--primary-color), #2563eb);
-             box-shadow: 0 6px 20px rgba(26, 86, 219, 0.6);
-        }
-        
-        /* Top Banner Gradient */
-        .top-banner-gradient {
-             background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
-        }
-
-        /* Utility for RTL text alignment in search bar */
-        .search-input {
-            text-align: right;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+        :root { --primary: #1a56db; --secondary: #059669; --bg: #f9fafb; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg); direction: rtl; }
+        .service-card { transition: all 0.3s ease; border-right: 5px solid var(--primary); }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body class="min-h-screen antialiased">
 
-    <!-- Main Container -->
-    <div id="app" class="max-w-7xl mx-auto pb-12">
-
-        <!-- 1. Top Banner Advertisement Space -->
-        <header class="p-4 sm:p-6 bg-gray-100 border-b border-gray-200 shadow-md">
-            <div class="top-banner-gradient text-white p-4 rounded-xl text-center shadow-lg">
-                <p class="font-bold text-lg sm:text-xl">مساحة إعلانية واضحة (بانر أعلى الصفحة)</p>
-                <p class="text-sm opacity-90 mt-1">إعلانك يظهر هنا! تواصل معنا للإعلان.</p>
-            </div>
-        </header>
-
-        <!-- 2. Search Bar Section -->
-        <section class="p-4 sm:p-6 bg-white shadow-lg rounded-b-xl mb-8">
-            <h1 class="text-3xl font-extrabold text-gray-900 mb-4 text-center">البحث عن أفضل الخدمات</h1>
-            
-            <!-- Quick Search Bar -->
-            <div class="bg-gray-50 p-3 sm:p-4 rounded-xl border border-gray-200 shadow-inner">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <!-- Profession/Name Input -->
-                    <input type="text" id="search-term" placeholder="المهنة / اسم المهني / المدينة / الحي" 
-                           class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all search-input"
-                           aria-label="البحث عن مهنة أو اسم">
-                    
-                    <!-- Search Button -->
-                    <button onclick="performSearch()" 
-                            class="cta-button text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        بحث سريع
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. Featured Sections and Categories -->
-        <section class="p-4 sm:p-6">
-            <!-- Featured Sections -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-                <a href="#professions" class="bg-white p-5 rounded-xl shadow-lg hover:shadow-xl transition-all border-t-4 border-blue-500 text-center">
-                    <div class="text-4xl text-blue-600 mb-2">🛠️</div>
-                    <p class="font-bold text-lg text-gray-800">المهن والخدمات</p>
-                    <p class="text-sm text-gray-500 mt-1">كهربائي، سباك، نجار، والمزيد</p>
-                </a>
-                <a href="#cars" class="bg-white p-5 rounded-xl shadow-lg hover:shadow-xl transition-all border-t-4 border-green-500 text-center">
-                    <div class="text-4xl text-green-600 mb-2">🚗</div>
-                    <p class="font-bold text-lg text-gray-800">كراء السيارات</p>
-                    <p class="text-sm text-gray-500 mt-1">أفضل عروض تأجير السيارات</p>
-                </a>
-                <a href="#ads" class="bg-white p-5 rounded-xl shadow-lg hover:shadow-xl transition-all border-t-4 border-yellow-500 text-center">
-                    <div class="text-4xl text-yellow-600 mb-2">⭐</div>
-                    <p class="font-bold text-lg text-gray-800">إعلانات مميزة</p>
-                    <p class="text-sm text-gray-500 mt-1">خدمات وعروض خاصة</p>
-                </a>
-            </div>
-
-            <!-- Professions by Specialization -->
-            <h2 id="professions" class="text-2xl font-bold text-gray-800 mb-5 border-b pb-2">تصنيف حسب التخصص</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10">
-                <button onclick="filterCategory('كهربائي')" class="category-btn bg-white p-3 text-center rounded-lg shadow hover:bg-blue-50 hover:shadow-md transition-all">
-                    <span class="text-2xl block mb-1">⚡</span> كهربائي
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto p-4 sm:p-6 flex justify-between items-center">
+            <h1 class="text-2xl font-black text-blue-600 italic">BERKANE<span class="text-amber-500">.</span>CONNECT</h1>
+            <div class="flex gap-2">
+                <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg hover:bg-blue-700 transition">
+                    + أضف خدمتك
                 </button>
-                <button onclick="filterCategory('سباك')" class="category-btn bg-white p-3 text-center rounded-lg shadow hover:bg-blue-50 hover:shadow-md transition-all">
-                    <span class="text-2xl block mb-1">💧</span> سباك
-                </button>
-                <button onclick="filterCategory('ميكانيكي')" class="category-btn bg-white p-3 text-center rounded-lg shadow hover:bg-blue-50 hover:shadow-md transition-all">
-                    <span class="text-2xl block mb-1">🔧</span> ميكانيكي
-                </button>
-                <button onclick="filterCategory('نجار')" class="category-btn bg-white p-3 text-center rounded-lg shadow hover:bg-blue-50 hover:shadow-md transition-all">
-                    <span class="text-2xl block mb-1">🪑</span> نجار
-                </button>
-                <button onclick="filterCategory('حداد')" class="category-btn bg-white p-3 text-center rounded-lg shadow hover:bg-blue-50 hover:shadow-md transition-all">
-                    <span class="text-2xl block mb-1">🔥</span> حداد
-                </button>
-                <button onclick="filterCategory('حلاق')" class="category-btn bg-white p-3 text-center rounded-lg shadow hover:bg-blue-50 hover:shadow-md transition-all">
-                    <span class="text-2xl block mb-1">✂️</span> حلاق
+                <button onclick="adminGateway()" class="bg-gray-100 p-2 rounded-lg text-gray-400 hover:text-black">
+                    <i class="fas fa-lock"></i>
                 </button>
             </div>
+        </div>
+    </header>
 
-            <!-- Results/Listings Area -->
-            <h3 class="text-xl font-bold text-gray-800 mb-4" id="results-title">أبرز المهنيين المتاحين</h3>
-            <div id="listings-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic Content Loaded Here by JavaScript -->
+    <main class="max-w-7xl mx-auto p-4 sm:p-8">
+        <div class="bg-blue-600 p-8 rounded-3xl shadow-2xl mb-12 text-center text-white">
+            <h2 class="text-3xl font-black mb-6">ابحث عن أفضل الخدمات في مدينتك</h2>
+            <div class="max-w-2xl mx-auto relative">
+                <input type="text" id="search-input" onkeyup="filterData()" placeholder="مثلاً: كهربائي، نجار، كراء سيارات..." 
+                class="w-full p-5 rounded-2xl text-black font-bold outline-none border-none shadow-xl">
             </div>
-            
-            <div id="loading-indicator" class="text-center p-8 hidden">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-3"></div>
-                <p class="text-gray-500">جاري تحميل المزيد من الخدمات...</p>
+        </div>
+
+        <div class="flex gap-3 overflow-x-auto pb-6 no-scrollbar mb-8">
+            <button onclick="setCat('all')" class="bg-white px-6 py-2 rounded-full shadow border font-bold hover:bg-blue-50">الكل</button>
+            <button onclick="setCat('كهربائي')" class="bg-white px-6 py-2 rounded-full shadow border font-bold hover:bg-blue-50">⚡ كهربائي</button>
+            <button onclick="setCat('سباك')" class="bg-white px-6 py-2 rounded-full shadow border font-bold hover:bg-blue-50">💧 سباك</button>
+            <button onclick="setCat('كراء سيارات')" class="bg-white px-6 py-2 rounded-full shadow border font-bold hover:bg-blue-50">🚗 كراء سيارات</button>
+        </div>
+
+        <div id="listings-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
-        </section>
+    </main>
 
-        <!-- Side Banners (Simulated as cards for responsiveness) -->
-        <section id="ads" class="p-4 sm:p-6 mt-8">
-            <h3 class="text-2xl font-bold text-gray-800 mb-5 border-b pb-2">إعلانات مميزة</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Ad Card 1 -->
-                <div class="md:col-span-1 bg-yellow-50 p-4 rounded-xl shadow-lg border-l-4 border-yellow-500">
-                    <p class="text-sm font-semibold text-yellow-700 mb-1">إعلان محلي</p>
-                    <p class="text-xl font-bold text-gray-800 mb-3">وكالة كراء سيارات (الرحال)</p>
-                    <p class="text-gray-600 mb-3">أحدث الموديلات بأسعار منافسة. تأجير يومي وأسبوعي.</p>
-                    <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">
-                        عرض تفاصيل الوكالة
-                    </button>
-                </div>
-                <!-- Ad Card 2 (Placeholder for AdSense later) -->
-                <div class="md:col-span-2 bg-gray-100 p-6 rounded-xl shadow-inner text-center flex items-center justify-center h-40 border border-dashed border-gray-300">
-                    <p class="text-gray-500 font-medium">مساحة إعلانية (AdSense/محلية)</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Registration Section -->
-        <section class="p-4 sm:p-6 mt-12 bg-white rounded-xl shadow-xl border-t-8 border-green-500">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">هل أنت مهني أو وكالة؟ انضم إلينا!</h3>
-            <div class="max-w-3xl mx-auto space-y-6">
-                <p class="text-center text-gray-600 mb-6">سجل بياناتك الآن وشارك في نموذج المراجعة الأسبوعي لضمان تحديث معلوماتك بسهولة.</p>
-                
-                <button onclick="document.getElementById('registration-modal').classList.remove('hidden')"
-                        class="w-full cta-button text-white font-bold py-3 text-lg rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-3">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 14.828H11v-2.828l8.586-8.586z"></path></svg>
-                        ابدأ التسجيل الآن
-                </button>
-            </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="mt-10 p-6 text-center text-gray-500 border-t border-gray-200">
-            <p>&copy; 2024 دليلك للخدمات. جميع الحقوق محفوظة.</p>
-            <p class="text-sm mt-1">تم تصميمه لسهولة الوصول للخدمات المحلية.</p>
-        </footer>
-
-    </div>
-
-    <!-- Registration Modal (Hidden by default) -->
-    <div id="registration-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100">
-            <button onclick="document.getElementById('registration-modal').classList.add('hidden')" class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-            <h4 class="text-2xl font-bold text-gray-800 mb-4 text-center border-b pb-2">نموذج تسجيل جديد</h4>
-            
-            <form id="registration-form" class="space-y-4">
-                <!-- Type Selection -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">نوع التسجيل</label>
-                    <select id="reg-type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-all">
-                        <option value="مهني">مهني (كهربائي، سباك، إلخ)</option>
-                        <option value="وكالة">وكالة كراء سيارات</option>
-                    </select>
-                </div>
-
-                <!-- Name -->
-                <div>
-                    <label for="reg-name" class="block text-sm font-medium text-gray-700 mb-1">الاسم الكامل / اسم الوكالة</label>
-                    <input type="text" id="reg-name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
-                </div>
-
-                <!-- Phone -->
-                <div>
-                    <label for="reg-phone" class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف (مع مفتاح البلد)</label>
-                    <input type="tel" id="reg-phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
-                </div>
-                
-                <!-- Service/City -->
-                <div>
-                    <label for="reg-service" class="block text-sm font-medium text-gray-700 mb-1">التخصص / المدينة الرئيسية</label>
-                    <input type="text" id="reg-service" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
-                </div>
-                
-                <!-- Submit -->
-                <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition-all mt-4">
-                    إرسال للمراجعة
-                </button>
-            </form>
-            
-            <div id="reg-success" class="hidden text-center p-4 mt-4 bg-green-50 border border-green-200 rounded-lg">
-                <p class="text-green-700 font-semibold">تم الاستلام بنجاح!</p>
-                <p class="text-sm text-green-600 mt-1">سيتم مراجعة بياناتك وإرسال تحديث لك قريباً.</p>
+    <div id="reg-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full relative">
+            <button onclick="document.getElementById('reg-modal').classList.add('hidden')" class="absolute top-4 left-4 text-2xl">&times;</button>
+            <h3 class="text-2xl font-black mb-6 border-b pb-2">سجل بياناتك</h3>
+            <div class="space-y-4">
+                <input type="text" id="reg-name" placeholder="الاسم الكامل / اسم المحل" class="w-full p-3 border rounded-lg font-bold">
+                <input type="tel" id="reg-phone" placeholder="رقم الواتساب (06...)" class="w-full p-3 border rounded-lg font-bold">
+                <select id="reg-cat" class="w-full p-3 border rounded-lg font-bold">
+                    <option value="كهربائي">كهربائي</option>
+                    <option value="سباك">سباك</option>
+                    <option value="كراء سيارات">كراء سيارات</option>
+                    <option value="أخرى">أخرى</option>
+                </select>
+                <button onclick="pushData()" id="save-btn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-black text-xl shadow-lg">نشر الآن</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Section -->
+    <div id="adminPanel" class="fixed inset-0 bg-white z-[100] hidden overflow-y-auto p-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-10 border-b pb-4">
+                <h2 class="text-3xl font-black italic">لوحة التحكم</h2>
+                <button onclick="location.reload()" class="bg-red-500 text-white px-6 py-2 rounded-lg">خروج</button>
+            </div>
+            <div id="admin-list" class="space-y-4">
+                </div>
+        </div>
+    </div>
+
     <script>
-        // --- Mock Data Structure ---
-        const mockData = [
-            { id: 1, name: "أحمد السبيعي", profession: "كهربائي", phone: "0551234567", location: "الرياض - حي النرجس", hours: "8 صباحاً - 5 مساءً", whatsapp: "https://wa.me/966551234567", category: "كهربائي" },
-            { id: 2, name: "أبو خالد للسباكة", profession: "سباك", phone: "0509876543", location: "جدة - الفيصلية", hours: "طوارئ 24/7", whatsapp: "https://wa.me/966509876543", category: "سباك" },
-            { id: 3, name: "ورشة الميكانيك السريع", profession: "ميكانيكي", phone: "0567654321", location: "الدمام - حي الحمراء", hours: "9 صباحاً - 7 مساءً", whatsapp: "", category: "ميكانيكي" },
-            { id: 4, name: "نجار الأثاث الحديث", profession: "نجار", phone: "0533445566", location: "المدينة المنورة - العقيق", hours: "10 صباحاً - 6 مساءً", whatsapp: "https://wa.me/966533445566", category: "نجار" },
-            { id: 5, name: "محل الحدادة المتقن", profession: "حداد", phone: "0599112233", location: "مكة - حي الزاهر", hours: "8 صباحاً - 4 مساءً", whatsapp: "", category: "حداد" },
-            { id: 6, name: "صالون الأناقة الرجالية", profession: "حلاق", phone: "0544556677", location: "الرياض - العليا", hours: "11 صباحاً - 9 مساءً", whatsapp: "https://wa.me/966544556677", category: "حلاق" },
-            { id: 7, name: "محمد فهد", profession: "كهربائي", phone: "0550111000", location: "جدة - السلامة", hours: "7 صباحاً - 3 مساءً", whatsapp: "https://wa.me/966550111000", category: "كهربائي" },
-            { id: 8, name: "شركة تأجير المركبات", profession: "وكالة سيارات", phone: "0558889999", location: "الرياض", hours: "9 صباحاً - 6 مساءً", whatsapp: "https://wa.me/966558889999", category: "كراء سيارات" },
-        ];
+        const DB_URL = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com/services.json";
+        let allData = {};
+        let currentCat = 'all';
 
-        let currentFilter = '';
-
-        // --- Utility Functions ---
-
-        function createCardHTML(item) {
-            const isCarRental = item.profession === "وكالة سيارات";
-            const title = isCarRental ? `وكالة: ${item.name}` : `${item.name} (${item.profession})`;
-            const icon = isCarRental ? '🚗' : '🛠️';
-            const colorClass = isCarRental ? 'border-green-500' : 'border-blue-500';
-
-            // Determine the main action link based on professional type
-            let mainActionHTML = '';
-            
-            // WhatsApp button
-            const whatsappBtn = item.whatsapp ? 
-                `<a href="${item.whatsapp}" target="_blank" class="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors text-center text-sm font-semibold flex items-center justify-center gap-1">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21 11.1c-.01-.83-.06-1.66-.18-2.47-.25-1.85-1.47-3.44-3.27-4.16-.79-.3-1.69-.45-2.63-.45-2.5 0-4.93.98-6.65 2.7C6.43 8.09 5.42 10.5 5.42 13.2c0 2.7 1.01 5.11 2.88 6.97l.98.98c1.53 1.53 3.64 2.37 5.75 2.37 2.1 0 4.22-.84 5.75-2.37l.98-.98c1.87-1.86 2.88-4.27 2.88-6.97zM10.42 15.5a.5.5 0 01-.71 0l-1.2-1.2a.5.5 0 010-.71l2.42-2.42a.5.5 0 01.71 0l1.2 1.2a.5.5 0 010 .71l-2.42 2.42z"/></svg>
-                    واتساب
-                </a>` : '';
-
-            // Direct Call button
-            const callBtn = `<a href="tel:${item.phone}" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-sm font-semibold flex items-center justify-center gap-1">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 16.92v3a1 1 0 01-2.18.45l-2.13-2.36c-1.08-1.2-2.48-2.17-4.02-2.82a11.138 11.138 0 01-3.4-1.15c-.95-.5-1.87-1.08-2.78-1.73C5.53 12.43 4.78 11.35 4.24 10.18c-.54-1.17-.81-2.42-.81-3.71 0-2.71 1.23-5.18 3.56-6.88C7.33 1.3 9.74.58 12.25.58c2.51 0 4.92.72 7.25 2.22 2.33 1.5 3.56 3.97 3.56 6.88v.04a.993.993 0 01-.15.38l-2.34 2.58zM13.01 21c-.43 0-.84-.17-1.15-.46l-3.17-3.17c-.3-.3-.46-.71-.46-1.15s.16-.85.46-1.15l3.17-3.17c.3-.3.71-.46 1.15-.46s.85.16 1.15.46l3.17 3.17c.3.3.46.71.46 1.15s-.16.85-.46 1.15l-3.17 3.17c-.3.3-.71.46-1.15.46z"/></svg>
-                                الاتصال
-                            </a>`;
-            
-            mainActionHTML = `
-                <div class="flex gap-2 mt-3">
-                    ${callBtn}
-                    ${whatsappBtn}
-                </div>
-            `;
-
-            return `
-                <div class="service-card bg-white p-5 rounded-xl shadow-lg border-r-4 ${colorClass} flex flex-col">
-                    <div class="flex items-center mb-3">
-                        <span class="text-3xl mr-3">${icon}</span>
-                        <h4 class="text-xl font-bold text-gray-900">${title}</h4>
-                    </div>
-                    
-                    <p class="text-md text-gray-600 mb-2">
-                        <span class="font-semibold text-gray-700">الموقع:</span> ${item.location}
-                    </p>
-                    <p class="text-md text-gray-600 mb-4">
-                        <span class="font-semibold text-gray-700">ساعات العمل:</span> ${item.hours}
-                    </p>
-                    
-                    ${mainActionHTML}
-                </div>
-            `;
+        // 1. Fetch Data
+        async function loadData() {
+            const res = await fetch(DB_URL);
+            allData = await res.json() || {};
+            render(allData);
         }
 
-        function renderListings(items) {
+        // 2. Render Cards
+        function render(data) {
             const container = document.getElementById('listings-container');
-            const titleElement = document.getElementById('results-title');
-            
-            if (items.length === 0) {
-                container.innerHTML = `
-                    <div class="lg:col-span-3 text-center p-10 bg-white rounded-xl shadow-lg">
-                        <p class="text-2xl text-gray-500">لم يتم العثور على نتائج مطابقة لـ "${currentFilter || 'الكل'}"</p>
-                        <p class="text-gray-400 mt-2">حاول استخدام كلمات بحث مختلفة أو تصفح الأقسام الرئيسية.</p>
+            const keys = Object.keys(data);
+            if(keys.length === 0) { container.innerHTML = "<p class='col-span-full text-center py-10 opacity-50 font-bold text-xl'>لا توجد بيانات حالياً</p>"; return; }
+
+            container.innerHTML = keys.reverse().map(id => {
+                const item = data[id];
+                return `
+                    <div class="service-card bg-white p-6 rounded-2xl shadow-md flex flex-col">
+                        <h4 class="text-xl font-bold text-gray-900 mb-1">${item.name}</h4>
+                        <span class="text-xs font-black text-blue-500 uppercase tracking-widest mb-4">${item.category}</span>
+                        <div class="flex gap-2 mt-auto">
+                            <a href="tel:${item.phone}" class="flex-1 bg-gray-900 text-white py-2 rounded-lg text-center font-bold text-sm">اتصال</a>
+                            <a href="https://wa.me/${item.phone.replace('0', '212')}" target="_blank" class="flex-1 bg-green-500 text-white py-2 rounded-lg text-center font-bold text-sm">واتساب</a>
+                        </div>
                     </div>
                 `;
-                titleElement.textContent = "نتائج البحث";
-                return;
-            }
-
-            const htmlContent = items.map(createCardHTML).join('');
-            container.innerHTML = htmlContent;
-            titleElement.textContent = currentFilter ? `نتائج البحث عن: ${currentFilter}` : "أبرز المهنيين والخدمات";
+            }).join('');
         }
 
-        // --- Search & Filter Logic ---
-
-        function performSearch() {
-            const searchTerm = document.getElementById('search-term').value.toLowerCase().trim();
-            currentFilter = searchTerm;
-            
-            if (!searchTerm) {
-                renderListings(mockData); // Show all if search is empty
-                return;
-            }
-
-            const filtered = mockData.filter(item => 
-                item.name.toLowerCase().includes(searchTerm) ||
-                item.profession.toLowerCase().includes(searchTerm) ||
-                item.location.toLowerCase().includes(searchTerm) ||
-                item.category.toLowerCase().includes(searchTerm)
-            );
-
-            renderListings(filtered);
-        }
-
-        function filterCategory(category) {
-            currentFilter = category;
-            document.getElementById('search-term').value = ''; // Clear search bar
-
-            const filtered = mockData.filter(item => item.category.toLowerCase() === category.toLowerCase());
-            
-            // Highlight the selected button
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-100', 'border-blue-500');
-                btn.classList.add('bg-white');
-                if (btn.textContent.includes(category)) {
-                    btn.classList.add('bg-blue-100', 'border-blue-500');
-                    btn.classList.remove('bg-white');
-                }
-            });
-
-            renderListings(filtered);
-        }
-
-
-        // --- Registration Form Handler ---
-        document.getElementById('registration-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Simulate sending data to backend (Firebase/Node.js)
-            console.log("Submitting Registration Data...");
-            
-            // Get form data (for logging/simulation)
-            const regType = document.getElementById('reg-type').value;
-            const regName = document.getElementById('reg-name').value;
-            const regPhone = document.getElementById('reg-phone').value;
-            const regService = document.getElementById('reg-service').value;
-
-            console.log({ Type: regType, Name: regName, Phone: regPhone, Service: regService });
-            
-            // Show success message and hide form
-            document.getElementById('registration-form').style.display = 'none';
-            document.getElementById('reg-success').classList.remove('hidden');
-            
-            // Optional: Reset modal content after a delay
-            setTimeout(() => {
-                 document.getElementById('registration-form').reset();
-                 document.getElementById('registration-form').style.display = 'block';
-                 document.getElementById('reg-success').classList.add('hidden');
-                 document.getElementById('registration-modal').classList.add('hidden');
-            }, 5000);
-        });
-
-
-        // --- Initialization ---
-        window.onload = () => {
-            // Load initial default view (all listings)
-            renderListings(mockData);
+        // 3. Search & Filter
+        window.filterData = () => {
+            const q = document.getElementById('search-input').value.toLowerCase();
+            const filtered = Object.fromEntries(Object.entries(allData).filter(([id, s]) => 
+                (currentCat === 'all' || s.category === currentCat) && s.name.toLowerCase().includes(q)
+            ));
+            render(filtered);
         };
 
+        window.setCat = (cat) => { currentCat = cat; filterData(); };
+
+        // 4. Save New Service
+        window.pushData = async () => {
+            const name = document.getElementById('reg-name').value;
+            const phone = document.getElementById('reg-phone').value;
+            const category = document.getElementById('reg-cat').value;
+            if(!name || !phone) return alert("عمر الخانات!");
+            
+            document.getElementById('save-btn').innerText = "جاري النشر...";
+            await fetch(DB_URL, { method: 'POST', body: JSON.stringify({name, phone, category}) });
+            location.reload();
+        };
+
+        // 5. Admin Security
+        window.adminGateway = () => {
+            const user = prompt("Gmail:");
+            const pass = prompt("كلمة السر:");
+            if(user === "imad@gmail.com" && pass === "2025") {
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadAdminList();
+            } else { alert("خطأ!"); }
+        };
+
+        async function loadAdminList() {
+            const list = document.getElementById('admin-list');
+            list.innerHTML = Object.keys(allData).reverse().map(id => `
+                <div class="flex justify-between items-center bg-gray-50 p-4 rounded-xl border">
+                    <span class="font-bold">${allData[id].name} (${allData[id].category})</span>
+                    <button onclick="deleteItem('${id}')" class="text-red-500 font-bold"><i class="fas fa-trash"></i> حذف</button>
+                </div>
+            `).join('');
+        }
+
+        window.deleteItem = async (id) => {
+            if(confirm("حذف؟")) {
+                await fetch(`https://studio-2627154759-2fb87-default-rtdb.firebaseio.com/services/${id}.json`, { method: 'DELETE' });
+                location.reload();
+            }
+        };
+
+        loadData();
     </script>
 </body>
-                  </html>
+</html>
