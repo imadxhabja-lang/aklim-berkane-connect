@@ -1,181 +1,288 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>Berkane Connect | بركان وأكليم</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkane Connect Pro | النسخة الشاملة 2025</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+        
+        :root {
+            --primary: #1e40af; --gold: #f59e0b; --pink: #db2777; --dark: #0f172a;
+        }
 
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; scroll-behavior: smooth; }
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+        /* شريط الأخبار العاجلة */
+        .news-marquee {
+            background: var(--dark); color: white; padding: 10px 0; border-bottom: 3px solid var(--gold);
+            font-weight: 800; overflow: hidden; white-space: nowrap; position: relative;
+        }
+        .news-content { display: inline-block; animation: scroll-news 25s linear infinite; }
+        @keyframes scroll-news { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-<style>
-body{
-  background: linear-gradient(135deg,#020617,#0f172a);
-}
-.glass{
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.15);
-}
-</style>
+        /* شريط الإهداءات السفلي */
+        .dedication-bar {
+            background: var(--gold); color: var(--dark); padding: 8px 0;
+            font-weight: 700; overflow: hidden; white-space: nowrap; font-size: 0.9rem;
+        }
+        .dedication-content { display: inline-block; animation: scroll-ded 30s linear infinite; }
+        @keyframes scroll-ded { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* تصميم الكروت */
+        .card-pro {
+            background: white; border-radius: 2rem; padding: 1.5rem; transition: all 0.4s ease;
+            border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card-pro:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        /* ألوان الأصناف */
+        .cat-default { border-bottom: 8px solid var(--primary); }
+        .cat-woman { border-bottom: 8px solid var(--pink); background: #fffafc; }
+        .cat-car { border-bottom: 8px solid var(--gold); }
+        .cat-med { border-bottom: 8px solid #10b981; }
+
+        .hidden { display: none !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
 </head>
+<body class="antialiased">
 
-<body class="text-white">
+    <div class="news-marquee">
+        <div class="news-content" id="news-ticker">جاري تحميل أخبار بركان وأكليم العاجلة...</div>
+    </div>
 
-<!-- شريط الأخبار -->
-<marquee id="newsBar" class="bg-yellow-500 text-black font-bold py-2"></marquee>
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-[100] border-b shadow-sm">
+        <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+            <div class="text-2xl font-black italic">BERKANE<span class="text-blue-600">.</span>PRO</div>
+            <div class="flex gap-2">
+                <button onclick="toggleModal('add-modal', true)" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold shadow-lg text-sm">+ أضف خدمتك</button>
+                <button onclick="adminGateway()" class="bg-slate-100 p-2 rounded-xl text-slate-400 hover:text-black"><i class="fas fa-fingerprint"></i></button>
+            </div>
+        </div>
+    </header>
 
-<!-- الإهداءات -->
-<div class="glass m-3 p-4 rounded-xl">
-<h2 class="font-bold mb-2">💌 إهداءات الزوار</h2>
-<marquee id="dedicationsBar"></marquee>
-<form id="dedicationForm" class="flex gap-2 mt-3">
-<input id="dedicationInput" class="w-full p-2 rounded text-black" placeholder="أضف إهداءك">
-<button class="bg-pink-600 px-4 rounded">إرسال</button>
-</form>
-</div>
+    <div class="dedication-bar">
+        <div class="dedication-content" id="dedication-ticker">أهلاً بكم في منصة التواصل الأولى ببركان .. ننتظر إهداءاتكم ورسائلكم ..</div>
+    </div>
 
-<!-- الطقس والصلاة -->
-<div class="grid md:grid-cols-2 gap-4 m-3">
-<div class="glass p-4 rounded-xl">
-<h3 class="font-bold mb-2">🌤️ الطقس</h3>
-<div id="weather">...</div>
-</div>
-<div class="glass p-4 rounded-xl">
-<h3 class="font-bold mb-2">🕌 مواقيت الصلاة</h3>
-<div id="prayerTimes">...</div>
-</div>
-</div>
+    <main class="max-w-7xl mx-auto p-4 py-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+            <div class="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-xl flex justify-between items-center overflow-hidden">
+                <div class="z-10">
+                    <span class="text-amber-500 font-bold text-xs">طقس بركان الآن</span>
+                    <h2 id="temp-val" class="text-5xl font-black italic mt-1">--°C</h2>
+                </div>
+                <i class="fas fa-cloud-sun text-7xl opacity-20 -rotate-12"></i>
+            </div>
+            
+            <div class="lg:col-span-2 bg-emerald-600 rounded-[2.5rem] p-8 text-white shadow-xl flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-hospital-user text-2xl"></i>
+                    <span class="font-black text-xl italic uppercase">صيدليات الحراسة لهذا الأسبوع:</span>
+                </div>
+                <p id="pharmacy-text" class="text-lg font-bold opacity-90">جاري تحميل قائمة الصيدليات...</p>
+            </div>
+        </div>
 
-<!-- صيدليات الحراسة -->
-<div class="glass m-3 p-4 rounded-xl">
-<h2 class="font-bold mb-3">💊 صيدليات الحراسة</h2>
-<ul id="pharmacies"></ul>
-</div>
+        <div class="max-w-3xl mx-auto mb-10">
+            <div class="relative">
+                <input type="text" id="search-input" onkeyup="filterItems()" placeholder="ابحث عن: كهربائي، حلويات، كراء سيارات..." 
+                class="w-full p-6 pr-14 rounded-3xl border-none shadow-2xl outline-none font-bold text-lg focus:ring-4 ring-blue-500/10">
+                <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
+            </div>
+        </div>
 
-<!-- دليل المهنيين -->
-<div class="m-3">
-<h2 class="font-bold mb-3">🛠️ دليل الخدمات</h2>
-<div id="professionals" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-</div>
+        <div class="flex gap-3 overflow-x-auto pb-8 no-scrollbar" id="tabs-container">
+            <button onclick="setFilter('all', event)" class="px-6 py-2.5 rounded-full bg-blue-600 text-white font-bold shadow-md shrink-0">الكل</button>
+            <button onclick="setFilter('عالم المرأة', event)" class="px-6 py-2.5 rounded-full bg-white border font-bold shrink-0 hover:bg-pink-50 text-pink-600 border-pink-100">💄 سيدتي</button>
+            <button onclick="setFilter('مطبخ وحلويات', event)" class="px-6 py-2.5 rounded-full bg-white border font-bold shrink-0 hover:bg-emerald-50 text-emerald-600 border-emerald-100">🍳 مطبخ</button>
+            <button onclick="setFilter('إصلاح وصيانة', event)" class="px-6 py-2.5 rounded-full bg-white border font-bold shrink-0 hover:bg-blue-50 text-blue-600 border-blue-100">🔧 خدمات</button>
+            <button onclick="setFilter('كراء سيارات', event)" class="px-6 py-2.5 rounded-full bg-white border font-bold shrink-0 hover:bg-amber-50 text-amber-600 border-amber-100">🚗 سيارات</button>
+        </div>
 
-<!-- قسم سيدتي -->
-<div class="glass m-3 p-4 rounded-xl border border-pink-400">
-<h2 class="font-bold text-pink-400 mb-3">🌸 قسم سيدتي</h2>
-<div id="ladies" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-</div>
+        <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+    </main>
 
-<!-- لوحة التحكم -->
-<div class="glass m-3 p-4 rounded-xl">
-<h2 class="font-bold mb-3">🔐 لوحة التحكم</h2>
+    <div id="add-modal" class="fixed inset-0 bg-slate-900/80 hidden z-[500] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full relative shadow-2xl">
+            <button onclick="toggleModal('add-modal', false)" class="absolute top-6 left-6 text-slate-300 text-2xl hover:text-red-500">&times;</button>
+            <h3 class="text-2xl font-black mb-6 border-r-4 border-blue-600 pr-3 italic">انضم إلينا مجاناً</h3>
+            <div class="space-y-4">
+                <input type="text" id="f-name" placeholder="الاسم الكامل أو المحل" class="w-full p-4 bg-slate-50 rounded-2xl border-none font-bold">
+                <input type="tel" id="f-phone" placeholder="رقم الواتساب (06..)" class="w-full p-4 bg-slate-50 rounded-2xl border-none font-bold text-left">
+                <select id="f-cat" class="w-full p-4 bg-slate-50 rounded-2xl border-none font-bold">
+                    <option value="إصلاح وصيانة">🔧 إصلاح وصيانة</option>
+                    <option value="عالم المرأة">💄 عالم المرأة (سيدتي)</option>
+                    <option value="مطبخ وحلويات">🍳 مطبخ وحلويات</option>
+                    <option value="كراء سيارات">🚗 كراء سيارات</option>
+                    <option value="أخرى">📦 أصناف أخرى</option>
+                </select>
+                <button onclick="pushToDB()" id="btn-save" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black text-xl shadow-xl transition active:scale-95">نشر خدمتي</button>
+            </div>
+        </div>
+    </div>
 
-<div id="loginBox">
-<input id="email" class="text-black p-2 w-full mb-2" placeholder="Gmail">
-<input id="password" type="password" class="text-black p-2 w-full mb-2" placeholder="كلمة السر">
-<button onclick="login()" class="bg-blue-600 px-4 py-2 rounded w-full">دخول</button>
-</div>
+    <div id="admin-panel" class="fixed inset-0 bg-white hidden z-[1000] overflow-y-auto p-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex justify-between items-center mb-10 border-b pb-6">
+                <h2 class="text-3xl font-black italic">لوحة تحكم المدير</h2>
+                <button onclick="location.reload()" class="bg-red-500 text-white px-8 py-2 rounded-xl font-bold">خروج</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <h4 class="font-black mb-3">تحديث الأخبار العاجلة:</h4>
+                        <input type="text" id="adm-news" class="w-full p-4 rounded-xl border mb-3 font-bold" placeholder="اكتب الخبر هنا...">
+                        <button onclick="updateAdminField('news', 'adm-news')" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">تحديث الأخبار</button>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <h4 class="font-black mb-3">تحديث صيدليات الحراسة:</h4>
+                        <input type="text" id="adm-med" class="w-full p-4 rounded-xl border mb-3 font-bold" placeholder="مثال: صيدلية ابن سينا، صيدلية السلام...">
+                        <button onclick="updateAdminField('pharmacy', 'adm-med')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold">تحديث الصيدليات</button>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <h4 class="font-black mb-3">تحديث شريط الإهداءات:</h4>
+                        <input type="text" id="adm-ded" class="w-full p-4 rounded-xl border mb-3 font-bold" placeholder="اكتب رسالة الإهداءات...">
+                        <button onclick="updateAdminField('dedication', 'adm-ded')" class="w-full bg-amber-500 text-white py-3 rounded-xl font-bold">تحديث الإهداءات</button>
+                    </div>
+                </div>
 
-<div id="adminPanel" class="hidden">
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h4 class="font-black mb-4 italic underline">إدارة المهنيين والخدمات:</h4>
+                    <div id="adm-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-2 no-scrollbar">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<textarea id="newsInput" class="text-black w-full p-2 mb-2" placeholder="شريط الأخبار"></textarea>
-<button onclick="updateNews()" class="bg-yellow-500 px-4 py-2 rounded w-full">تحديث الأخبار</button>
+    <script>
+        const DB_URL = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
+        let localCache = {};
+        let currentFilter = 'all';
 
-<h3 class="font-bold mt-4 mb-2">إضافة مهني</h3>
-<input id="pName" class="text-black p-2 w-full mb-2" placeholder="الاسم">
-<input id="pJob" class="text-black p-2 w-full mb-2" placeholder="المهنة">
-<input id="pPhone" class="text-black p-2 w-full mb-2" placeholder="الهاتف">
-<select id="pType" class="text-black p-2 w-full mb-2">
-<option value="general">عام</option>
-<option value="ladies">سيدتي</option>
-</select>
-<button onclick="addProfessional()" class="bg-green-600 px-4 py-2 rounded w-full">إضافة</button>
+        async function init() {
+            // جلب البيانات من APIs
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true')
+                .then(r => r.json()).then(d => document.getElementById('temp-val').innerText = Math.round(d.current_weather.temperature) + '°C');
 
-</div>
-</div>
+            // جلب بيانات Firebase
+            const res = await fetch(`${DB_URL}/.json`);
+            localCache = await res.json() || {};
+            
+            // تحديث واجهة المدير
+            const admin = localCache.admin || {};
+            document.getElementById('news-ticker').innerText = admin.news || "مرحباً بكم في بركان كونيكت";
+            document.getElementById('pharmacy-text').innerText = admin.pharmacy || "لم يتم تحديد الصيدليات بعد";
+            document.getElementById('dedication-ticker').innerText = admin.dedication || "بركان كونيكت تتمنى لكم يوماً سعيداً";
 
-<script>
-/* Firebase */
-firebase.initializeApp({
- databaseURL:"https://studio-2627154759-2fb87-default-rtdb.firebaseio.com/"
-});
-const db=firebase.database();
+            render(localCache.services || {});
+        }
 
-/* الأخبار */
-db.ref("news").on("value",s=>{
- newsBar.textContent=s.val()||"مرحبا بكم في Berkane Connect";
-});
+        function render(data) {
+            const grid = document.getElementById('services-grid');
+            const keys = Object.keys(data);
+            if(keys.length === 0) { grid.innerHTML = `<p class="col-span-full text-center py-20 font-bold opacity-30">لا توجد خدمات حالياً</p>`; return; }
 
-/* الإهداءات */
-db.ref("dedications").on("value",s=>{
- let t="";
- s.forEach(d=>t+=" 💖 "+d.val());
- dedicationsBar.textContent=t;
-});
-dedicationForm.onsubmit=e=>{
- e.preventDefault();
- db.ref("dedications").push(dedicationInput.value);
- dedicationInput.value="";
-};
+            grid.innerHTML = keys.reverse().map(id => {
+                const s = data[id];
+                let catClass = 'cat-default';
+                let icon = 'fa-tools';
+                
+                if(s.category === 'عالم المرأة') { catClass = 'cat-woman'; icon = 'fa-heart'; }
+                if(s.category === 'مطبخ وحلويات') { catClass = 'cat-med'; icon = 'fa-utensils'; }
+                if(s.category === 'كراء سيارات') { catClass = 'cat-car'; icon = 'fa-car'; }
 
-/* صيدليات */
-db.ref("pharmacies").on("value",s=>{
- pharmacies.innerHTML="";
- s.forEach(p=>pharmacies.innerHTML+=`<li>🏥 ${p.val()}</li>`);
-});
+                return `
+                    <div class="card-pro ${catClass}">
+                        <div>
+                            <div class="w-12 h-12 bg-slate-50 rounded-xl mb-4 flex items-center justify-center text-slate-300">
+                                <i class="fas ${icon} text-xl"></i>
+                            </div>
+                            <h4 class="text-xl font-black text-slate-900">${s.name}</h4>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1 mb-6">${s.category}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="tel:${s.phone}" class="flex-1 bg-slate-900 text-white py-3 rounded-xl text-center font-bold text-xs">اتصال</a>
+                            <a href="https://wa.me/${s.phone.replace('0', '212')}" target="_blank" class="flex-1 bg-green-500 text-white py-3 rounded-xl text-center font-bold text-xs">واتساب</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-/* مهنيين */
-db.ref("professionals").on("value",s=>{
- professionals.innerHTML="";
- ladies.innerHTML="";
- s.forEach(p=>{
-  let d=p.val();
-  let card=`
-  <div class="glass p-3 rounded-xl">
-  <h4 class="font-bold">${d.name}</h4>
-  <p>${d.job}</p>
-  <a href="tel:${d.phone}" class="text-green-400 block">📞 اتصال</a>
-  <a href="https://wa.me/${d.phone}" class="text-green-500">💬 واتساب</a>
-  </div>`;
-  d.type==="ladies"?ladies.innerHTML+=card:professionals.innerHTML+=card;
- });
-});
+        window.filterItems = () => {
+            const q = document.getElementById('search-input').value.toLowerCase();
+            const filtered = Object.fromEntries(Object.entries(localCache.services || {}).filter(([id, s]) => 
+                (currentFilter === 'all' || s.category === currentFilter) && s.name.toLowerCase().includes(q)
+            ));
+            render(filtered);
+        };
 
-/* الطقس */
-fetch("https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true")
-.then(r=>r.json())
-.then(d=>weather.textContent=d.current_weather.temperature+"°C");
+        window.setFilter = (cat, e) => {
+            currentFilter = cat;
+            document.querySelectorAll('#tabs-container button').forEach(b => {
+                b.className = "px-6 py-2.5 rounded-full bg-white border font-bold shrink-0 hover:bg-slate-50";
+            });
+            e.currentTarget.className = "px-6 py-2.5 rounded-full bg-blue-600 text-white font-bold shadow-md shrink-0";
+            filterItems();
+        };
 
-/* الصلاة */
-fetch("https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco")
-.then(r=>r.json())
-.then(d=>{
- let t=d.data.timings;
- prayerTimes.innerHTML=`الفجر: ${t.Fajr}<br>الظهر: ${t.Dhuhr}<br>العصر: ${t.Asr}<br>المغرب: ${t.Maghrib}<br>العشاء: ${t.Isha}`;
-});
+        window.adminGateway = () => {
+            const user = prompt("Gmail:");
+            const pass = prompt("Password:");
+            if(user === "imad@gmail.com" && pass === "2025") {
+                toggleModal('admin-panel', true);
+                loadAdminList();
+            } else { alert("خطأ!"); }
+        };
 
-/* Admin */
-function login(){
- if(email.value==="imad@gmail.com" && password.value==="2025"){
-  loginBox.classList.add("hidden");
-  adminPanel.classList.remove("hidden");
- }else alert("بيانات غير صحيحة");
-}
-function updateNews(){
- db.ref("news").set(newsInput.value);
-}
-function addProfessional(){
- db.ref("professionals").push({
-  name:pName.value,
-  job:pJob.value,
-  phone:pPhone.value,
-  type:pType.value
- });
-}
-</script>
+        async function loadAdminList() {
+            const res = await fetch(`${DB_URL}/services.json`);
+            const data = await res.json() || {};
+            document.getElementById('adm-list').innerHTML = Object.keys(data).reverse().map(id => `
+                <div class="flex justify-between items-center bg-white p-4 rounded-2xl border shadow-sm">
+                    <span class="font-bold text-sm">${data[id].name}</span>
+                    <button onclick="deleteEntry('${id}')" class="text-red-500 hover:scale-110"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
 
+        window.deleteEntry = async (id) => {
+            if(confirm("حذف؟")) {
+                await fetch(`${DB_URL}/services/${id}.json`, { method: 'DELETE' });
+                loadAdminList(); init();
+            }
+        };
+
+        window.updateAdminField = async (field, inputId) => {
+            const val = document.getElementById(inputId).value;
+            if(!val) return;
+            await fetch(`${DB_URL}/admin/${field}.json`, { method: 'PUT', body: JSON.stringify(val) });
+            alert("تم التحديث!"); location.reload();
+        };
+
+        window.pushToDB = async () => {
+            const name = document.getElementById('f-name').value;
+            const phone = document.getElementById('f-phone').value;
+            const category = document.getElementById('f-cat').value;
+            if(!name || !phone) return alert("الخانات!");
+            document.getElementById('btn-save').innerText = "جاري النشر...";
+            await fetch(`${DB_URL}/services.json`, { method: 'POST', body: JSON.stringify({name, phone, category}) });
+            location.reload();
+        };
+
+        window.toggleModal = (id, show) => document.getElementById(id).classList.toggle('hidden', !show);
+
+        init();
+    </script>
 </body>
 </html>
