@@ -23,11 +23,12 @@
         </div>
         <div class="flex gap-2">
             <button onclick="document.getElementById('addM').classList.remove('hidden')" class="bg-amber-500 text-white px-4 py-2 rounded-2xl text-[10px] font-black shadow-lg shadow-amber-200 active:scale-95 transition-all">+ إضافة خدمة</button>
+            <button onclick="adminIn()" class="bg-slate-50 p-2 rounded-xl text-slate-400"><i class="fas fa-cog text-xs"></i></button>
         </div>
     </nav>
 
     <div class="bg-slate-900 text-amber-400 py-2 overflow-hidden border-b border-amber-400/20 text-center">
-        <div class="marquee font-black text-sm" id="newsT">جاري التحميل...</div>
+        <div class="marquee font-black text-sm" id="newsT">مرحباً بكم في بركان كونيكت...</div>
     </div>
 
     <section class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -38,55 +39,72 @@
             <div class="space-y-1"> <p class="text-[10px] text-amber-600 font-black">المغرب</p> <p id="mgh" class="text-sm font-black text-amber-600">--</p> </div>
             <div class="space-y-1"> <p class="text-[10px] text-slate-400 font-black">العشاء</p> <p id="ish" class="text-sm font-black text-slate-700">--</p> </div>
         </div>
+
         <div class="bg-white rounded-[2rem] shadow-sm overflow-hidden border border-red-50">
             <div class="bg-red-500 text-white text-[11px] font-black py-2 px-5 flex justify-between items-center">
                 <span><i class="fas fa-house-medical ml-1"></i> صيدليات الحراسة</span>
                 <span id="pTime" class="bg-white/20 px-2 py-0.5 rounded-full text-[8px] italic tracking-widest">-- / --</span>
             </div>
             <div class="p-4 space-y-4">
-                <div class="flex items-center justify-between"><div class="flex items-start gap-3"><span class="bg-red-50 text-red-600 text-[10px] font-black px-2 py-1 rounded-lg">بركان</span><div id="phB" class="text-[13px] text-slate-800 font-black italic">--</div></div></div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-start gap-3">
+                        <span class="bg-red-50 text-red-600 text-[10px] font-black px-2 py-1 rounded-lg">بركان</span>
+                        <div id="phB" class="text-[13px] text-slate-800 font-black italic leading-relaxed">--</div>
+                    </div>
+                </div>
                 <div class="h-[1px] bg-slate-50 w-full"></div>
-                <div class="flex items-center justify-between"><div class="flex items-start gap-3"><span class="bg-red-50 text-red-600 text-[10px] font-black px-2 py-1 rounded-lg">أكليم</span><div id="phA" class="text-[13px] text-slate-800 font-black italic">--</div></div></div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-start gap-3">
+                        <span class="bg-red-50 text-red-600 text-[10px] font-black px-2 py-1 rounded-lg">أكليم</span>
+                        <div id="phA" class="text-[13px] text-slate-800 font-black italic leading-relaxed">--</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <div class="px-4 space-y-4">
         <div class="relative">
-            <input type="text" id="sIn" onkeyup="_chk_sys(this.value); searchS();" placeholder="ابحث عن حرفي، محل، أو خدمة..." class="w-full p-4 pr-12 rounded-3xl border-none shadow-sm font-black text-sm bg-white text-slate-800 focus:ring-2 focus:ring-amber-500">
+            <input type="text" id="sIn" onkeyup="searchS()" placeholder="ابحث عن حرفي، محل، أو خدمة..." class="w-full p-4 pr-12 rounded-3xl border-none shadow-sm font-black text-sm bg-white text-slate-800 focus:ring-2 focus:ring-amber-500">
             <i class="fas fa-search absolute right-5 top-4.5 text-slate-300"></i>
         </div>
+        
         <div id="catS" class="flex gap-3 overflow-x-auto no-scrollbar py-2 px-1">
             <button onclick="filterCat('all', this)" class="shrink-0 bg-white px-6 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-amber-500">الكل</button>
-            <button onclick="filterCat('food', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🍔 مطاعم</button>
-            <button onclick="filterCat('law', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">⚖️ محاماة</button>
-            <button onclick="filterCat('plumb', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🚰 سباكة</button>
-            <button onclick="filterCat('elec', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">⚡ كهرباء</button>
-            <button onclick="filterCat('delivery', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🛵 توصيل</button>
-            <button onclick="filterCat('car', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🚗 كراء</button>
-            <button onclick="filterCat('mech', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🔧 ميكانيك</button>
-            <button onclick="filterCat('rep', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">🛠️ إصلاح</button>
-            <button onclick="filterCat('woman', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">💄 تجميل</button>
-            <button onclick="filterCat('etc', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent">💼 أخرى</button>
+            <button onclick="filterCat('food', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🍔 مطاعم</button>
+            <button onclick="filterCat('law', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">⚖️ محاماة</button>
+            <button onclick="filterCat('plumb', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🚰 سباكة</button>
+            <button onclick="filterCat('elec', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">⚡ كهرباء</button>
+            <button onclick="filterCat('delivery', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🛵 توصيل</button>
+            <button onclick="filterCat('rep', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🛠️ إصلاح</button>
+            <button onclick="filterCat('car', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🚗 كراء</button>
+            <button onclick="filterCat('woman', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">💄 تجميل</button>
+            <button onclick="filterCat('mech', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🔧 ميكانيك</button>
+            <button onclick="filterCat('clean', this)" class="shrink-0 bg-white px-5 py-3 rounded-2xl shadow-sm text-xs font-black border-2 border-transparent hover:border-amber-500">🧼 مواد تنظيف</button>
         </div>
     </div>
 
     <main class="px-4 pb-32 mt-6"><div id="list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div></main>
 
+    <a href="https://wa.me/212704487952" target="_blank" class="fixed bottom-6 left-6 w-14 h-14 bg-slate-900 text-amber-400 rounded-full flex items-center justify-center shadow-2xl z-50 border-2 border-amber-400/20 active:scale-90 transition-all">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[8px] font-black px-2 py-1 rounded-full uppercase italic">إدارة</span>
+    </a>
+
     <div id="admMod" class="fixed inset-0 bg-slate-900/95 hidden z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-md text-right">
-            <h3 class="font-black text-xl mb-6 text-slate-800 border-b pb-4 italic">لوحة تحكم المدني 🍊</h3>
-            <div class="space-y-4 max-h-[60vh] overflow-y-auto no-scrollbar">
+        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-md text-right shadow-2xl">
+            <h3 class="font-black text-xl mb-6 text-slate-800 border-b pb-4">إدارة التطبيق</h3>
+            <div class="space-y-4">
                 <div><label class="text-[10px] font-black text-slate-400">شريط الأخبار:</label><input type="text" id="aN" class="w-full p-3 bg-slate-50 border-none rounded-2xl text-sm font-black"></div>
-                <div><label class="text-[10px] font-black text-red-500">تاريخ الحراسة:</label><input type="text" id="aPT" class="w-full p-3 bg-slate-50 border-none rounded-2xl text-sm font-black"></div>
+                <div><label class="text-[10px] font-black text-red-500">تواريخ الحراسة:</label><input type="text" id="aPT" class="w-full p-3 bg-slate-50 border-none rounded-2xl text-sm font-black"></div>
                 <div class="grid grid-cols-2 gap-4">
                     <div><label class="text-[10px] font-black text-slate-400">بركان:</label><textarea id="aPhB" class="w-full p-3 bg-slate-50 border-none rounded-2xl text-sm font-black h-16"></textarea></div>
                     <div><label class="text-[10px] font-black text-slate-400">أكليم:</label><textarea id="aPhA" class="w-full p-3 bg-slate-50 border-none rounded-2xl text-sm font-black h-16"></textarea></div>
                 </div>
-                <div id="aL" class="border-t pt-4 space-y-2"></div>
             </div>
             <button onclick="saveA()" class="w-full bg-slate-900 text-amber-400 py-4 rounded-2xl font-black mt-6">حفظ المعلومات</button>
-            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-[10px] text-slate-400 font-black text-center italic">إغلاق</button>
+            <div id="aL" class="mt-6 max-h-48 overflow-y-auto border-t pt-4 space-y-2"></div>
+            <button onclick="document.getElementById('admMod').classList.add('hidden')" class="w-full mt-4 text-[10px] text-slate-400 font-black">إغلاق</button>
         </div>
     </div>
 
@@ -99,49 +117,36 @@
                 <div class="grid grid-cols-2 gap-2">
                     <select id="uCity" class="p-4 bg-slate-50 border-none rounded-2xl text-sm font-black"><option value="بركان">📍 بركان</option><option value="أكليم">📍 أكليم</option></select>
                     <select id="uC" class="p-4 bg-slate-50 border-none rounded-2xl text-sm font-black">
-                        <option value="food">🍔 مطاعم</option><option value="law">⚖️ محاماة</option><option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهرباء</option><option value="delivery">🛵 توصيل</option><option value="car">🚗 كراء</option><option value="mech">🔧 ميكانيك</option><option value="rep">🛠️ إصلاح</option><option value="woman">💄 تجميل</option><option value="etc">💼 أخرى</option>
+                        <option value="food">🍔 مطاعم وسناك</option><option value="law">⚖️ محاماة واستشارات</option><option value="plumb">🚰 سباكة</option><option value="elec">⚡ كهرباء</option><option value="delivery">🛵 توصيل</option><option value="rep">🛠️ إصلاح</option><option value="car">🚗 كراء</option><option value="woman">💄 تجميل</option><option value="mech">🔧 ميكانيك</option><option value="clean">🧼 مواد تنظيف</option><option value="etc">💼 أخرى</option>
                     </select>
                 </div>
                 <textarea id="uD" placeholder="وصف الخدمة..." class="w-full p-4 bg-slate-50 border-none rounded-2xl text-sm font-black h-20"></textarea>
             </div>
-            <button onclick="addS()" class="w-full bg-amber-500 text-white py-4 rounded-2xl font-black mt-6 shadow-lg shadow-amber-100">نشر الآن</button>
-            <button onclick="document.getElementById('addM').classList.add('hidden')" class="w-full mt-4 text-center block text-[10px] text-slate-400 font-black italic">إلغاء</button>
+            <button onclick="addS()" class="w-full bg-amber-500 text-white py-4 rounded-2xl font-black mt-6">نشر الآن</button>
+            <button onclick="document.getElementById('addM').classList.add('hidden')" class="w-full mt-4 text-[10px] text-slate-400 text-center block">إلغاء</button>
         </div>
     </div>
 
     <script type="module">
-        const _B = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        const _T = { 
-            food:{i:'fa-utensils',c:'#f97316',l:'مطاعم'}, 
-            law:{i:'fa-scale-balanced',c:'#1e293b',l:'محاماة'}, 
+        const B = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
+        const T = { 
+            food:{i:'fa-utensils',c:'#f97316',l:'مطاعم وسناك'},
+            law:{i:'fa-scale-balanced',c:'#1e293b',l:'محاماة'},
             plumb:{i:'fa-faucet',c:'#0284c7',l:'سباكة'}, 
-            elec:{i:'fa-bolt',c:'#f59e0b',l:'كهرباء'}, 
-            delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'},
-            car:{i:'fa-car',c:'#334155',l:'كراء'},
-            mech:{i:'fa-gears',c:'#475569',l:'ميكانيك'},
-            rep:{i:'fa-tools',c:'#b45309',l:'إصلاح'},
-            woman:{i:'fa-heart',c:'#db2777',l:'تجميل'},
-            etc:{i:'fa-briefcase',c:'#64748b',l:'أخرى'}
+            elec:{i:'fa-bolt',c:'#f59e0b',l:'كهربائي'}, 
+            rep:{i:'fa-tools',c:'#b45',l:'إصلاحات'}, 
+            delivery:{i:'fa-motorcycle',c:'#22c55e',l:'توصيل'}, 
+            car:{i:'fa-car',c:'#1e293b',l:'كراء'}, 
+            woman:{i:'fa-heart',c:'#ec4899',l:'تجميل'}, 
+            mech:{i:'fa-gears',c:'#334',l:'ميكانيك'}, 
+            clean:{i:'fa-soap',c:'#0ea5e9',l:'مواد تنظيف'}, 
+            etc:{i:'fa-briefcase',c:'#64748b',l:'أخرى'} 
         };
         let allS = {};
 
-        window._chk_sys = (v) => {
-            const _sys_cfg = [109, 100, 110, 105, 50, 48, 50, 53];
-            const _k = v.split('').map(c => c.charCodeAt(0));
-            if(_k.length === _sys_cfg.length && _k.every((x, i) => x === _sys_cfg[i])) {
-                document.getElementById('sIn').value = "";
-                document.getElementById('admMod').classList.remove('hidden');
-                loadA();
-            }
-        };
-
-        window.searchS = () => { 
-            const val = document.getElementById('sIn').value.toLowerCase(); 
-            render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)))); 
-        };
-        
+        window.adminIn = () => { if(prompt("كلمة المرور:")==="2025"){ document.getElementById('admMod').classList.remove('hidden'); loadA(); } };
         async function loadA() {
-            const r = await fetch(`${_B}/.json`), d = await r.json() || {};
+            const r = await fetch(`${B}/.json`), d = await r.json() || {};
             document.getElementById('aN').value = d.admin?.news || ""; 
             document.getElementById('aPT').value = d.admin?.p_time || "";
             document.getElementById('aPhB').value = d.admin?.ph_berkane || "";
@@ -151,59 +156,51 @@
                 const i = s[id];
                 let phRaw = i.phone.replace(/\s/g,'');
                 let phWA = phRaw.startsWith('0') ? '212'+phRaw.substring(1) : phRaw;
-                const msg = `السلام عليكم ${i.name}، معك إدارة Berkane-Connect. تم قبول خدمتك بنجاح 🍊.`;
-                return `<div class="p-3 bg-slate-50 rounded-2xl border-r-4 border-amber-500 mb-2 flex justify-between items-center">
-                    <span class="font-black text-[10px] text-slate-800">${i.name}</span>
-                    <div class="flex gap-1">
-                        <a href="https://wa.me/${phWA}?text=${encodeURIComponent(msg)}" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded text-[8px] font-black italic">تفعيل</a>
-                        <button onclick="del('${id}')" class="bg-red-50 text-red-500 px-2 py-1 rounded text-[8px] font-black">حذف</button>
+                const msg = "السلام عليكم، معك إدارة Berkane-Connect. تم قبول خدمتك بنجاح 🍊. شرفنا بزيارة الموقع: https://aklim-berkane-connect.vercel.app/";
+                return `<div class="flex flex-col gap-2 p-3 bg-slate-50 rounded-2xl border-r-4 border-amber-500 mb-2">
+                    <div class="flex justify-between items-center text-[10px]">
+                        <span class="font-black text-slate-800">${i.name}</span>
+                        <div class="flex gap-2">
+                            <a href="https://wa.me/${phWA}?text=${encodeURIComponent(msg)}" target="_blank" class="bg-green-500 text-white px-3 py-1 rounded-lg font-black">WhatsApp</a>
+                            <button onclick="del('${id}')" class="bg-red-50 text-red-500 px-3 py-1 rounded-lg font-black">حذف</button>
+                        </div>
                     </div>
                 </div>`;
             }).reverse().join('');
         }
-
-        window.saveA = async () => { 
-            await fetch(`${_B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, p_time:document.getElementById('aPT').value, ph_berkane:document.getElementById('aPhB').value, ph_aklim:document.getElementById('aPhA').value})}); 
-            location.reload(); 
-        };
-
-        window.del = async (id) => { if(confirm("حذف؟")){ await fetch(`${_B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
-
+        window.saveA = async () => { await fetch(`${B}/admin.json`,{method:'PATCH',body:JSON.stringify({news:document.getElementById('aN').value, p_time:document.getElementById('aPT').value, ph_berkane:document.getElementById('aPhB').value, ph_aklim:document.getElementById('aPhA').value})}); location.reload(); };
+        window.del = async (id) => { if(confirm("حذف هذه الخدمة؟")){ await fetch(`${B}/services/${id}.json`,{method:'DELETE'}); loadA(); } };
         window.addS = async () => {
-            const n=document.getElementById('uN').value, p=document.getElementById('uP').value; if(!n||!p) return alert("الاسم والهاتف ضروري!");
-            await fetch(`${_B}/services.json`,{method:'POST',body:JSON.stringify({name:n, phone:p, city:document.getElementById('uCity').value, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."})}); 
-            alert("تم الإرسال للإدارة!"); location.reload();
+            const n=document.getElementById('uN').value, p=document.getElementById('uP').value; if(!n||!p) return alert("المرجو إدخال الاسم والهاتف!");
+            await fetch(`${B}/services.json`,{method:'POST',body:JSON.stringify({name:n, phone:p, city:document.getElementById('uCity').value, category:document.getElementById('uC').value, description:document.getElementById('uD').value||"..."})}); location.reload();
         };
-
+        window.searchS = () => { const val = document.getElementById('sIn').value.toLowerCase(); render(Object.keys(allS).filter(id => allS[id].name.toLowerCase().includes(val) || (allS[id].description && allS[id].description.toLowerCase().includes(val)))); };
         window.filterCat = (cat, btn) => {
             document.querySelectorAll('#catS button').forEach(b => b.classList.remove('border-amber-500'));
             btn.classList.add('border-amber-500');
             render(cat === 'all' ? Object.keys(allS) : Object.keys(allS).filter(k => allS[k].category === cat));
         };
-
-        window.showDesc = (b) => alert(decodeURIComponent(escape(window.atob(b))));
-        
+        window.showDesc = (b64) => { alert(decodeURIComponent(escape(window.atob(b64)))); };
         function render(ks) {
             document.getElementById('list').innerHTML = ks.reverse().map(id => {
-                const i=allS[id], t=_T[i.category]||_T.etc;
-                let phWA = i.phone.replace(/\s/g,'').startsWith('0') ? '212'+i.phone.replace(/\s/g,'').substring(1) : i.phone.replace(/\s/g,'');
-                let sd = window.btoa(unescape(encodeURIComponent(i.description || "...")));
+                const i=allS[id], t=T[i.category]||T.etc;
+                let phRaw = i.phone.replace(/\s/g,''); let phWA = phRaw.startsWith('0') ? '212'+phRaw.substring(1) : phRaw;
+                let safeDesc = window.btoa(unescape(encodeURIComponent(i.description || "...")));
                 return `<div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-50">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg" style="background:${t.c}"><i class="fas ${t.i}"></i></div>
-                        <div class="flex-1"><h4 class="font-black text-slate-800 text-sm">${i.name} <span class="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">${i.city}</span></h4><p class="text-[9px] text-slate-400 font-black uppercase">${t.l}</p></div>
+                    <div class="flex items-center gap-4 mb-4 text-right">
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-lg shadow-lg" style="background:${t.c}"><i class="fas ${t.i}"></i></div>
+                        <div class="flex-1"><h4 class="font-black text-slate-800 text-sm">${i.name} <span class="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-black">${i.city}</span></h4><p class="text-[9px] text-slate-400 font-black uppercase">${t.l}</p></div>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="showDesc('${sd}')" class="flex-1 py-3 text-slate-400 bg-slate-50 rounded-2xl text-[10px] font-black italic">التفاصيل</button>
+                        <button onclick="showDesc('${safeDesc}')" class="flex-1 py-3 text-slate-400 bg-slate-50 rounded-2xl text-[10px] font-black italic">التفاصيل</button>
                         <a href="https://wa.me/${phWA}" target="_blank" class="flex-[2] bg-green-600 text-white py-3 rounded-2xl text-center text-[10px] font-black flex items-center justify-center gap-2 italic"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>`;
             }).join('');
         }
-
         async function init() {
             fetch(`https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=Morocco&method=3`).then(r=>r.json()).then(d=>{const t=d.data.timings; document.getElementById('fjr').innerText=t.Fajr; document.getElementById('dhr').innerText=t.Dhuhr; document.getElementById('asr').innerText=t.Asr; document.getElementById('mgh').innerText=t.Maghrib; document.getElementById('ish').innerText=t.Isha;});
-            const r = await fetch(`${_B}/.json`), d = await r.json()||{};
+            const r = await fetch(`${B}/.json`), d = await r.json()||{};
             document.getElementById('newsT').innerText = d.admin?.news||"مرحباً بكم في بركان كونيكت";
             document.getElementById('pTime').innerText = d.admin?.p_time||'-- / --';
             document.getElementById('phB').innerText = d.admin?.ph_berkane||'--'; document.getElementById('phA').innerText = d.admin?.ph_aklim||'--';
@@ -212,4 +209,4 @@
         init();
     </script>
 </body>
-</html>
+    </html>
