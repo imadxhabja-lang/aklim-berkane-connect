@@ -3,271 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkane Connect | النسخة الاحترافية البنينة</title>
-    
+    <title>Berkane Connect | النسخة الاحترافية الشاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
-        
-        :root {
-            --bg-color: #f8fafc;
-            --main-dark: #0f172a;
-            --accent-gold: #f59e0b;
-            --woman-pink: #ec4899;
-        }
-
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background-color: var(--bg-color); 
-            color: #1e293b;
-        }
-
-        /* --- الأناقة والبنة (Styling) --- */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 4px solid var(--accent-gold);
-        }
-
-        .hero-card {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            border-radius: 2.5rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 2.2rem;
-            padding: 2rem;
-            border: 1px solid #edf2f7;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-gold);
-        }
-
+        :root { --main-dark: #0f172a; --accent-gold: #f59e0b; --woman-pink: #ec4899; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 4px solid var(--accent-gold); }
+        .hero-card { background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 2.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); }
+        .service-card { background: white; border-radius: 2.2rem; padding: 2rem; border: 1px solid #edf2f7; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; position: relative; overflow: hidden; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); border-color: var(--accent-gold); }
         .woman-card { border-bottom: 6px solid var(--woman-pink) !important; }
-        .woman-card:hover { border-color: var(--woman-pink); }
-
-        .btn-wa {
-            background: var(--main-dark);
-            color: var(--accent-gold);
-            font-weight: 900;
-            padding: 1rem;
-            border-radius: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1.5rem;
-            transition: 0.3s;
-        }
-
-        .btn-wa:hover {
-            background: #000;
-            transform: scale(1.02);
-        }
-
-        /* شريط الأخبار البنين */
-        .marquee-container {
-            background: var(--main-dark);
-            padding: 15px 0;
-            border-top: 2px solid var(--accent-gold);
-            border-bottom: 2px solid var(--accent-gold);
-        }
-
-        .marquee-text {
-            color: var(--accent-gold);
-            font-weight: 800;
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee-run 25s linear infinite;
-        }
-
-        @keyframes marquee-run {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* الفلاتر */
-        .filter-chip {
-            background: white;
-            padding: 12px 24px;
-            border-radius: 1.2rem;
-            border: 2px solid #e2e8f0;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-
-        .filter-chip.active {
-            background: var(--accent-gold);
-            color: white;
-            border-color: #d97706;
-            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
-        }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .marquee-container { background: var(--main-dark); padding: 15px 0; border-top: 2px solid var(--accent-gold); border-bottom: 2px solid var(--accent-gold); overflow: hidden; }
+        .marquee-text { color: var(--accent-gold); font-weight: 800; display: inline-block; white-space: nowrap; animation: marquee-run 25s linear infinite; }
+        @keyframes marquee-run { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .filter-chip { background: white; padding: 12px 24px; border-radius: 1.2rem; border: 2px solid #e2e8f0; font-weight: 700; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .filter-chip.active { background: var(--accent-gold); color: white; border-color: #d97706; box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4); }
         .hidden { display: none !important; }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
     <nav class="glass-nav sticky top-0 z-[1000] p-4 px-8 flex justify-between items-center">
-        <div class="text-2xl font-black italic tracking-tighter">
-            BERKANE<span class="text-amber-500">.</span>CONNECT
-        </div>
+        <div class="text-2xl font-black italic">BERKANE<span class="text-amber-500">.</span>CONNECT</div>
         <div class="flex items-center gap-4">
-            <button onclick="toggleModal('addModal', true)" class="bg-amber-500 text-white px-6 py-3 rounded-2xl text-xs font-black shadow-lg active:scale-95 transition">
-                + أضف خدمتك
-            </button>
-            <button onclick="enterAdmin()" class="bg-slate-100 p-3 rounded-2xl text-slate-500 hover:bg-slate-200">
-                <i class="fas fa-fingerprint"></i>
-            </button>
+            <button onclick="toggleModal('addModal', true)" class="bg-amber-500 text-white px-6 py-3 rounded-2xl text-xs font-black shadow-lg"> + أضف خدمتك </button>
+            <button onclick="enterAdmin()" class="bg-slate-100 p-3 rounded-2xl text-slate-500"><i class="fas fa-fingerprint"></i></button>
         </div>
     </nav>
 
     <div class="container mx-auto p-4 mt-6">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="hero-card p-8 text-white flex justify-between items-center">
-                <div>
-                    <span class="text-amber-400 text-[10px] font-black uppercase tracking-widest">طقس بركان</span>
-                    <h2 id="temp-val" class="text-5xl font-black italic mt-1">--°C</h2>
-                    <p class="text-slate-400 text-xs mt-2">مباشر الآن</p>
-                </div>
-                <div class="text-6xl text-amber-500/20"><i class="fas fa-sun animate-spin-slow"></i></div>
+                <div><span class="text-amber-400 text-[10px] font-black uppercase">طقس بركان</span><h2 id="temp-val" class="text-5xl font-black italic mt-1">--°C</h2></div>
+                <i class="fas fa-sun text-5xl text-amber-500 animate-pulse"></i>
             </div>
-            <div class="lg:col-span-2 bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 flex justify-around items-center">
-                <div class="text-center"><span class="block text-[10px] text-slate-400 font-bold mb-1">الفجر</span><p id="t-fajr" class="text-lg font-black italic">--:--</p></div>
-                <div class="text-center text-amber-600"><span class="block text-[10px] font-bold mb-1">العصر</span><p id="t-asr" class="text-lg font-black italic">--:--</p></div>
-                <div class="text-center"><span class="block text-[10px] text-slate-400 font-bold mb-1">المغرب</span><p id="t-maghrib" class="text-lg font-black italic">--:--</p></div>
-                <div class="text-center"><span class="block text-[10px] text-slate-400 font-bold mb-1">العشاء</span><p id="t-isha" class="text-lg font-black italic">--:--</p></div>
+            <div class="lg:col-span-2 bg-white rounded-[2.5rem] p-6 shadow-sm border flex justify-around items-center font-bold">
+                <div class="text-center">الفجر<p id="t-fajr" class="text-lg font-black italic">--:--</p></div>
+                <div class="text-center text-amber-600">العصر<p id="t-asr" class="text-lg font-black italic">--:--</p></div>
+                <div class="text-center">المغرب<p id="t-maghrib" class="text-lg font-black italic">--:--</p></div>
+                <div class="text-center">العشاء<p id="t-isha" class="text-lg font-black italic">--:--</p></div>
             </div>
         </div>
     </div>
 
     <div class="marquee-container mt-8">
-        <div class="marquee-text" id="news-ticker">أهلاً بكم في المنصة الرسمية لمدينة بركان .. Berkane Connect يحييكم .. جاري تحديث بيانات صيدليات الحراسة ..</div>
+        <div class="marquee-text" id="news-ticker">أهلاً بكم في Berkane Connect .. جاري تحديث خدمات المدينة ..</div>
     </div>
 
     <section class="container mx-auto p-4 mt-12">
-        <h3 class="text-2xl font-black mb-8 italic border-r-8 border-amber-500 pr-4 uppercase">صيدليات الحراسة</h3>
+        <h3 class="text-2xl font-black mb-8 italic border-r-8 border-amber-500 pr-4">صيدليات الحراسة</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="service-card !p-0 overflow-hidden">
-                <div class="bg-slate-900 p-4 text-amber-500 font-black italic flex justify-between px-8"><span>بركان</span><i class="fas fa-clinic-medical"></i></div>
-                <div id="ph-berkane-list" class="p-10 text-slate-600 font-bold leading-relaxed">جاري الجلب...</div>
-            </div>
-            <div class="service-card !p-0 overflow-hidden">
-                <div class="bg-slate-700 p-4 text-amber-500 font-black italic flex justify-between px-8"><span>أكليم</span><i class="fas fa-pills"></i></div>
-                <div id="ph-aklim-list" class="p-10 text-slate-600 font-bold leading-relaxed">جاري الجلب...</div>
-            </div>
+            <div class="service-card !p-0 overflow-hidden"><div class="bg-slate-900 p-4 text-amber-500 font-black italic">بركان</div><div id="ph-berkane-list" class="p-10 text-slate-600 font-bold">جاري الجلب...</div></div>
+            <div class="service-card !p-0 overflow-hidden"><div class="bg-slate-700 p-4 text-amber-500 font-black italic">أكليم</div><div id="ph-aklim-list" class="p-10 text-slate-600 font-bold">جاري الجلب...</div></div>
         </div>
     </section>
 
     <main class="container mx-auto p-4 py-16">
         <div class="max-w-3xl mx-auto mb-12 relative">
-            <input type="text" id="search-in" onkeyup="doSearch()" placeholder="ابحث عن: كهربائي، نجار، صباغ، حلويات..." class="w-full p-6 pr-16 rounded-[2.2rem] border-2 border-slate-100 focus:border-amber-500 outline-none shadow-sm font-bold text-right transition-all">
-            <i class="fas fa-search-location absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 text-xl"></i>
+            <input type="text" id="search-in" onkeyup="doSearch()" placeholder="ابحث عن: كهربائي، نجار، صباغ..." class="w-full p-6 pr-16 rounded-[2.2rem] border-2 focus:border-amber-500 outline-none shadow-sm font-bold text-right">
+            <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 text-xl"></i>
         </div>
-
-        <div class="flex gap-4 overflow-x-auto pb-8 no-scrollbar" id="cat-tabs">
+        <div class="flex gap-4 overflow-x-auto pb-8" id="cat-tabs">
             <button onclick="setFilter('all', event)" class="filter-chip active">الكل</button>
-            <button onclick="setFilter('kitchen', event)" class="filter-chip">🍳 مطبخ وحلويات</button>
-            <button onclick="setFilter('cosmetics', event)" class="filter-chip">💄 عالم المرأة</button>
-            <button onclick="setFilter('wrench', event)" class="filter-chip">🔧 إصلاح وصيانة</button>
-            <button onclick="setFilter('truck', event)" class="filter-chip">🚚 نقل وتوصيل</button>
+            <button onclick="setFilter('kitchen', event)" class="filter-chip">🍳 مطبخ</button>
+            <button onclick="setFilter('cosmetics', event)" class="filter-chip">💄 امرأة</button>
+            <button onclick="setFilter('wrench', event)" class="filter-chip">🔧 إصلاح</button>
         </div>
-
-        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            </div>
+        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </main>
 
-    <div id="addModal" class="fixed inset-0 bg-slate-900/90 hidden z-[5000] flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-[3rem] p-12 max-w-md w-full relative shadow-2xl">
-            <button onclick="toggleModal('addModal', false)" class="absolute top-8 left-8 text-slate-300 hover:text-red-500 transition-colors"><i class="fas fa-times-circle text-3xl"></i></button>
-            <h3 class="text-3xl font-black mb-10 italic">سجل نشاطك</h3>
-            <div class="space-y-6">
-                <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2 mr-2">اسم المهني / المحل</label><input type="text" id="f-name" class="w-full p-5 bg-slate-50 rounded-2xl border-2 border-transparent focus:border-amber-500 outline-none font-bold text-right"></div>
-                <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2 mr-2">واتساب</label><input type="tel" id="f-phone" class="w-full p-5 bg-slate-50 rounded-2xl border-2 border-transparent focus:border-amber-500 outline-none font-bold text-left"></div>
-                <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2 mr-2">التصنيف</label>
-                    <select id="f-cat" class="w-full p-5 bg-slate-50 rounded-2xl border-2 border-transparent outline-none font-bold">
-                        <option value="kitchen">🍳 مطبخ وحلويات</option>
-                        <option value="cosmetics">💄 عالم المرأة</option>
-                        <option value="wrench">🔧 إصلاح وصيانة</option>
-                        <option value="truck">🚚 نقل وتوصيل</option>
-                    </select>
-                </div>
-                <button onclick="saveToFirebase()" id="btn-save" class="w-full bg-slate-900 text-amber-500 py-5 rounded-2xl font-black text-xl shadow-xl active:scale-95 transition">انشر الآن</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="adminPanel" class="fixed inset-0 bg-white hidden z-[6000] overflow-y-auto">
-        <div class="container mx-auto p-10">
-            <div class="flex justify-between items-center mb-12 border-b-2 pb-6">
-                <h2 class="text-4xl font-black italic text-slate-900">التحكم المركزي</h2>
-                <button onclick="toggleModal('adminPanel', false)" class="bg-red-50 text-red-500 px-8 py-3 rounded-2xl font-bold">إغلاق</button>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div class="space-y-6 bg-slate-50 p-8 rounded-[2.5rem]">
-                    <h4 class="font-black text-amber-600 mb-4">تحديث الواجهة</h4>
-                    <input type="text" id="adm-news" placeholder="شريط الأخبار" class="w-full p-5 border rounded-2xl text-right font-bold">
-                    <textarea id="adm-ph" placeholder="صيدليات (اسم في كل سطر)" class="w-full p-5 border rounded-2xl h-40 text-right font-bold"></textarea>
-                    <input type="text" id="adm-days" placeholder="تاريخ الحراسة" class="w-full p-5 border rounded-2xl text-right font-bold">
-                    <button onclick="pushUpdate()" class="w-full bg-amber-500 text-white py-5 rounded-2xl font-black shadow-lg">حفظ التغييرات</button>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[2.5rem]">
-                    <h4 class="font-black text-slate-800 mb-6">إدارة الخدمات المضافة</h4>
-                    <div id="adm-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-2"></div>
-                </div>
-            </div>
+    <div id="addModal" class="fixed inset-0 bg-slate-900/90 hidden z-[5000] flex items-center justify-center p-4">
+        <div class="bg-white rounded-[3rem] p-10 max-w-md w-full relative">
+            <button onclick="toggleModal('addModal', false)" class="absolute top-6 left-6 text-slate-300"><i class="fas fa-times-circle text-2xl"></i></button>
+            <h3 class="text-2xl font-black mb-6">سجل خدمتك</h3>
+            <input type="text" id="f-name" placeholder="الاسم" class="w-full p-4 bg-slate-50 rounded-2xl mb-4 text-right font-bold border-none outline-none">
+            <input type="tel" id="f-phone" placeholder="رقم الواتساب" class="w-full p-4 bg-slate-50 rounded-2xl mb-4 text-left font-bold border-none outline-none">
+            <select id="f-cat" class="w-full p-4 bg-slate-50 rounded-2xl mb-6 font-bold border-none outline-none">
+                <option value="kitchen">🍳 مطبخ</option><option value="cosmetics">💄 امرأة</option><option value="wrench">🔧 إصلاح</option>
+            </select>
+            <button onclick="saveToFirebase()" class="w-full bg-slate-900 text-amber-500 py-4 rounded-2xl font-black shadow-xl">انشر الآن</button>
         </div>
     </div>
 
     <script>
         const DB = "https://studio-2627154759-2fb87-default-rtdb.firebaseio.com";
-        let localCache = {};
-        let currentFilter = 'all';
+        let localCache = {}; let currentFilter = 'all';
 
         async function init() {
-            // APIs
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true').then(r=>r.json()).then(d=> {
-                document.getElementById('temp-val').innerText = Math.round(d.current_weather.temperature) + '°C';
-            });
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=34.92&longitude=-2.32&current_weather=true').then(r=>r.json()).then(d=> document.getElementById('temp-val').innerText = Math.round(d.current_weather.temperature) + '°C');
             fetch('https://api.aladhan.com/v1/timingsByCity?city=Berkane&country=MA&method=3').then(r=>r.json()).then(d=>{
-                const t = d.data.timings;
-                document.getElementById('t-fajr').innerText = t.Fajr;
-                document.getElementById('t-asr').innerText = t.Asr;
-                document.getElementById('t-maghrib').innerText = t.Maghrib;
-                document.getElementById('t-isha').innerText = t.Isha;
+                const t = d.data.timings; document.getElementById('t-fajr').innerText = t.Fajr; document.getElementById('t-asr').innerText = t.Asr; document.getElementById('t-maghrib').innerText = t.Maghrib; document.getElementById('t-isha').innerText = t.Isha;
             });
-
-            // Firebase
             try {
                 const res = await fetch(`${DB}/.json`);
                 localCache = await res.json() || {};
-                
-                if(localCache.admin?.news) {
-                    document.getElementById('news-ticker').innerText = localCache.admin.news;
-                    document.getElementById('adm-news').value = localCache.admin.news;
-                }
-
+                if(localCache.admin?.news) document.getElementById('news-ticker').innerText = localCache.admin.news;
                 if(localCache.pharmacies_v4?.berkane) {
                     const p = localCache.pharmacies_v4.berkane;
-                    document.getElementById('ph-berkane-list').innerHTML = `<p class="text-amber-600 mb-2 italic">حراسة: ${p.days}</p>${p.names.replace(/\n/g, '<br>📍 ')}`;
-                    document.getElementById('adm-ph').value = p.names;
-                    document.getElementById('adm-days').value = p.days;
+                    document.getElementById('ph-berkane-list').innerHTML = `<p class="text-amber-600 italic mb-2">حراسة: ${p.days}</p>${p.names.replace(/\n/g, '<br>📍 ')}`;
                 }
-
                 render(localCache.services || {});
             } catch(e) { console.error(e); }
         }
@@ -275,86 +111,40 @@
         function render(data) {
             const grid = document.getElementById('main-grid');
             const keys = Object.keys(data);
-            if(keys.length === 0) { grid.innerHTML = `<p class="col-span-full text-center py-20 text-slate-300 font-bold italic">لا توجد خدمات حالياً</p>`; return; }
-            
-            grid.innerHTML = keys.reverse().map(id => {
-                const s = data[id];
-                const isWoman = ['kitchen', 'cosmetics'].includes(s.category);
-                return `
-                    <div class="service-card ${isWoman ? 'woman-card' : ''}">
-                        <div class="w-16 h-16 bg-slate-50 rounded-2xl mx-auto mb-6 flex items-center justify-center text-2xl text-amber-500">
-                            <i class="${getIcon(s.category)}"></i>
-                        </div>
-                        <h4 class="font-black text-2xl text-slate-800 mb-1">${s.name}</h4>
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-[3px] mb-6">${s.category}</p>
-                        <a href="https://wa.me/${s.phone.replace('0', '212')}" target="_blank" class="btn-wa shadow-xl">
-                            <i class="fab fa-whatsapp"></i> واتساب
-                        </a>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function getIcon(cat) {
-            const icons = {kitchen: 'fas fa-utensils', cosmetics: 'fas fa-magic', wrench: 'fas fa-tools', truck: 'fas fa-truck-moving'};
-            return icons[cat] || 'fas fa-star';
-        }
-
-        window.doSearch = () => {
-            const q = document.getElementById('search-in').value.toLowerCase();
-            const filtered = Object.fromEntries(Object.entries(localCache.services || {}).filter(([id, s]) => 
-                (currentFilter === 'all' || s.category === currentFilter) && s.name.toLowerCase().includes(q)
-            ));
-            render(filtered);
-        };
-
-        window.setFilter = (cat, e) => {
-            currentFilter = cat;
-            document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-            e.currentTarget.classList.add('active');
-            window.doSearch();
-        };
-
-        window.toggleModal = (id, show) => document.getElementById(id).classList.toggle('hidden', !show);
-
-        window.enterAdmin = () => {
-            const p = prompt("كلمة السر:");
-            if(p === "1234") {
-                toggleModal('adminPanel', true);
-                loadAdminList();
-            }
-        };
-
-        async function loadAdminList() {
-            const res = await fetch(`${DB}/services.json`);
-            const data = await res.json() || {};
-            document.getElementById('adm-list').innerHTML = Object.keys(data).reverse().map(id => `
-                <div class="flex justify-between items-center bg-white p-5 rounded-2xl shadow-sm border border-slate-100 font-bold text-sm">
-                    <span>${data[id].name}</span>
-                    <button onclick="delService('${id}')" class="text-red-400 hover:text-red-600"><i class="fas fa-trash-alt"></i></button>
+            grid.innerHTML = keys.reverse().map(id => `
+                <div class="service-card ${['kitchen','cosmetics'].includes(data[id].category) ? 'woman-card' : ''}">
+                    <h4 class="font-black text-2xl text-slate-800 mb-1">${data[id].name}</h4>
+                    <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-6">${data[id].category}</p>
+                    <a href="https://wa.me/${data[id].phone.replace('0','212')}" target="_blank" class="block bg-slate-900 text-amber-500 py-3 rounded-2xl font-black shadow-lg">واتساب</a>
                 </div>
             `).join('');
         }
 
-        window.delService = async (id) => {
-            if(confirm("حذف؟")) { await fetch(`${DB}/services/${id}.json`, { method: 'DELETE' }); loadAdminList(); init(); }
+        window.doSearch = () => {
+            const q = document.getElementById('search-in').value.toLowerCase();
+            const filtered = Object.fromEntries(Object.entries(localCache.services || {}).filter(([id, s]) => (currentFilter === 'all' || s.category === currentFilter) && s.name.toLowerCase().includes(q)));
+            render(filtered);
         };
 
-        window.pushUpdate = async () => {
-            const news = document.getElementById('adm-news').value;
-            const names = document.getElementById('adm-ph').value;
-            const days = document.getElementById('adm-days').value;
-            await fetch(`${DB}/admin/news.json`, { method: 'PUT', body: JSON.stringify(news) });
-            await fetch(`${DB}/pharmacies_v4/berkane.json`, { method: 'PUT', body: JSON.stringify({names, days}) });
-            alert("تم التحديث!"); location.reload();
+        window.setFilter = (cat, e) => {
+            currentFilter = cat; document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active')); e.currentTarget.classList.add('active'); window.doSearch();
+        };
+
+        window.toggleModal = (id, show) => document.getElementById(id).classList.toggle('hidden', !show);
+        
+        window.enterAdmin = () => { 
+            const p = prompt("كلمة السر:"); 
+            if(p === "1234") { 
+                const n = prompt("تحديث الخبر:"); 
+                if(n) fetch(`${DB}/admin/news.json`, { method: 'PUT', body: JSON.stringify(n) }).then(()=>location.reload());
+            } 
         };
 
         window.saveToFirebase = async () => {
             const name = document.getElementById('f-name').value;
             const phone = document.getElementById('f-phone').value;
             const category = document.getElementById('f-cat').value;
-            if(!name || !phone) return alert("الخانات فارغة!");
-            document.getElementById('btn-save').innerText = "جاري النشر...";
+            if(!name || !phone) return alert("عمر الخانات!");
             await fetch(`${DB}/services.json`, { method: 'POST', body: JSON.stringify({name, phone, category}) });
             location.reload();
         };
